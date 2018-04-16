@@ -36,7 +36,45 @@ class ViewController: UIViewController {
     
     private func updateViewFromModel() {
         
+        var cardString: NSMutableAttributedString
+        
+        for card in game.currentCardsInGame {
+            switch card.symbol {
+            case .A:
+                print("card button should be symbol A")
+            case .B:
+                print("card button should be symbol B")
+            case .C:
+                print("card button should be symbol C")
+            }
+            
+            switch card.number {
+            case .A:
+                print("card button should be number A")
+            case .B:
+                print("card button should be number B")
+            case .C:
+                print("card button should be number C")
+            }
+            
+            switch card.color {
+            case .A:
+                print("card button should be color A")
+            case .B:
+                print("card button should be color B")
+            case .C:
+                print("card button should be color C")
+            }
+            
+            switch card.shading {
+            case .A:
+                print("card button should be shading A")
+            case .B:
+                print("card button should be shading B")
+            case .C:
+                print("card button should be shading C")
+            }
+        }
     }
-
 }
 

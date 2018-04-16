@@ -22,7 +22,6 @@ struct SetGame {
     }
     
     mutating func selectCard(card: Card) {
-        
         if selectedCards.count == 3 && setFound() {
             for card in selectedCards {
                 currentCardsInGame = currentCardsInGame.filter() { $0 != card }
