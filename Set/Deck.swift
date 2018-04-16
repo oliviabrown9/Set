@@ -23,4 +23,9 @@ struct Deck {
             }
         }
     }
+    
+    mutating func drawCard() -> Card {
+        let cardDrawn = self.cards.remove(at: Int(arc4random_uniform(UInt32(self.cards.count))))
+        return cardDrawn
+    }
 }

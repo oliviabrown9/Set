@@ -1,9 +1,9 @@
 version: "Apple Swift version 4.1 (swiftlang-902.0.48 clang-902.0.37.1)"
 options: "e9370a0ad524513126b508d0a99d067c"
-build_time: [1523919150, 590817000]
+build_time: [1523920583, 732580000]
 inputs:
   "/Users/apple/Set/Set/ViewController.swift": [1523918028, 0]
   "/Users/apple/Set/Set/AppDelegate.swift": [1523909376, 0]
-  "/Users/apple/Set/Set/Deck.swift": [1523918132, 0]
-  "/Users/apple/Set/Set/SetGame.swift": [1523919150, 0]
-  "/Users/apple/Set/Set/Card.swift": [1523918691, 0]
+  "/Users/apple/Set/Set/Deck.swift": [1523920557, 0]
+  "/Users/apple/Set/Set/SetGame.swift": [1523920583, 0]
+  "/Users/apple/Set/Set/Card.swift": [1523919288, 0]

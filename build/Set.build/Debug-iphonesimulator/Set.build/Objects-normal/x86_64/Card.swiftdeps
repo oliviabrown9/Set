@@ -1,6 +1,7 @@
 ### Swift dependencies file v0 ###
 provides-top-level:
 - "Card"
+- "=="
 provides-nominal:
 - "3Set4CardV"
 - "3Set4CardV12MatchVariantO"
@@ -9,13 +10,20 @@ provides-member:
 - ["3Set4CardV12MatchVariantO", ""]
 provides-dynamic-lookup:
 depends-top-level:
+- !private "&&"
 - "=="
+- "Bool"
 - "Card"
+- "Equatable"
 - !private "FloatLiteralType"
 - !private "IntegerLiteralType"
 depends-member:
+- ["3Set4CardV", "=="]
+- ["3Set4CardV", "Bool"]
+- ["3Set4CardV", "Card"]
 - ["3Set4CardV", "MatchVariant"]
 - ["3Set4CardV", "color"]
+- ["3Set4CardV", "deinit"]
 - ["3Set4CardV", "init"]
 - ["3Set4CardV", "number"]
 - ["3Set4CardV", "shading"]
@@ -24,7 +32,11 @@ depends-member:
 - !private ["s9EquatableP", "B"]
 - !private ["s9EquatableP", "C"]
 - ["s9EquatableP", ""]
+- !private ["s9EquatableP", "color"]
 - ["s9EquatableP", "hashValue"]
+- !private ["s9EquatableP", "number"]
+- !private ["s9EquatableP", "shading"]
+- !private ["s9EquatableP", "symbol"]
 - !private ["s8HashableP", "A"]
 - !private ["s8HashableP", "B"]
 - !private ["s8HashableP", "C"]
@@ -68,4 +80,4 @@ depends-external:
 - "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.3.sdk/System/Library/Frameworks/CoreGraphics.framework/Headers/CoreGraphics.apinotes"
 - "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.3.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.apinotes"
 - "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator11.3.sdk/System/Library/Frameworks/CoreText.framework/Headers/CoreText.apinotes"
-interface-hash: "7d37a9892ed04f4be09885a63122ea9c"
+interface-hash: "a218aa05025fde6a22fd1ba2bae21242"

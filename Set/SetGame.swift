@@ -11,39 +11,32 @@ import Foundation
 struct SetGame {
     
     private(set) var deck = Deck()
+    private(set) var currentCardsInGame = [Card]()
     private(set) var selectedCards = [Card]()
     private(set) var score = 0
     
     mutating func selectCard(card: Card) {
         
         if selectedCards.count == 3 && setFound() {
-//            selectedCards.forEach {
-//                if let selectedCardInGameIndex = cardsInGame.index(of: $0) {
-//                    cardsInGame.remove(at: selectedCardInGameIndex)
-//                    if availableCards.count > 0 {
-//                        let selectedCard = availableCards.remove(at: availableCards.count.arc4Random())
-//                        cardsInGame.insert(selectedCard, at: selectedCardInGameIndex)
-//                    }
-//                }
-//            }
-//            selectedCards.removeAll()
-//            score += 3
-//        }
-//        else if selectedCards.count == 3 && !isSet() {
-//            selectedCards.removeAll()
-//            score -= 1
-//        }
-//
-//        if let alreadySelectedCardIndex = selectedCards.index(of: card) {
-//            selectedCards.remove(at: alreadySelectedCardIndex)
-//        }
-//        else {
-//            selectedCards.append(card)
-//        }
+            for card in selectedCards {
+                currentCardsInGame = currentCardsInGame.filter() { $0 != card }
+            }
+            if !deck.cards.isEmpty {
+                currentCardsInGame.append(deck.drawCard())
+            }
+            selectedCards.removeAll()
+            score += 3
+        }
+        else if selectedCards.count == 3 && !setFound() {
+            selectedCards.removeAll()
+            score -= 1
+        }
         
-//        print("Selected \(selectedCards.count) cards")
-//        print("Cards available in deck \(availableCards.count) cards")
-//        print("Cards in game \(cardsInGame.count) cards")
+        if let alreadySelectedCardIndex = selectedCards.index(of: card) {
+            selectedCards.remove(at: alreadySelectedCardIndex)
+        }
+        else {
+            selectedCards.append(card)
         }
     }
     
