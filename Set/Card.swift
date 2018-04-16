@@ -8,27 +8,38 @@
 
 import Foundation
 
-struct Card: Hashable {
-    
-    var hashValue: Int {
-        return identifier
-    }
+struct Card: Equatable {
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
-        return lhs.identifier == rhs.identifier
+        return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
     }
     
-    var isInSet = false
-    private var identifier: Int
+    let number: Number
+    let symbol: Symbol
+    let shading: Shading
+    let color: Color
     
-    private static var identifierFactory = 0
-    
-    private static func getUniqueIdentifier() -> Int {
-        identifierFactory += 1
-        return identifierFactory
+    enum Number {
+        case one
+        case two
+        case three
     }
     
-    init() {
-        self.identifier = Card.getUniqueIdentifier()
+    enum Symbol {
+        case one
+        case two
+        case three
+    }
+    
+    enum Shading {
+        case one
+        case two
+        case three
+    }
+    
+    enum Color {
+        case one
+        case two
+        case three
     }
 }
