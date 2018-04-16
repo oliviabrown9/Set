@@ -15,6 +15,12 @@ struct SetGame {
     private(set) var selectedCards = [Card]()
     private(set) var score = 0
     
+    init() {
+        for _ in 1..<12 {
+            currentCardsInGame.append(deck.drawCard())
+        }
+    }
+    
     mutating func selectCard(card: Card) {
         
         if selectedCards.count == 3 && setFound() {
