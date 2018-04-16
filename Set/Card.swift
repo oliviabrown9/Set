@@ -10,36 +10,27 @@ import Foundation
 
 struct Card: Equatable {
     
+    let cardColor: MatchVariant
+    let cardSymbol: MatchVariant
+    let cardNumber: MatchVariant
+    let cardShading: MatchVariant
+    
+//    init(color: MatchVariant, symbol: MatchVariant, number: MatchVariant, shading: MatchVariant) {
+//        cardColor = color
+//        cardSymbol = symbol
+//        cardNumber = number
+//        cardShading = shading
+//    }
+    
     static func ==(lhs: Card, rhs: Card) -> Bool {
-        return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
+        return lhs.cardNumber == rhs.cardNumber && lhs.cardSymbol == rhs.cardSymbol && lhs.cardShading == rhs.cardShading && lhs.cardColor == rhs.cardColor
     }
-    
-    let number: Number
-    let symbol: Symbol
-    let shading: Shading
-    let color: Color
-    
-    enum Number {
-        case one
-        case two
-        case three
-    }
-    
-    enum Symbol {
-        case one
-        case two
-        case three
-    }
-    
-    enum Shading {
-        case one
-        case two
-        case three
-    }
-    
-    enum Color {
-        case one
-        case two
-        case three
+
+    enum MatchVariant {
+        case A, B, C
+        
+        static var all: [MatchVariant] {
+            return [.A, .B, .C]
+        }
     }
 }
