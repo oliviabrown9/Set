@@ -57,6 +57,7 @@ depends-member:
 - !private ["s23CustomStringConvertibleP", "init"]
 - !private ["s23CustomStringConvertibleP", "updateViewFromModel"]
 - !private ["s23CustomStringConvertibleP", "viewDidLoad"]
+- !private ["3Set4DeckV", "cards"]
 - !private ["s9DecodableP", "_getBuiltinLogicValue"]
 - !private ["s9DecodableP", "count"]
 - !private ["s9DecodableP", "index"]
@@ -123,7 +124,7 @@ depends-member:
 - !private ["s26RangeReplaceableCollectionP", "index"]
 - !private ["s8SequenceP", "count"]
 - !private ["s8SequenceP", "index"]
-- !private ["3Set0A4GameV", "cards"]
+- !private ["3Set0A4GameV", "deck"]
 - ["3Set0A4GameV", "init"]
 - ["So21UIAppearanceContainerP", "SetGame"]
 - ["So21UIAppearanceContainerP", ""]
@@ -228,6 +229,7 @@ depends-nominal:
 - !private "s29CustomPlaygroundQuickLookableP"
 - !private "s17CustomReflectableP"
 - "s23CustomStringConvertibleP"
+- !private "3Set4DeckV"
 - !private "s9DecodableP"
 - !private "s9EncodableP"
 - "s9EquatableP"

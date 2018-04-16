@@ -33,7 +33,6 @@ depends-member:
 - ["s9DecodableP", "init"]
 - !private ["s9EncodableP", "append"]
 - ["s9EncodableP", "init"]
-- !private ["s9EquatableP", "MatchVariant"]
 - !private ["s9EquatableP", "all"]
 - !private ["s9EquatableP", "append"]
 - ["s9EquatableP", "init"]

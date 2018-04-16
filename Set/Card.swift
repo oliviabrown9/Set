@@ -8,23 +8,16 @@
 
 import Foundation
 
-struct Card: Equatable {
+struct Card {
     
-    let cardColor: MatchVariant
-    let cardSymbol: MatchVariant
-    let cardNumber: MatchVariant
-    let cardShading: MatchVariant
+    let color: MatchVariant
+    let symbol: MatchVariant
+    let number: MatchVariant
+    let shading: MatchVariant
     
-//    init(color: MatchVariant, symbol: MatchVariant, number: MatchVariant, shading: MatchVariant) {
-//        cardColor = color
-//        cardSymbol = symbol
-//        cardNumber = number
-//        cardShading = shading
+//    static func ==(lhs: Card, rhs: Card) -> Bool {
+//        return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
 //    }
-    
-    static func ==(lhs: Card, rhs: Card) -> Bool {
-        return lhs.cardNumber == rhs.cardNumber && lhs.cardSymbol == rhs.cardSymbol && lhs.cardShading == rhs.cardShading && lhs.cardColor == rhs.cardColor
-    }
 
     enum MatchVariant {
         case A, B, C

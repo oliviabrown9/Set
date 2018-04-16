@@ -24,13 +24,12 @@ class ViewController: UIViewController {
         //        button.layer.borderColor = UIColor.blue.cgColor
         //    }
         if let cardNumber = cardButtons.index(of: sender) {
-            if cardNumber < game.cards.count {
+            if cardNumber < game.deck.cards.count {
 //                game.select(card: setGame.cardsInGame[cardIndex])
-        }
-        updateViewFromModel()
             }
-        
+            updateViewFromModel()
         }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
     }

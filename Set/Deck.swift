@@ -17,7 +17,7 @@ struct Deck {
             for symbol in Card.MatchVariant.all {
                 for number in Card.MatchVariant.all {
                     for shading in Card.MatchVariant.all {
-                        cards.append(Card(cardColor: color, cardSymbol: symbol, cardNumber: number, cardShading: shading))
+                        cards.append(Card(color: color, symbol: symbol, number: number, shading: shading))
                     }
                 }
             }
