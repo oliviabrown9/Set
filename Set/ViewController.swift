@@ -16,9 +16,13 @@ class ViewController: UIViewController {
     
     @IBAction func newGame(_ sender: UIButton) {
         game.newGame()
-        clearButtons()
         updateViewFromModel()
-//        dealThreeCardsButton.isEnabled = true
+        dealThreeCardsButton.isEnabled = true
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViewFromModel()
     }
     
     var game = SetGame()
@@ -53,9 +57,9 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
+        clearButtons()
         
         var cardIndex = 0
-        clearButtons()
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
             cardButton.backgroundColor = UIColor.white
