@@ -30,7 +30,7 @@ struct SetGame {
         }
     }
     
-    mutating func replace(cards: [Card]) {
+    private mutating func replace(cards: [Card]) {
         cards.forEach {
             if let cardIndex = currentCardsInGame.index(of: $0) {
                 currentCardsInGame.remove(at: cardIndex)
@@ -71,7 +71,6 @@ struct SetGame {
             currentCardsInGame.append(deck.drawCard())
         }
     }
-
     
     func setFound() -> Bool {
         if selectedCards.count == 3 {

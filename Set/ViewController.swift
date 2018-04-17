@@ -10,11 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet var cardButtons: [UIButton]!
-    @IBOutlet weak var dealThreeCardsButton: UIButton!
-    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet private var cardButtons: [UIButton]!
+    @IBOutlet private weak var dealThreeCardsButton: UIButton!
+    @IBOutlet private weak var scoreLabel: UILabel!
     
-    @IBAction func newGame(_ sender: UIButton) {
+    @IBAction private func newGame(_ sender: UIButton) {
         game.newGame()
         updateViewFromModel()
         dealThreeCardsButton.isEnabled = true
@@ -25,9 +25,9 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    var game = SetGame()
+    private var game = SetGame()
     
-    @IBAction func dealThreeCards(_ sender: UIButton) {
+    @IBAction private func dealThreeCards(_ sender: UIButton) {
         game.addThreeCards()
         updateViewFromModel()
         if game.currentCardsInGame.count >= 24 {
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func touchCard(_ sender: UIButton) {
+    @IBAction private func touchCard(_ sender: UIButton) {
         if let index = cardButtons.index(of: sender) {
             if index < game.currentCardsInGame.count {
                 game.selectCard(card: game.currentCardsInGame[index])
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func clearButtons() {
+    private func clearButtons() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
             button.removeOutline()

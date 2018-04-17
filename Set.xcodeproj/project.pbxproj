@@ -60,17 +60,25 @@
 		759FD9B120844DE40045444F /* Set */ = {
 			isa = PBXGroup;
 			children = (
-				759FD9B220844DE40045444F /* AppDelegate.swift */,
+				759FD9C82085CF5C0045444F /* Supporting Files */,
 				759FD9B420844DE40045444F /* ViewController.swift */,
 				759FD9B620844DE40045444F /* Main.storyboard */,
 				759FD9C4208454BE0045444F /* SetGame.swift */,
 				759FD9C6208454CB0045444F /* Card.swift */,
 				18D25AE62085566D0056A865 /* Deck.swift */,
-				759FD9B920844DE80045444F /* Assets.xcassets */,
-				759FD9BB20844DE80045444F /* LaunchScreen.storyboard */,
 				759FD9BE20844DE80045444F /* Info.plist */,
 			);
 			path = Set;
+			sourceTree = "<group>";
+		};
+		759FD9C82085CF5C0045444F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				759FD9B220844DE40045444F /* AppDelegate.swift */,
+				759FD9B920844DE80045444F /* Assets.xcassets */,
+				759FD9BB20844DE80045444F /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
