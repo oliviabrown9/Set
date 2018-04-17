@@ -14,18 +14,31 @@ struct SetGame {
     private(set) var currentCardsInGame = [Card]()
     private(set) var selectedCards = [Card]()
     private(set) var score = 0
+    private var firstMoveTime: Date?
+    private var foundSet: [Card]?
     
     init() {
         newGame()
     }
     
     mutating func addThreeCards() {
-        if setFound() {
+        if setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
         }
         else {
             for _ in 0..<3 {
                 currentCardsInGame.append(deck.drawCard())
+            }
+            if isSetAvailable() {
+                score -= 5
+            }
+        }
+    }
+    
+    mutating func cheat() {
+        if isSetAvailable() {
+            if let set = foundSet {
+                selectedCards = set
             }
         }
     }
@@ -42,12 +55,14 @@ struct SetGame {
     }
     
     mutating func selectCard(card: Card) {
-        if selectedCards.count == 3 && setFound() {
+        if selectedCards.count == 3 && setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
             selectedCards.removeAll()
-            score += 3
+            if let firstTime = firstMoveTime {
+                score += (3 * Int(1.0/(abs(firstTime.timeIntervalSinceNow))))
+            }
         }
-        else if selectedCards.count == 3 && !setFound() {
+        else if selectedCards.count == 3 && !setFound(withCards: selectedCards) {
             selectedCards.removeAll()
             score -= 5
         }
@@ -58,7 +73,28 @@ struct SetGame {
         }
         else {
             selectedCards.append(card)
+            if selectedCards.count == 1 {
+                firstMoveTime = Date()
+            }
         }
+    }
+    
+    mutating func isSetAvailable() -> Bool {
+            for firstCardIndex in currentCardsInGame.indices{
+                for secondCardIndex in (firstCardIndex+1)..<currentCardsInGame.count{
+                    for thirdCardIndex in (secondCardIndex+1)..<currentCardsInGame.count{
+                        if setFound(withCards: [currentCardsInGame[firstCardIndex], currentCardsInGame[secondCardIndex], currentCardsInGame[thirdCardIndex]]) == true {
+                            foundSet = [
+                                currentCardsInGame[firstCardIndex],
+                                currentCardsInGame[secondCardIndex],
+                                currentCardsInGame[thirdCardIndex]
+                            ]
+                            return true
+                            }
+                        }
+                    }
+                }
+        return false
     }
     
     mutating func newGame() {
@@ -72,7 +108,7 @@ struct SetGame {
         }
     }
     
-    func setFound() -> Bool {
+    func setFound(withCards cards: [Card]) -> Bool {
         if selectedCards.count == 3 {
             if selectedCards[0].color == selectedCards[1].color && selectedCards[0].color == selectedCards[2].color ||
                 selectedCards[0].color != selectedCards[1].color && selectedCards[0].color != selectedCards[2].color && selectedCards[1].color != selectedCards[2].color {

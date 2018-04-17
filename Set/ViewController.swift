@@ -29,6 +29,10 @@ class ViewController: UIViewController {
             dealThreeCardsButton.isEnabled = false
         }
     }
+    @IBAction func cheat(_ sender: UIButton) {
+        game.cheat()
+        updateViewFromModel()
+    }
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if let index = cardButtons.index(of: sender) {
@@ -112,7 +116,7 @@ class ViewController: UIViewController {
             cardIndex += 1
             
             if game.selectedCards.contains(card) {
-                if game.setFound() {
+                if game.setFound(withCards: game.selectedCards) {
                     cardButton.outline(inColor: UIColor.green)
                 }
                 else if game.selectedCards.count == 3 {

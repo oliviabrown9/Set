@@ -8,11 +8,11 @@
 
 import Foundation
 
-class Deck {
+struct Deck {
     
     private(set) var cards = [Card]()
     
-    func fillDeck() {
+    mutating func fillDeck() {
         cards.removeAll()
         for color in Card.Attribute.cases {
             for symbol in Card.Attribute.cases {
@@ -25,7 +25,7 @@ class Deck {
         }
     }
     
-    func drawCard() -> Card {
+    mutating func drawCard() -> Card {
         let cardDrawn = self.cards.remove(at: Int(arc4random_uniform(UInt32(self.cards.count))))
         return cardDrawn
     }
