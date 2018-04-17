@@ -34,46 +34,59 @@ class ViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    
     private func updateViewFromModel() {
         
-        var cardString: NSMutableAttributedString
+        var cardIndex = 0
         
         for card in game.currentCardsInGame {
+            let cardButton = cardButtons[cardIndex]
+
+            var cardTitle, symbol: String
             switch card.symbol {
             case .A:
-                print("card button should be symbol A")
+                symbol = "▲"
             case .B:
-                print("card button should be symbol B")
+                symbol = "●"
             case .C:
-                print("card button should be symbol C")
+                symbol = "■"
             }
             
             switch card.number {
             case .A:
-                print("card button should be number A")
+                cardTitle = symbol
             case .B:
-                print("card button should be number B")
+                cardTitle = "\(symbol) \(symbol)"
             case .C:
-                print("card button should be number C")
+                cardTitle = "\(symbol) \(symbol) \(symbol)"
             }
+            
+            var attributes: [NSAttributedStringKey: Any] = [:]
+            var color: UIColor
             
             switch card.color {
             case .A:
-                print("card button should be color A")
+                color = UIColor.yellow
             case .B:
-                print("card button should be color B")
+                color = UIColor.purple
             case .C:
-                print("card button should be color C")
+                color = UIColor.blue
             }
             
             switch card.shading {
             case .A:
-                print("card button should be shading A")
+                attributes[.foregroundColor] = color
+                attributes[.strokeWidth] = 3
             case .B:
-                print("card button should be shading B")
+                attributes[.foregroundColor] = color
+                attributes[.strokeWidth] = -1
             case .C:
-                print("card button should be shading C")
+                attributes[.foregroundColor] = color.withAlphaComponent(0.15)
+                attributes[.strokeWidth] = -1
             }
+
+            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: attributes), for: .normal)
+            cardIndex += 1
         }
     }
 }
