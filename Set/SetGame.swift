@@ -49,11 +49,12 @@ struct SetGame {
         }
         else if selectedCards.count == 3 && !setFound() {
             selectedCards.removeAll()
-            score -= 1
+            score -= 5
         }
         
         if let alreadySelectedCardIndex = selectedCards.index(of: card) {
             selectedCards.remove(at: alreadySelectedCardIndex)
+            score -= 1
         }
         else {
             selectedCards.append(card)

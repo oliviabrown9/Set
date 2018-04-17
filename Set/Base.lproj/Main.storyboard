@@ -199,7 +199,7 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
-                                <rect key="frame" x="287" y="59.333333333333343" width="68" height="30"/>
+                                <rect key="frame" x="287" y="59" width="68" height="30"/>
                                 <state key="normal" title="+ 3 Cards">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
@@ -208,13 +208,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYL-23-MFw">
-                                <rect key="frame" x="20" y="64" width="64" height="20.333333333333329"/>
+                                <rect key="frame" x="155" y="771" width="64" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znn-OC-ge7">
-                                <rect key="frame" x="280" y="762" width="75" height="30"/>
+                                <rect key="frame" x="20" y="59" width="75" height="30"/>
                                 <state key="normal" title="New Game">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 </state>
@@ -225,17 +225,16 @@
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="pYL-23-MFw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="6pq-Ck-Hxu"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="9sK-Nv-P58"/>
-                            <constraint firstItem="pYL-23-MFw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="C8r-EA-Wkd"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pYL-23-MFw" secondAttribute="trailing" constant="203" id="I4n-HN-K5i"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="20" id="Pvh-yI-IYP"/>
+                            <constraint firstItem="znn-OC-ge7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="DrH-gP-oH2"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="znn-OC-ge7" secondAttribute="centerY" id="Q5V-Cg-Xm6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KMf-U6-RNT" secondAttribute="bottom" constant="100" id="QPB-1W-AZU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KMf-U6-RNT" secondAttribute="trailing" constant="20" id="Uf2-ka-Erc"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="pYL-23-MFw" secondAttribute="centerY" id="Wtc-7i-X1x"/>
-                            <constraint firstAttribute="bottom" secondItem="znn-OC-ge7" secondAttribute="bottom" constant="20" id="aNt-JL-YSI"/>
+                            <constraint firstAttribute="bottom" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="20" id="VSO-Xq-Ppd"/>
+                            <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VuL-ep-IDR"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cOa-BZ-gkb"/>
-                            <constraint firstItem="znn-OC-ge7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="280" id="mIa-hy-Yl1"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
+                            <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p8V-Z4-ZbQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
