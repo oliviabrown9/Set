@@ -222,15 +222,6 @@
                                     <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qZD-ne-aWh">
-                                <rect key="frame" x="314" y="29" width="41" height="30"/>
-                                <state key="normal" title="Cheat">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
-                                </state>
-                                <connections>
-                                    <action selector="cheat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dba-ni-Vfw"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -239,14 +230,12 @@
                             <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="znn-OC-ge7" secondAttribute="centerY" id="Q5V-Cg-Xm6"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KMf-U6-RNT" secondAttribute="bottom" constant="100" id="QPB-1W-AZU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KMf-U6-RNT" secondAttribute="trailing" constant="20" id="Uf2-ka-Erc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qZD-ne-aWh" secondAttribute="trailing" constant="20" id="V4V-rk-Jx8"/>
                             <constraint firstAttribute="bottom" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="20" id="VSO-Xq-Ppd"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VuL-ep-IDR"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cOa-BZ-gkb"/>
                             <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p8V-Z4-ZbQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="top" secondItem="qZD-ne-aWh" secondAttribute="bottom" id="y8S-Wo-n5Q"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

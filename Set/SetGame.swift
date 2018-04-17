@@ -29,17 +29,6 @@ struct SetGame {
             for _ in 0..<3 {
                 currentCardsInGame.append(deck.drawCard())
             }
-            if isSetAvailable() {
-                score -= 5
-            }
-        }
-    }
-    
-    mutating func cheat() {
-        if isSetAvailable() {
-            if let set = foundSet {
-                selectedCards = set
-            }
         }
     }
     
@@ -77,24 +66,6 @@ struct SetGame {
                 firstMoveTime = Date()
             }
         }
-    }
-    
-    mutating func isSetAvailable() -> Bool {
-            for firstCardIndex in currentCardsInGame.indices{
-                for secondCardIndex in (firstCardIndex+1)..<currentCardsInGame.count{
-                    for thirdCardIndex in (secondCardIndex+1)..<currentCardsInGame.count{
-                        if setFound(withCards: [currentCardsInGame[firstCardIndex], currentCardsInGame[secondCardIndex], currentCardsInGame[thirdCardIndex]]) == true {
-                            foundSet = [
-                                currentCardsInGame[firstCardIndex],
-                                currentCardsInGame[secondCardIndex],
-                                currentCardsInGame[thirdCardIndex]
-                            ]
-                            return true
-                            }
-                        }
-                    }
-                }
-        return false
     }
     
     mutating func newGame() {

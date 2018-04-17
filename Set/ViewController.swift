@@ -29,10 +29,6 @@ class ViewController: UIViewController {
             dealThreeCardsButton.isEnabled = false
         }
     }
-    @IBAction func cheat(_ sender: UIButton) {
-        game.cheat()
-        updateViewFromModel()
-    }
     
     @IBAction private func touchCard(_ sender: UIButton) {
         if let index = cardButtons.index(of: sender) {
