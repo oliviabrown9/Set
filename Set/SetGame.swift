@@ -31,12 +31,14 @@ struct SetGame {
     
     mutating func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound() {
-            for card in selectedCards {
-                if let cardIndex = currentCardsInGame.index(of: card) {
-                    currentCardsInGame = currentCardsInGame.filter() { $0 != card }
+            selectedCards.forEach {
+                if let cardIndex = currentCardsInGame.index(of: $0) {
+                    currentCardsInGame.remove(at: cardIndex)
                     if !deck.cards.isEmpty {
                         currentCardsInGame.insert(deck.drawCard(), at: cardIndex)
                     }
+                    print("select card")
+                    print(currentCardsInGame.count)
                 }
             }
             selectedCards.removeAll()
@@ -54,6 +56,7 @@ struct SetGame {
             selectedCards.append(card)
         }
     }
+
     
     func setFound() -> Bool {
         if selectedCards.count == 3 {
@@ -62,13 +65,13 @@ struct SetGame {
 
                 if selectedCards[0].number == selectedCards[1].number && selectedCards[0].number == selectedCards[2].number ||
                     selectedCards[0].number != selectedCards[1].number && selectedCards[0].number != selectedCards[2].number && selectedCards[1].number != selectedCards[2].number {
-                    
+
                     if selectedCards[0].shading == selectedCards[1].shading && selectedCards[0].shading == selectedCards[2].shading ||
                         selectedCards[0].shading != selectedCards[1].shading && selectedCards[0].shading != selectedCards[2].shading && selectedCards[1].shading != selectedCards[2].shading {
-                        
+
                         if selectedCards[0].symbol == selectedCards[1].symbol && selectedCards[0].symbol == selectedCards[2].symbol ||
                             selectedCards[0].symbol != selectedCards[1].symbol && selectedCards[0].symbol != selectedCards[2].symbol && selectedCards[1].symbol != selectedCards[2].symbol {
-                            
+
                             return true
                         }
                     }

@@ -32,10 +32,19 @@ class ViewController: UIViewController {
         }
     }
     
+    func clearButtons() {
+        for buttonIndex in cardButtons.indices {
+            let button = cardButtons[buttonIndex]
+            button.removeOutline()
+            button.backgroundColor = UIColor.clear
+            button.setAttributedTitle(nil, for: UIControlState.normal)
+        }
+    }
+    
     private func updateViewFromModel() {
         
         var cardIndex = 0
-        
+        clearButtons()
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
             cardButton.backgroundColor = UIColor.white
@@ -113,6 +122,7 @@ extension UIButton {
     
     func removeOutline() {
         self.layer.borderWidth = 0
+        self.layer.borderColor = UIColor.clear.cgColor
     }
 }
 
