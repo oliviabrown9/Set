@@ -21,6 +21,7 @@ struct SetGame {
         newGame()
     }
     
+    // Replace 3 cards if found match, add three cards if not
     mutating func addThreeCards() {
         if setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
@@ -32,6 +33,7 @@ struct SetGame {
         }
     }
     
+    // Locates the passed cards and inserts a new random card at that index
     private mutating func replace(cards: [Card]) {
         cards.forEach {
             if let cardIndex = currentCardsInGame.index(of: $0) {
@@ -43,6 +45,7 @@ struct SetGame {
         }
     }
     
+    // Handles when a selection by checking if a set is found or if the card was already selected
     mutating func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
@@ -79,6 +82,7 @@ struct SetGame {
         }
     }
     
+    // Checks if a set was found based on Attribute enums of the card
     func setFound(withCards cards: [Card]) -> Bool {
         if selectedCards.count == 3 {
             if selectedCards[0].color == selectedCards[1].color && selectedCards[0].color == selectedCards[2].color ||

@@ -25,28 +25,25 @@ class ViewController: UIViewController {
     @IBAction private func dealThreeCards(_ sender: UIButton) {
         game.addThreeCards()
         updateViewFromModel()
-        if game.currentCardsInGame.count >= 24 {
-            dealThreeCardsButton.isEnabled = false
-        }
     }
     
+    // Selects a card in game if possible
     @IBAction private func touchCard(_ sender: UIButton) {
         if let index = cardButtons.index(of: sender) {
             if index < game.currentCardsInGame.count {
                 game.selectCard(card: game.currentCardsInGame[index])
             }
             updateViewFromModel()
-            if game.deck.cards.isEmpty {
-                dealThreeCardsButton.isEnabled = false
-            }
         }
     }
     
+    // Loads an initial game on start
     override func viewDidLoad() {
         super.viewDidLoad()
         updateViewFromModel()
     }
     
+    // Resets the design of the buttons
     private func clearButtons() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
@@ -56,11 +53,10 @@ class ViewController: UIViewController {
         }
     }
     
+    // Creates the UI of the game based on the Attribute enums for all the current cards in game
     private func updateViewFromModel() {
         clearButtons()
-        
         var cardIndex = 0
-        
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
             cardButton.backgroundColor = UIColor.white
@@ -111,6 +107,7 @@ class ViewController: UIViewController {
             cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
             cardIndex += 1
             
+            // Outlines the selected cards and changes color if a set is correct/incorrect
             if game.selectedCards.contains(card) {
                 if game.setFound(withCards: game.selectedCards) {
                     cardButton.outline(inColor: UIColor.green)
@@ -125,6 +122,11 @@ class ViewController: UIViewController {
             else {
                 cardButton.removeOutline()
             }
+        }
+        
+        // Update the ability to deal three more cards & update score label
+        if game.deck.cards.isEmpty || game.currentCardsInGame.count >= 24 {
+            dealThreeCardsButton.isEnabled = false
         }
         scoreLabel.text = "Score: \(game.score)"
     }

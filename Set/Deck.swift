@@ -12,6 +12,7 @@ struct Deck {
     
     private(set) var cards = [Card]()
     
+    // Generates a deck with all possible combinations of Attribute enums
     mutating func fillDeck() {
         cards.removeAll()
         for color in Card.Attribute.cases {
@@ -25,6 +26,7 @@ struct Deck {
         }
     }
     
+    // Removes and returns a random card from the deck
     mutating func drawCard() -> Card {
         let cardDrawn = self.cards.remove(at: Int(arc4random_uniform(UInt32(self.cards.count))))
         return cardDrawn
