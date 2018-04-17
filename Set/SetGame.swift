@@ -32,10 +32,12 @@ struct SetGame {
     mutating func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound() {
             for card in selectedCards {
-                currentCardsInGame = currentCardsInGame.filter() { $0 != card }
-            }
-            if !deck.cards.isEmpty {
-                currentCardsInGame.append(deck.drawCard())
+                if let cardIndex = currentCardsInGame.index(of: card) {
+                    currentCardsInGame = currentCardsInGame.filter() { $0 != card }
+                    if !deck.cards.isEmpty {
+                        currentCardsInGame.insert(deck.drawCard(), at: cardIndex)
+                    }
+                }
             }
             selectedCards.removeAll()
             score += 3
