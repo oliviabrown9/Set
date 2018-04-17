@@ -14,10 +14,10 @@ class Deck {
     
     func fillDeck() {
         cards.removeAll()
-        for color in Card.CardOption.cases {
-            for symbol in Card.CardOption.cases {
-                for number in Card.CardOption.cases {
-                    for shading in Card.CardOption.cases {
+        for color in Card.Attribute.cases {
+            for symbol in Card.Attribute.cases {
+                for number in Card.Attribute.cases {
+                    for shading in Card.Attribute.cases {
                         cards.append(Card(color: color, symbol: symbol, number: number, shading: shading))
                     }
                 }

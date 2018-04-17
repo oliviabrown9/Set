@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    private var game = SetGame()
+    
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var dealThreeCardsButton: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
@@ -19,13 +21,6 @@ class ViewController: UIViewController {
         updateViewFromModel()
         dealThreeCardsButton.isEnabled = true
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateViewFromModel()
-    }
-    
-    private var game = SetGame()
     
     @IBAction private func dealThreeCards(_ sender: UIButton) {
         game.addThreeCards()
@@ -47,6 +42,11 @@ class ViewController: UIViewController {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        updateViewFromModel()
+    }
+    
     private func clearButtons() {
         for buttonIndex in cardButtons.indices {
             let button = cardButtons[buttonIndex]
@@ -60,11 +60,15 @@ class ViewController: UIViewController {
         clearButtons()
         
         var cardIndex = 0
+        
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
             cardButton.backgroundColor = UIColor.white
 
             var cardTitle, symbol: String
+            var titleAttributes: [NSAttributedStringKey: Any] = [:]
+            var titleColor: UIColor
+            
             switch card.symbol {
             case .A:
                 symbol = "▲"
@@ -83,31 +87,28 @@ class ViewController: UIViewController {
                 cardTitle = "\(symbol) \(symbol) \(symbol)"
             }
             
-            var attributes: [NSAttributedStringKey: Any] = [:]
-            var color: UIColor
-            
             switch card.color {
             case .A:
-                color = UIColor.orange
+                titleColor = UIColor.orange
             case .B:
-                color = UIColor.purple
+                titleColor = UIColor.purple
             case .C:
-                color = UIColor.blue
+                titleColor = UIColor.blue
             }
             
             switch card.shading {
             case .A:
-                attributes[.foregroundColor] = color
-                attributes[.strokeWidth] = 3
+                titleAttributes[.foregroundColor] = titleColor
+                titleAttributes[.strokeWidth] = 3
             case .B:
-                attributes[.foregroundColor] = color
-                attributes[.strokeWidth] = -1
+                titleAttributes[.foregroundColor] = titleColor
+                titleAttributes[.strokeWidth] = -1
             case .C:
-                attributes[.foregroundColor] = color.withAlphaComponent(0.15)
-                attributes[.strokeWidth] = -1
+                titleAttributes[.foregroundColor] = titleColor.withAlphaComponent(0.15)
+                titleAttributes[.strokeWidth] = -1
             }
 
-            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: attributes), for: .normal)
+            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
             cardIndex += 1
             
             if game.selectedCards.contains(card) {

@@ -10,18 +10,18 @@ import Foundation
 
 struct Card: Equatable {
     
-    let color: CardOption
-    let symbol: CardOption
-    let number: CardOption
-    let shading: CardOption
+    let color: Attribute
+    let symbol: Attribute
+    let number: Attribute
+    let shading: Attribute
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
     }
 
-    enum CardOption {
+    enum Attribute {
         case A, B, C
-        static var cases: [CardOption] {
+        static var cases: [Attribute] {
             return [.A, .B, .C]
         }
     }
