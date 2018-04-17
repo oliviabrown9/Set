@@ -11,11 +11,16 @@ import UIKit
 class ViewController: UIViewController {
     
     @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet weak var dealThreeCardsButton: UIButton!
     
     var game = SetGame()
     
     @IBAction func dealThreeCards(_ sender: UIButton) {
-        
+        game.addThreeCards()
+        updateViewFromModel()
+        if game.currentCardsInGame.count >= 24 {
+            dealThreeCardsButton.isEnabled = false
+        }
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
@@ -59,7 +64,7 @@ class ViewController: UIViewController {
             
             switch card.color {
             case .A:
-                color = UIColor.yellow
+                color = UIColor.orange
             case .B:
                 color = UIColor.purple
             case .C:

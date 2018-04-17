@@ -23,6 +23,12 @@ struct SetGame {
         }
     }
     
+    mutating func addThreeCards() {
+        for _ in 0..<3 {
+            currentCardsInGame.append(deck.drawCard())
+        }
+    }
+    
     mutating func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound() {
             for card in selectedCards {
