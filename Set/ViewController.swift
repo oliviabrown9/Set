@@ -87,7 +87,15 @@ class ViewController: UIViewController {
             cardIndex += 1
             
             if game.selectedCards.contains(card) {
-                cardButton.outlineInBlack()
+                if game.setFound() {
+                    cardButton.outline(inColor: UIColor.green)
+                }
+                else if game.selectedCards.count == 3 {
+                    cardButton.outline(inColor: UIColor.red)
+                }
+                else {
+                    cardButton.outline(inColor: UIColor.black)
+                }
             }
             else {
                 cardButton.removeOutline()
@@ -98,9 +106,9 @@ class ViewController: UIViewController {
 
 extension UIButton {
     
-    func outlineInBlack() {
+    func outline(inColor color: UIColor) {
         self.layer.borderWidth = 5.0
-        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.borderColor = color.cgColor
     }
     
     func removeOutline() {

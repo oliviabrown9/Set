@@ -53,7 +53,7 @@ struct SetGame {
         }
     }
     
-    private func setFound() -> Bool {
+    func setFound() -> Bool {
         if selectedCards.count == 3 {
             if selectedCards[0].color == selectedCards[1].color && selectedCards[0].color == selectedCards[2].color ||
                 selectedCards[0].color != selectedCards[1].color && selectedCards[0].color != selectedCards[2].color && selectedCards[1].color != selectedCards[2].color {
