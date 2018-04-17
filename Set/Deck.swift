@@ -12,7 +12,8 @@ struct Deck {
     
     private(set) var cards = [Card]()
     
-    init() {
+    mutating func fillDeck() {
+        cards.removeAll()
         for color in Card.MatchVariant.all {
             for symbol in Card.MatchVariant.all {
                 for number in Card.MatchVariant.all {

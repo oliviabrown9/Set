@@ -12,6 +12,14 @@ class ViewController: UIViewController {
     
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var dealThreeCardsButton: UIButton!
+    @IBOutlet weak var scoreLabel: UILabel!
+    
+    @IBAction func newGame(_ sender: UIButton) {
+        game.newGame()
+        clearButtons()
+        updateViewFromModel()
+//        dealThreeCardsButton.isEnabled = true
+    }
     
     var game = SetGame()
     
@@ -29,6 +37,9 @@ class ViewController: UIViewController {
                 game.selectCard(card: game.currentCardsInGame[index])
             }
             updateViewFromModel()
+            if game.deck.cards.isEmpty {
+                dealThreeCardsButton.isEnabled = false
+            }
         }
     }
     
@@ -110,6 +121,7 @@ class ViewController: UIViewController {
                 cardButton.removeOutline()
             }
         }
+        scoreLabel.text = "Score: \(game.score)"
     }
 }
 

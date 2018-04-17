@@ -15,12 +15,8 @@ struct SetGame {
     private(set) var selectedCards = [Card]()
     private(set) var score = 0
     
-    let numberOfInitialCards = 12
-    
     init() {
-        for _ in 0..<numberOfInitialCards {
-            currentCardsInGame.append(deck.drawCard())
-        }
+        newGame()
     }
     
     mutating func addThreeCards() {
@@ -61,6 +57,17 @@ struct SetGame {
         }
         else {
             selectedCards.append(card)
+        }
+    }
+    
+    mutating func newGame() {
+        score = 0
+        currentCardsInGame.removeAll()
+        selectedCards.removeAll()
+        deck.fillDeck()
+        
+        for _ in 0..<12 {
+            currentCardsInGame.append(deck.drawCard())
         }
     }
 

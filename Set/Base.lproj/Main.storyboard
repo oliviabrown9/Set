@@ -199,27 +199,50 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
-                                <rect key="frame" x="287" y="56" width="68" height="30"/>
-                                <state key="normal" title="+ 3 Cards"/>
+                                <rect key="frame" x="287" y="59.333333333333343" width="68" height="30"/>
+                                <state key="normal" title="+ 3 Cards">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="dealThreeCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w2c-ne-8xp"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYL-23-MFw">
+                                <rect key="frame" x="20" y="64" width="64" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znn-OC-ge7">
+                                <rect key="frame" x="280" y="762" width="75" height="30"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="pYL-23-MFw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="6pq-Ck-Hxu"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="9sK-Nv-P58"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="287" id="AZN-uR-ST6"/>
+                            <constraint firstItem="pYL-23-MFw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="C8r-EA-Wkd"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pYL-23-MFw" secondAttribute="trailing" constant="203" id="I4n-HN-K5i"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="20" id="Pvh-yI-IYP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KMf-U6-RNT" secondAttribute="bottom" constant="100" id="QPB-1W-AZU"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KMf-U6-RNT" secondAttribute="trailing" constant="20" id="Uf2-ka-Erc"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="pYL-23-MFw" secondAttribute="centerY" id="Wtc-7i-X1x"/>
+                            <constraint firstAttribute="bottom" secondItem="znn-OC-ge7" secondAttribute="bottom" constant="20" id="aNt-JL-YSI"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cOa-BZ-gkb"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="12" id="qIu-rI-dbU"/>
+                            <constraint firstItem="znn-OC-ge7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="280" id="mIa-hy-Yl1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="dealThreeCardsButton" destination="An9-4A-dLk" id="Wo7-ss-Mdn"/>
+                        <outlet property="scoreLabel" destination="pYL-23-MFw" id="XRd-Tw-apb"/>
                         <outletCollection property="cardButtons" destination="ZWw-sY-8gf" collectionClass="NSMutableArray" id="a6f-cB-6gX"/>
                         <outletCollection property="cardButtons" destination="tdg-IT-0MF" collectionClass="NSMutableArray" id="ydG-HD-iaB"/>
                         <outletCollection property="cardButtons" destination="Xeg-st-Qyf" collectionClass="NSMutableArray" id="mwi-Jm-GGs"/>
