@@ -12,28 +12,20 @@ class ViewController: UIViewController {
     
     @IBOutlet var cardButtons: [UIButton]!
     
-    let game = SetGame()
+    var game = SetGame()
     
     @IBAction func dealThreeCards(_ sender: UIButton) {
         
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        //    if card.isSelected {
-        //        button.layer.borderWidth = 3.0
-        //        button.layer.borderColor = UIColor.blue.cgColor
-        //    }
-        if let cardNumber = cardButtons.index(of: sender) {
-            if cardNumber < game.deck.cards.count {
-//                game.select(card: setGame.cardsInGame[cardIndex])
+        if let index = cardButtons.index(of: sender) {
+            if index < game.currentCardsInGame.count {
+                game.selectCard(card: game.currentCardsInGame[index])
             }
             updateViewFromModel()
         }
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     
     private func updateViewFromModel() {
         
@@ -41,6 +33,7 @@ class ViewController: UIViewController {
         
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
+            cardButton.backgroundColor = UIColor.white
 
             var cardTitle, symbol: String
             switch card.symbol {
@@ -87,7 +80,26 @@ class ViewController: UIViewController {
 
             cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: attributes), for: .normal)
             cardIndex += 1
+            
+            if game.selectedCards.contains(card) {
+                cardButton.outlineInBlack()
+            }
+            else {
+                cardButton.removeOutline()
+            }
         }
+    }
+}
+
+extension UIButton {
+    
+    func outlineInBlack() {
+        self.layer.borderWidth = 5.0
+        self.layer.borderColor = UIColor.black.cgColor
+    }
+    
+    func removeOutline() {
+        self.layer.borderWidth = 0
     }
 }
 

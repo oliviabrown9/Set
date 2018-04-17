@@ -15,8 +15,10 @@ struct SetGame {
     private(set) var selectedCards = [Card]()
     private(set) var score = 0
     
+    let numberOfInitialCards = 12
+    
     init() {
-        for _ in 1..<12 {
+        for _ in 0..<numberOfInitialCards {
             currentCardsInGame.append(deck.drawCard())
         }
     }
