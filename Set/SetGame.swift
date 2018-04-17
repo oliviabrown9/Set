@@ -24,23 +24,30 @@ struct SetGame {
     }
     
     mutating func addThreeCards() {
-        for _ in 0..<3 {
-            currentCardsInGame.append(deck.drawCard())
+        if setFound() {
+            replace(cards: selectedCards)
+        }
+        else {
+            for _ in 0..<3 {
+                currentCardsInGame.append(deck.drawCard())
+            }
+        }
+    }
+    
+    mutating func replace(cards: [Card]) {
+        cards.forEach {
+            if let cardIndex = currentCardsInGame.index(of: $0) {
+                currentCardsInGame.remove(at: cardIndex)
+                if !deck.cards.isEmpty {
+                    currentCardsInGame.insert(deck.drawCard(), at: cardIndex)
+                }
+            }
         }
     }
     
     mutating func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound() {
-            selectedCards.forEach {
-                if let cardIndex = currentCardsInGame.index(of: $0) {
-                    currentCardsInGame.remove(at: cardIndex)
-                    if !deck.cards.isEmpty {
-                        currentCardsInGame.insert(deck.drawCard(), at: cardIndex)
-                    }
-                    print("select card")
-                    print(currentCardsInGame.count)
-                }
-            }
+            replace(cards: selectedCards)
             selectedCards.removeAll()
             score += 3
         }
