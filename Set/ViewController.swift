@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         for card in game.currentCardsInGame {
             let cardButton = cardButtons[cardIndex]
             cardButton.backgroundColor = UIColor.white
-
+            
             var cardTitle, symbol: String
             var titleAttributes: [NSAttributedStringKey: Any] = [:]
             var titleColor: UIColor
@@ -103,7 +103,7 @@ class ViewController: UIViewController {
                 titleAttributes[.foregroundColor] = titleColor.withAlphaComponent(0.15)
                 titleAttributes[.strokeWidth] = -1
             }
-
+            
             cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
             cardIndex += 1
             

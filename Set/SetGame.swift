@@ -51,7 +51,7 @@ struct SetGame {
             replace(cards: selectedCards)
             selectedCards.removeAll()
             if let firstTime = firstMoveTime {
-                score += (3 * Int(1.0/(abs(firstTime.timeIntervalSinceNow))))
+                score += (3 * Int(10.0/(abs(firstTime.timeIntervalSinceNow))))
             }
         }
         else if selectedCards.count == 3 && !setFound(withCards: selectedCards) {
@@ -87,16 +87,16 @@ struct SetGame {
         if selectedCards.count == 3 {
             if selectedCards[0].color == selectedCards[1].color && selectedCards[0].color == selectedCards[2].color ||
                 selectedCards[0].color != selectedCards[1].color && selectedCards[0].color != selectedCards[2].color && selectedCards[1].color != selectedCards[2].color {
-
+                
                 if selectedCards[0].number == selectedCards[1].number && selectedCards[0].number == selectedCards[2].number ||
                     selectedCards[0].number != selectedCards[1].number && selectedCards[0].number != selectedCards[2].number && selectedCards[1].number != selectedCards[2].number {
-
+                    
                     if selectedCards[0].shading == selectedCards[1].shading && selectedCards[0].shading == selectedCards[2].shading ||
                         selectedCards[0].shading != selectedCards[1].shading && selectedCards[0].shading != selectedCards[2].shading && selectedCards[1].shading != selectedCards[2].shading {
-
+                        
                         if selectedCards[0].symbol == selectedCards[1].symbol && selectedCards[0].symbol == selectedCards[2].symbol ||
                             selectedCards[0].symbol != selectedCards[1].symbol && selectedCards[0].symbol != selectedCards[2].symbol && selectedCards[1].symbol != selectedCards[2].symbol {
-
+                            
                             return true
                         }
                     }

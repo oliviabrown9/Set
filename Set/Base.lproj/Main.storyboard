@@ -233,7 +233,7 @@
                             <constraint firstAttribute="bottom" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="20" id="VSO-Xq-Ppd"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VuL-ep-IDR"/>
                             <constraint firstItem="KMf-U6-RNT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cOa-BZ-gkb"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p8V-Z4-ZbQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
                         </constraints>

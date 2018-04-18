@@ -18,7 +18,7 @@ struct Card: Equatable {
     static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
     }
-
+    
     enum Attribute {
         case A, B, C
         static var cases: [Attribute] {
