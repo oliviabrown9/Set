@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -28,7 +29,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYL-23-MFw">
-                                <rect key="frame" x="155" y="771" width="64" height="20.333333333333371"/>
+                                <rect key="frame" x="155.66666666666666" y="771.66666666666663" width="64" height="20.333333333333371"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -42,19 +43,28 @@
                                     <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
-                            <view opaque="NO" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa" customClass="CardView" customModule="Set" customModuleProvider="target">
-                                <rect key="frame" x="67" y="106" width="240" height="474"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa" customClass="CardView" customModule="Set" customModuleProvider="target">
+                                <rect key="frame" x="15" y="135" width="345" height="552"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Cxe-H4-lxa" secondAttribute="height" multiplier="5:8" id="ctJ-E3-aQY"/>
+                                    <constraint firstAttribute="width" priority="750" constant="800" id="on9-Ly-j4y"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="9N1-cd-Z4e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Cxe-H4-lxa" secondAttribute="bottom" constant="15" id="CQX-d3-5Un"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="DrH-gP-oH2"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Cxe-H4-lxa" secondAttribute="trailing" constant="15" id="E8d-ab-uut"/>
+                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="GV0-Gq-Rvx"/>
                             <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="znn-OC-ge7" secondAttribute="centerY" id="Q5V-Cg-Xm6"/>
                             <constraint firstAttribute="bottom" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="20" id="VSO-Xq-Ppd"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VuL-ep-IDR"/>
+                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="kAU-ax-51q"/>
                             <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
+                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="nTL-nP-bTv"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p8V-Z4-ZbQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
                         </constraints>
