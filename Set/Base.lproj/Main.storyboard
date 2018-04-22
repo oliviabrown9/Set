@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -19,185 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="KMf-U6-RNT">
-                                <rect key="frame" x="20" y="94" width="335" height="584"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="LLL-hf-qhc">
-                                        <rect key="frame" x="0.0" y="0.0" width="335" height="90.666666666666671"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZWw-sY-8gf">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z9z-M3-VcM"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tdg-IT-0MF">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ac0-pd-IRd"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xeg-st-Qyf">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="lmy-mG-XX9"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RiO-Yj-tJT">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wil-5b-Bno"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iay-PM-6Su">
-                                        <rect key="frame" x="0.0" y="98.666666666666657" width="335" height="90.666666666666657"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ThW-F1-dH7">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Lou-de-Fav"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jtU-29-9Bw">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SP9-9d-UMa"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gsa-dm-B53">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QDg-gT-h8n"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVy-fn-tmq">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="NZz-Ib-75S"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="MiQ-2a-d6b">
-                                        <rect key="frame" x="0.0" y="197.33333333333331" width="335" height="90.666666666666686"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pi7-Rj-jA2">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fO0-o6-Ot0"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a6n-Fq-Cqz">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HtO-CC-pTn"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyu-ez-qcv">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="EAp-2M-IFl"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lC0-Ao-J1P">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xPb-aU-sg5"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="iHu-jD-w9T">
-                                        <rect key="frame" x="0.0" y="296" width="335" height="90.666666666666686"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wBp-Fs-Rlq">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e89-r5-1O9"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sJ6-bl-Taf">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="rja-zX-NCH"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="E1W-Zx-Cvb">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WF6-vN-yZv"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0ns-TH-zWB">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Iqa-iy-4va"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="sru-xc-Hxr">
-                                        <rect key="frame" x="0.0" y="394.66666666666669" width="335" height="90.666666666666686"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="npM-GZ-2nx">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="sFq-qG-IlU"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Tb-gd-Xth">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="C4H-nU-Onu"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RKY-Gn-iwP">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Sfi-H5-l3f"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wuu-E5-d3l">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="OEo-54-oyB"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="DZw-kV-iXq">
-                                        <rect key="frame" x="0.0" y="493.33333333333343" width="335" height="90.666666666666686"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="d37-PE-cN3">
-                                                <rect key="frame" x="0.0" y="0.0" width="77.666666666666671" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="iJ1-We-7np"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XkR-j2-KI6">
-                                                <rect key="frame" x="85.666666666666671" y="0.0" width="78.000000000000014" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nnh-lL-wGJ"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UJR-oh-FXa">
-                                                <rect key="frame" x="171.66666666666666" y="0.0" width="77.666666666666657" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0iT-XM-F5k"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyb-cW-Wt8">
-                                                <rect key="frame" x="257.33333333333331" y="0.0" width="77.666666666666686" height="90.666666666666671"/>
-                                                <connections>
-                                                    <action selector="touchCard:" destination="BYZ-38-t0r" eventType="touchUpInside" id="cd5-Zx-t0S"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
                                 <rect key="frame" x="287" y="59" width="68" height="30"/>
                                 <state key="normal" title="+ 3 Cards">
@@ -222,17 +42,18 @@
                                     <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
+                            <view opaque="NO" contentMode="redraw" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa" customClass="CardView" customModule="Set" customModuleProvider="target">
+                                <rect key="frame" x="67" y="106" width="240" height="474"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="KMf-U6-RNT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="50" id="9sK-Nv-P58"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="15" id="DrH-gP-oH2"/>
                             <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="znn-OC-ge7" secondAttribute="centerY" id="Q5V-Cg-Xm6"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="KMf-U6-RNT" secondAttribute="bottom" constant="100" id="QPB-1W-AZU"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="KMf-U6-RNT" secondAttribute="trailing" constant="20" id="Uf2-ka-Erc"/>
                             <constraint firstAttribute="bottom" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="20" id="VSO-Xq-Ppd"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VuL-ep-IDR"/>
-                            <constraint firstItem="KMf-U6-RNT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cOa-BZ-gkb"/>
                             <constraint firstItem="An9-4A-dLk" firstAttribute="leading" relation="lessThanOrEqual" secondItem="znn-OC-ge7" secondAttribute="trailing" constant="192" id="kdg-j0-xe0"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="p8V-Z4-ZbQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="qt8-65-N5B"/>
@@ -242,35 +63,11 @@
                     <connections>
                         <outlet property="dealThreeCardsButton" destination="An9-4A-dLk" id="Wo7-ss-Mdn"/>
                         <outlet property="scoreLabel" destination="pYL-23-MFw" id="XRd-Tw-apb"/>
-                        <outletCollection property="cardButtons" destination="ZWw-sY-8gf" collectionClass="NSMutableArray" id="a6f-cB-6gX"/>
-                        <outletCollection property="cardButtons" destination="tdg-IT-0MF" collectionClass="NSMutableArray" id="ydG-HD-iaB"/>
-                        <outletCollection property="cardButtons" destination="Xeg-st-Qyf" collectionClass="NSMutableArray" id="mwi-Jm-GGs"/>
-                        <outletCollection property="cardButtons" destination="RiO-Yj-tJT" collectionClass="NSMutableArray" id="vrU-30-mcl"/>
-                        <outletCollection property="cardButtons" destination="ThW-F1-dH7" collectionClass="NSMutableArray" id="LWt-LX-Irp"/>
-                        <outletCollection property="cardButtons" destination="jtU-29-9Bw" collectionClass="NSMutableArray" id="75L-EL-Z2y"/>
-                        <outletCollection property="cardButtons" destination="gsa-dm-B53" collectionClass="NSMutableArray" id="URL-9a-GhT"/>
-                        <outletCollection property="cardButtons" destination="uVy-fn-tmq" collectionClass="NSMutableArray" id="Y6Q-3J-xV6"/>
-                        <outletCollection property="cardButtons" destination="Pi7-Rj-jA2" collectionClass="NSMutableArray" id="LJg-0d-kuw"/>
-                        <outletCollection property="cardButtons" destination="a6n-Fq-Cqz" collectionClass="NSMutableArray" id="vTk-Vb-fKW"/>
-                        <outletCollection property="cardButtons" destination="Dyu-ez-qcv" collectionClass="NSMutableArray" id="8x6-MI-YSV"/>
-                        <outletCollection property="cardButtons" destination="lC0-Ao-J1P" collectionClass="NSMutableArray" id="ilq-D6-FxM"/>
-                        <outletCollection property="cardButtons" destination="wBp-Fs-Rlq" collectionClass="NSMutableArray" id="ZO2-uY-pkN"/>
-                        <outletCollection property="cardButtons" destination="sJ6-bl-Taf" collectionClass="NSMutableArray" id="DW8-Ll-Hvd"/>
-                        <outletCollection property="cardButtons" destination="E1W-Zx-Cvb" collectionClass="NSMutableArray" id="jA1-p1-22N"/>
-                        <outletCollection property="cardButtons" destination="0ns-TH-zWB" collectionClass="NSMutableArray" id="y3h-Y8-La0"/>
-                        <outletCollection property="cardButtons" destination="npM-GZ-2nx" collectionClass="NSMutableArray" id="lsZ-mh-vH5"/>
-                        <outletCollection property="cardButtons" destination="9Tb-gd-Xth" collectionClass="NSMutableArray" id="9UW-bx-k0t"/>
-                        <outletCollection property="cardButtons" destination="RKY-Gn-iwP" collectionClass="NSMutableArray" id="O4s-gP-72e"/>
-                        <outletCollection property="cardButtons" destination="wuu-E5-d3l" collectionClass="NSMutableArray" id="RQ8-HR-ju7"/>
-                        <outletCollection property="cardButtons" destination="d37-PE-cN3" collectionClass="NSMutableArray" id="R8D-7S-pT4"/>
-                        <outletCollection property="cardButtons" destination="XkR-j2-KI6" collectionClass="NSMutableArray" id="0oZ-r4-OJh"/>
-                        <outletCollection property="cardButtons" destination="UJR-oh-FXa" collectionClass="NSMutableArray" id="wlF-rq-4Hf"/>
-                        <outletCollection property="cardButtons" destination="Dyb-cW-Wt8" collectionClass="NSMutableArray" id="wq5-zR-sta"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="136.80000000000001" y="133.00492610837438"/>
         </scene>
     </scenes>
 </document>
