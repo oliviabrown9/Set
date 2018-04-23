@@ -32,16 +32,6 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    // Selects a card in game if possible
-//    @IBAction private func touchCard(_ sender: UIButton) {
-//        if let index = cardButtons.index(of: sender) {
-//            if index < game.currentCardsInGame.count {
-//                game.selectCard(card: game.currentCardsInGame[index])
-//            }
-//            updateViewFromModel()
-//        }
-//    }
-    
     // Loads an initial game on start
     override func viewDidLoad() {
         super.viewDidLoad()

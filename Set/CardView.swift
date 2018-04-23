@@ -10,6 +10,8 @@ import UIKit
 
 class CardView: UIView {
     
+    var game: SetGame?
+    
     let gapHeight: CGFloat = 0.11
     let cornerRadiusToBoundsHeight: CGFloat = 0.06
     let symbolCornerRadiusToBoundsHeight: CGFloat = 0.4
@@ -30,8 +32,22 @@ class CardView: UIView {
     
     var associatedCard: Card? {
         didSet {
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            self.addGestureRecognizer(tap)
             setNeedsLayout()
             setNeedsDisplay()
+        }
+    }
+    
+    @objc func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            guard let cardView = sender.view as? CardView else {
+                return
+            }
+            if let selectedCard = cardView.associatedCard {
+                game?.selectCard(card: selectedCard)
+                // some kind of updateViewFromModel?
+            }
         }
     }
     
