@@ -28,7 +28,12 @@ class CardView: UIView {
         return bounds.size.width * cardFrameInsetToBound
     }
     
-    var associatedCard: Card?
+    var associatedCard: Card? {
+        didSet {
+            setNeedsLayout()
+            setNeedsDisplay()
+        }
+    }
     
     override func draw(_ rect: CGRect) {
         isOpaque = false

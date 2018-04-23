@@ -11,14 +11,13 @@ import UIKit
 class ViewController: UIViewController {
     
     private(set) var game = SetGame()
-    @IBOutlet weak var cardsView: UIView! {
+    @IBOutlet weak var cardsView: CardsInGameView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(game.shuffleCardsInGame))
             cardsView.addGestureRecognizer(rotateGesture)
         }
     }
     
-    @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var dealThreeCardsButton: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
     
@@ -34,14 +33,14 @@ class ViewController: UIViewController {
     }
     
     // Selects a card in game if possible
-    @IBAction private func touchCard(_ sender: UIButton) {
-        if let index = cardButtons.index(of: sender) {
-            if index < game.currentCardsInGame.count {
-                game.selectCard(card: game.currentCardsInGame[index])
-            }
-            updateViewFromModel()
-        }
-    }
+//    @IBAction private func touchCard(_ sender: UIButton) {
+//        if let index = cardButtons.index(of: sender) {
+//            if index < game.currentCardsInGame.count {
+//                game.selectCard(card: game.currentCardsInGame[index])
+//            }
+//            updateViewFromModel()
+//        }
+//    }
     
     // Loads an initial game on start
     override func viewDidLoad() {
@@ -49,46 +48,36 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    // Resets the design of the buttons
-    private func clearButtons() {
-        for buttonIndex in cardButtons.indices {
-            let button = cardButtons[buttonIndex]
-            button.removeOutline()
-            button.backgroundColor = UIColor.clear
-            button.setAttributedTitle(nil, for: UIControlState.normal)
-        }
-    }
-    
     // Creates the UI of the game based on the Attribute enums for all the current cards in game
     private func updateViewFromModel() {
-        clearButtons()
-        var cardIndex = 0
-        for card in game.currentCardsInGame {
-            let cardView = CardView()
-            
-            var cardTitle, symbol: String
-            var titleAttributes: [NSAttributedStringKey: Any] = [:]
-            var titleColor: UIColor
-//
-//            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
-//            cardIndex += 1
+        
+        cardsView.game = game
+        
+        
+//        for card in game.currentCardsInGame {
+//            let cardView = CardView()
+//            cardView.associatedCard = card
 //
 //            // Outlines the selected cards and changes color if a set is correct/incorrect
 //            if game.selectedCards.contains(card) {
 //                if game.setFound(withCards: game.selectedCards) {
-//                    cardButton.outline(inColor: UIColor.green)
+//                    cardView.layer.borderColor = UIColor.green.cgColor
+//                    cardView.layer.borderWidth = 3.0
 //                }
 //                else if game.selectedCards.count == 3 {
-//                    cardButton.outline(inColor: UIColor.red)
+//                    cardView.layer.borderColor = UIColor.red.cgColor
+//                    cardView.layer.borderWidth = 3.0
 //                }
 //                else {
-//                    cardButton.outline(inColor: UIColor.black)
+//                    cardView.layer.borderColor = UIColor.black.cgColor
+//                    cardView.layer.borderWidth = 3.0
 //                }
 //            }
 //            else {
-//                cardButton.removeOutline()
+//                cardView.layer.borderColor = UIColor.clear.cgColor
+//                cardView.layer.borderWidth = 0.0
 //            }
-        }
+//        }
         
         // Update the ability to deal three more cards & update score label
         if game.deck.cards.isEmpty {
