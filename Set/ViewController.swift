@@ -10,7 +10,13 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private var game = SetGame()
+    private(set) var game = SetGame()
+    @IBOutlet weak var cardsView: UIView! {
+        didSet {
+            let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(game.shuffleCardsInGame))
+            cardsView.addGestureRecognizer(rotateGesture)
+        }
+    }
     
     @IBOutlet private var cardButtons: [UIButton]!
     @IBOutlet private weak var dealThreeCardsButton: UIButton!

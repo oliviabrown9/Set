@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SetGame {
+class SetGame {
     
     private(set) var deck = Deck()
     private(set) var currentCardsInGame = [Card]()
@@ -22,7 +22,7 @@ struct SetGame {
     }
     
     // Replace 3 cards if found match, add three cards if not
-    mutating func addThreeCards() {
+    func addThreeCards() {
         if setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
         }
@@ -34,7 +34,7 @@ struct SetGame {
     }
     
     // Locates the passed cards and inserts a new random card at that index
-    private mutating func replace(cards: [Card]) {
+    private func replace(cards: [Card]) {
         cards.forEach {
             if let cardIndex = currentCardsInGame.index(of: $0) {
                 currentCardsInGame.remove(at: cardIndex)
@@ -46,7 +46,7 @@ struct SetGame {
     }
     
     // Handles when a selection by checking if a set is found or if the card was already selected
-    mutating func selectCard(card: Card) {
+    func selectCard(card: Card) {
         if selectedCards.count == 3 && setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
             selectedCards.removeAll()
@@ -71,7 +71,7 @@ struct SetGame {
         }
     }
     
-    mutating func newGame() {
+    func newGame() {
         score = 0
         currentCardsInGame.removeAll()
         selectedCards.removeAll()
@@ -104,6 +104,15 @@ struct SetGame {
             }
         }
         return false
+    }
+    
+    @objc func shuffleCardsInGame() {
+        var shuffledCards = [Card]()
+        while !currentCardsInGame.isEmpty {
+            let randomCard = currentCardsInGame.remove(at: Int(arc4random_uniform(UInt32(currentCardsInGame.count))))
+            shuffledCards.append(randomCard)
+        }
+        currentCardsInGame = shuffledCards
     }
 }
 
