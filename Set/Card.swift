@@ -19,7 +19,7 @@ struct Card: Equatable {
         return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
     }
     
-    enum Attribute {
+    enum Attribute: Int {
         case A, B, C
         static var cases: [Attribute] {
             return [.A, .B, .C]

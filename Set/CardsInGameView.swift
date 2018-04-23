@@ -33,4 +33,9 @@ class CardsInGameView: UIView {
             }
         }
     }
+    
+//    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+//        setNeedsDisplay()
+//        setNeedsLayout()
+//    }
 }

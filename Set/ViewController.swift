@@ -64,70 +64,30 @@ class ViewController: UIViewController {
         clearButtons()
         var cardIndex = 0
         for card in game.currentCardsInGame {
-            let cardButton = cardButtons[cardIndex]
-            cardButton.backgroundColor = UIColor.white
+            let cardView = CardView()
             
             var cardTitle, symbol: String
             var titleAttributes: [NSAttributedStringKey: Any] = [:]
             var titleColor: UIColor
-            
-            switch card.symbol {
-            case .A:
-                symbol = "▲"
-            case .B:
-                symbol = "●"
-            case .C:
-                symbol = "■"
-            }
-            
-            switch card.number {
-            case .A:
-                cardTitle = symbol
-            case .B:
-                cardTitle = "\(symbol) \(symbol)"
-            case .C:
-                cardTitle = "\(symbol) \(symbol) \(symbol)"
-            }
-            
-            switch card.color {
-            case .A:
-                titleColor = UIColor.orange
-            case .B:
-                titleColor = UIColor.purple
-            case .C:
-                titleColor = UIColor.blue
-            }
-            
-            switch card.shading {
-            case .A:
-                titleAttributes[.foregroundColor] = titleColor
-                titleAttributes[.strokeWidth] = 3
-            case .B:
-                titleAttributes[.foregroundColor] = titleColor
-                titleAttributes[.strokeWidth] = -1
-            case .C:
-                titleAttributes[.foregroundColor] = titleColor.withAlphaComponent(0.15)
-                titleAttributes[.strokeWidth] = -1
-            }
-            
-            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
-            cardIndex += 1
-            
-            // Outlines the selected cards and changes color if a set is correct/incorrect
-            if game.selectedCards.contains(card) {
-                if game.setFound(withCards: game.selectedCards) {
-                    cardButton.outline(inColor: UIColor.green)
-                }
-                else if game.selectedCards.count == 3 {
-                    cardButton.outline(inColor: UIColor.red)
-                }
-                else {
-                    cardButton.outline(inColor: UIColor.black)
-                }
-            }
-            else {
-                cardButton.removeOutline()
-            }
+//
+//            cardButton.setAttributedTitle(NSAttributedString(string: cardTitle, attributes: titleAttributes), for: .normal)
+//            cardIndex += 1
+//
+//            // Outlines the selected cards and changes color if a set is correct/incorrect
+//            if game.selectedCards.contains(card) {
+//                if game.setFound(withCards: game.selectedCards) {
+//                    cardButton.outline(inColor: UIColor.green)
+//                }
+//                else if game.selectedCards.count == 3 {
+//                    cardButton.outline(inColor: UIColor.red)
+//                }
+//                else {
+//                    cardButton.outline(inColor: UIColor.black)
+//                }
+//            }
+//            else {
+//                cardButton.removeOutline()
+//            }
         }
         
         // Update the ability to deal three more cards & update score label
