@@ -38,7 +38,6 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    // Creates the UI of the game based on the Attribute enums for all the current cards in game
     private func updateViewFromModel() {
         
         cardsView.game = game
@@ -48,27 +47,7 @@ class ViewController: UIViewController {
 //            let cardView = CardView()
 //            cardView.associatedCard = card
 //
-//            // Outlines the selected cards and changes color if a set is correct/incorrect
-//            if game.selectedCards.contains(card) {
-//                if game.setFound(withCards: game.selectedCards) {
-//                    cardView.layer.borderColor = UIColor.green.cgColor
-//                    cardView.layer.borderWidth = 3.0
-//                }
-//                else if game.selectedCards.count == 3 {
-//                    cardView.layer.borderColor = UIColor.red.cgColor
-//                    cardView.layer.borderWidth = 3.0
-//                }
-//                else {
-//                    cardView.layer.borderColor = UIColor.black.cgColor
-//                    cardView.layer.borderWidth = 3.0
-//                }
-//            }
-//            else {
-//                cardView.layer.borderColor = UIColor.clear.cgColor
-//                cardView.layer.borderWidth = 0.0
-//            }
-//        }
-        
+    
         // Update the ability to deal three more cards & update score label
         if game.deck.cards.isEmpty {
             dealThreeCardsButton.isEnabled = false

@@ -29,6 +29,7 @@ class CardsInGameView: UIView {
         for index in 0..<cardGrid.cellCount {
             let cardView = CardView()
             cardView.associatedCard = setGame.currentCardsInGame[index]
+            cardView.game = game
             addSubview(cardView)
             configureCardView(cardView, cardGrid[index]!)
             cardView.frame.origin = cardGrid[index]!.origin

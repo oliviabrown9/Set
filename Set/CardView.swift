@@ -46,7 +46,34 @@ class CardView: UIView {
             }
             if let selectedCard = cardView.associatedCard {
                 game?.selectCard(card: selectedCard)
-                // some kind of updateViewFromModel?
+                
+                for eachCard in (superview?.subviews)! {
+                    if let eachCardView = eachCard as? CardView {
+                        eachCardView.setNeedsLayout()
+                        eachCardView.setNeedsDisplay()
+                    }
+                }
+            
+            
+            // Outlines the selected cards and changes color if a set is correct/incorrect
+            if game!.selectedCards.contains(selectedCard) {
+                if game!.setFound(withCards: game!.selectedCards) {
+                    cardView.layer.borderColor = UIColor.green.cgColor
+                    cardView.layer.borderWidth = 3.0
+                }
+                else if game!.selectedCards.count == 3 {
+                    cardView.layer.borderColor = UIColor.red.cgColor
+                    cardView.layer.borderWidth = 3.0
+                }
+                else {
+                    cardView.layer.borderColor = UIColor.black.cgColor
+                    cardView.layer.borderWidth = 3.0
+                }
+            }
+            else {
+                cardView.layer.borderColor = UIColor.clear.cgColor
+                cardView.layer.borderWidth = 0.0
+            }
             }
         }
     }
