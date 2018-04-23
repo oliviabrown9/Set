@@ -125,7 +125,7 @@ class ViewController: UIViewController {
         }
         
         // Update the ability to deal three more cards & update score label
-        if game.deck.cards.isEmpty || game.currentCardsInGame.count >= 24 {
+        if game.deck.cards.isEmpty {
             dealThreeCardsButton.isEnabled = false
         }
         scoreLabel.text = "Score: \(game.score)"

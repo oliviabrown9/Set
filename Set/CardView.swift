@@ -14,6 +14,7 @@ class CardView: UIView {
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: 15.0)
         roundedRect.addClip()
         UIColor.white.setFill()
+        roundedRect.fill()
     }
 
 }
