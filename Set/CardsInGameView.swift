@@ -9,43 +9,17 @@
 import UIKit
 
 class CardsInGameView: UIView {
-    
-    let cardAspectRatio: CGFloat = 5/8
-    var game: SetGame? {
-        didSet {
-            setNeedsLayout()
-            setNeedsDisplay()
-        }
-    }
-    
-    lazy private var cardGrid = Grid(layout: Grid.Layout.aspectRatio(cardAspectRatio))
     let cardEdgeWidthToCellFrameSize: CGFloat = 0.02
+//    configureCardView(cardView, cardGrid[index]!)
+//    override func layoutSubviews() {
     
-    override func layoutSubviews() {
-        guard let setGame = game else {
-            return
-        }
+//        self.subviews.forEach({ $0.removeFromSuperview() })
         
-        cardGrid.cellCount = setGame.currentCardsInGame.count
-        cardGrid.frame = bounds
-        
-        self.subviews.forEach({ $0.removeFromSuperview() })
-        
-        for index in 0..<cardGrid.cellCount {
-            let cardView = CardView()
-            cardView.associatedCard = setGame.currentCardsInGame[index]
-            cardView.game = game
-            addSubview(cardView)
-            configureCardView(cardView, cardGrid[index]!)
-            cardView.frame.origin = cardGrid[index]!.origin
-        }
-    }
+//        for index in 0..<cardGrid.cellCount {
+//            addSubview(cardView)
+//            configureCardView(cardView, cardGrid[index]!)
+//            cardView.frame.origin = cardGrid[index]!.origin
+//        }
+//    }
     
-    private func configureCardView(_ view: UIView, _ frame: CGRect) {
-        let delta = frame.width * cardEdgeWidthToCellFrameSize
-        let insetFrame = frame.insetBy(dx: delta, dy: delta)
-        view.frame.size = CGSize.init(width: insetFrame.width, height: insetFrame.height)
-        view.frame.origin = insetFrame.origin
-        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-    }
 }

@@ -9,10 +9,7 @@
 import UIKit
 
 class CardView: UIView {
-    
-    var game: SetGame?
-    
-    let gapHeight: CGFloat = 0.11
+
     let cornerRadiusToBoundsHeight: CGFloat = 0.06
     let symbolCornerRadiusToBoundsHeight: CGFloat = 0.4
     let cardFrameInsetToBound: CGFloat = 0.07
@@ -21,7 +18,6 @@ class CardView: UIView {
     let symbolGapHeightToSymbolFrameHeight: CGFloat = 0.11
     let twoSymbolOffsetToSymbolFrameHeight: CGFloat = 0.56
     let strokeWidthToSymbolFrameHeight: CGFloat = 0.12
-    let stripeGapToSymbolFrameWidth: CGFloat = 0.17
     
     private var cornerRadius: CGFloat  {
         return bounds.size.height * cornerRadiusToBoundsHeight
@@ -30,32 +26,28 @@ class CardView: UIView {
         return bounds.size.width * cardFrameInsetToBound
     }
     
-    var associatedCard: Card? {
+    enum CardViewAttribute: Int {
+        case A, B, C
+    }
+    
+    var color: CardViewAttribute = .A {
         didSet {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            self.addGestureRecognizer(tap)
-            setNeedsLayout()
             setNeedsDisplay()
         }
     }
-    
-    @objc func handleTap(sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            guard let cardView = sender.view as? CardView else {
-                return
-            }
-            if let selectedCard = cardView.associatedCard {
-                game?.selectCard(card: selectedCard)
-                
-                for eachCard in (superview?.subviews)! {
-                    if let eachCardView = eachCard as? CardView {
-                        eachCardView.setNeedsLayout()
-                        eachCardView.setNeedsDisplay()
-                        superview?.setNeedsLayout()
-                        superview?.setNeedsDisplay()
-                    }
-                }
-            }
+    var symbol: CardViewAttribute = .A {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    var number: CardViewAttribute = .A {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    var shading: CardViewAttribute = .A {
+        didSet {
+            setNeedsDisplay()
         }
     }
     
@@ -68,42 +60,16 @@ class CardView: UIView {
         roundedRect.addClip()
         UIColor.white.setStroke()
         roundedRect.fill()
-        
         let insetFrame = bounds.insetBy(dx: symbolGapToCardEdge, dy: symbolGapToCardEdge)
         let singleSymbolFrame = insetFrame.insetBy(dx: 0, dy: insetFrame.height/2.9)
-        
-        if let card = associatedCard {
-            drawCardContent(forAssociatedCard: card, inRect: singleSymbolFrame)
-            
-            // Outlines the selected cards and changes color if a set is correct/incorrect
-            if game!.selectedCards.contains(card) {
-                if game!.setFound(withCards: game!.selectedCards) {
-                    self.layer.borderColor = UIColor.green.cgColor
-                    self.layer.borderWidth = 5.0
-                }
-                else if game!.selectedCards.count == 3 {
-                    self.layer.borderColor = UIColor.red.cgColor
-                    self.layer.borderWidth = 5.0
-                }
-                else {
-                    self.layer.borderColor = UIColor.black.cgColor
-                    self.layer.borderWidth = 5.0
-                }
-            }
-            else {
-                self.layer.borderColor = UIColor.clear.cgColor
-                self.layer.borderWidth = 0.0
-            }
-        }
-        
-        
+        drawCardContent(inRect: singleSymbolFrame)
     }
     
-    func drawCardContent(forAssociatedCard card: Card, inRect rect: CGRect) {
+    func drawCardContent(inRect rect: CGRect) {
         var symbolFrame = rect
         let symbolGap = symbolFrame.height * symbolGapHeightToSymbolFrameHeight
         
-        switch card.number {
+        switch number {
         case .A:
             break
         case .B:
@@ -112,19 +78,19 @@ class CardView: UIView {
             symbolFrame = symbolFrame.offsetBy(dx: 0, dy: -symbolFrame.height-symbolGap)
         }
         
-        var color: UIColor
-        switch card.color {
+        var cardColor: UIColor
+        switch color {
         case .A:
-            color = UIColor.blue
+            cardColor = UIColor.blue
         case .B:
-            color = UIColor.purple
+            cardColor = UIColor.purple
         case .C:
-            color = UIColor.green
+            cardColor = UIColor.green
         }
         
-        for _ in 0...card.number.rawValue {
+        for _ in 0...number.rawValue {
             var symbolPath: UIBezierPath
-            switch card.symbol {
+            switch symbol {
             case .A:
                 symbolPath = makeDiamondPath(inFrame: symbolFrame)
             case .B:
@@ -133,17 +99,17 @@ class CardView: UIView {
                 symbolPath = makeTrianglePath(inFrame: symbolFrame)
             }
 
-            switch card.shading {
+            switch shading {
             case .A:
-                color.setFill()
+                cardColor.setFill()
                 symbolPath.fill()
             case .B:
                 symbolPath.lineWidth = frame.width * 0.05
-                color.setStroke()
+                cardColor.setStroke()
                 symbolPath.stroke()
             case .C:
                 symbolPath.lineWidth = frame.width * 0.05
-                color.setStroke()
+                cardColor.setStroke()
                 symbolPath.stroke()
                 let context = UIGraphicsGetCurrentContext()
                 context?.saveGState()
