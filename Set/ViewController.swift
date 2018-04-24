@@ -11,6 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     let cardAspectRatio: CGFloat = 5/8
+    let cardGapRatio: CGFloat = 0.02
     
     private(set) var game = SetGame()
     @IBOutlet weak var cardsView: UIView! {
@@ -69,11 +70,9 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    let cardEdgeWidthToCellFrameSize: CGFloat = 0.02
-    
     private func addGapBetweenCards(_ view: UIView, _ frame: CGRect) {
-        let delta = frame.width * cardEdgeWidthToCellFrameSize
-        let insetFrame = frame.insetBy(dx: delta, dy: delta)
+        let gap = frame.width * cardGapRatio
+        let insetFrame = frame.insetBy(dx: gap, dy: gap)
         view.frame.size = CGSize.init(width: insetFrame.width, height: insetFrame.height)
         view.frame.origin = insetFrame.origin
         view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
