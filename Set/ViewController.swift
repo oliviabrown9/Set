@@ -20,6 +20,10 @@ class ViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        updateViewFromModel()
+    }
+    
     @objc func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             guard let selectedCardView = sender.view else {
@@ -43,12 +47,6 @@ class ViewController: UIViewController {
     
     @IBAction private func dealThreeCards(_ sender: UIButton) {
         game.addThreeCards()
-        updateViewFromModel()
-    }
-    
-    // Loads an initial game on start
-    override func viewDidLoad() {
-        super.viewDidLoad()
         updateViewFromModel()
     }
     
@@ -106,7 +104,6 @@ class ViewController: UIViewController {
                         }
                         else if game.selectedCards.count == 3 {
                             cardView.layer.borderColor = UIColor.red.cgColor
-                            
                         }
                         else {
                             cardView.layer.borderColor = UIColor.black.cgColor
