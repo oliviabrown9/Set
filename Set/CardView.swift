@@ -53,27 +53,6 @@ class CardView: UIView {
                         eachCardView.setNeedsDisplay()
                     }
                 }
-            
-            
-            // Outlines the selected cards and changes color if a set is correct/incorrect
-            if game!.selectedCards.contains(selectedCard) {
-                if game!.setFound(withCards: game!.selectedCards) {
-                    cardView.layer.borderColor = UIColor.green.cgColor
-                    cardView.layer.borderWidth = 3.0
-                }
-                else if game!.selectedCards.count == 3 {
-                    cardView.layer.borderColor = UIColor.red.cgColor
-                    cardView.layer.borderWidth = 3.0
-                }
-                else {
-                    cardView.layer.borderColor = UIColor.black.cgColor
-                    cardView.layer.borderWidth = 3.0
-                }
-            }
-            else {
-                cardView.layer.borderColor = UIColor.clear.cgColor
-                cardView.layer.borderWidth = 0.0
-            }
             }
         }
     }
@@ -93,7 +72,29 @@ class CardView: UIView {
         
         if let card = associatedCard {
             drawCardContent(forAssociatedCard: card, inRect: singleSymbolFrame)
+            
+            // Outlines the selected cards and changes color if a set is correct/incorrect
+            if game!.selectedCards.contains(card) {
+                if game!.setFound(withCards: game!.selectedCards) {
+                    self.layer.borderColor = UIColor.green.cgColor
+                    self.layer.borderWidth = 3.0
+                }
+                else if game!.selectedCards.count == 3 {
+                    self.layer.borderColor = UIColor.red.cgColor
+                    self.layer.borderWidth = 3.0
+                }
+                else {
+                    self.layer.borderColor = UIColor.black.cgColor
+                    self.layer.borderWidth = 3.0
+                }
+            }
+            else {
+                self.layer.borderColor = UIColor.clear.cgColor
+                self.layer.borderWidth = 0.0
+            }
         }
+        
+        
     }
     
     func drawCardContent(forAssociatedCard card: Card, inRect rect: CGRect) {
