@@ -43,10 +43,6 @@ class ViewController: UIViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        updateViewFromModel()
-    }
-    
     @objc func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             guard let selectedCardView = sender.view else {
@@ -98,43 +94,8 @@ class ViewController: UIViewController {
                 cardView.isOpaque = false
                 
                 if let card = game.currentCardsInGame.indices.contains(cellIndex) ? game.currentCardsInGame[cellIndex] : nil {
-                    switch card.color {
-                    case .A : cardView.color = .A
-                    case .B : cardView.color = .B
-                    case .C : cardView.color = .C
-                    }
-                    switch card.number {
-                    case .A : cardView.number = .A
-                    case .B : cardView.number = .B
-                    case .C : cardView.number = .C
-                    }
-                    switch card.shading {
-                    case .A : cardView.shading = .A
-                    case .B : cardView.shading = .B
-                    case .C : cardView.shading = .C
-                    }
-                    switch card.symbol {
-                    case .A : cardView.symbol = .A
-                    case .B : cardView.symbol = .B
-                    case .C : cardView.symbol = .C
-                    }
-                    
-                    // Outlines the selected cards and changes color if a set is correct/incorrect
-                    if game.selectedCards.contains(card) {
-                        cardView.layer.borderWidth = 5.0
-                        if game.setFound(withCards: game.selectedCards) {
-                            cardView.layer.borderColor = UIColor.green.cgColor
-                        }
-                        else if game.selectedCards.count == 3 {
-                            cardView.layer.borderColor = UIColor.red.cgColor
-                        }
-                        else {
-                            cardView.layer.borderColor = UIColor.black.cgColor
-                        }
-                    }
-                    else {
-                        cardView.layer.borderWidth = 0.0
-                    }
+                    setCardViewAttributes(fromCard: card, forView: cardView)
+                    addOutline(to: cardView, withCard: card)
                     
                     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
                     cardView.addGestureRecognizer(tap)
@@ -149,6 +110,48 @@ class ViewController: UIViewController {
             dealThreeCardsButton.isEnabled = false
         }
         scoreLabel.text = "Score: \(game.score)"
+    }
+    
+    private func addOutline(to cardView: CardView, withCard card: Card) {
+        // Outlines the selected cards and changes color if a set is correct/incorrect
+        if game.selectedCards.contains(card) {
+            cardView.layer.borderWidth = 5.0
+            if game.setFound(withCards: game.selectedCards) {
+                cardView.layer.borderColor = UIColor.green.cgColor
+            }
+            else if game.selectedCards.count == 3 {
+                cardView.layer.borderColor = UIColor.red.cgColor
+            }
+            else {
+                cardView.layer.borderColor = UIColor.black.cgColor
+            }
+        }
+        else {
+            cardView.layer.borderWidth = 0.0
+        }
+    }
+    
+    private func setCardViewAttributes(fromCard card: Card, forView view: CardView) {
+        switch card.color {
+        case .A : view.color = .A
+        case .B : view.color = .B
+        case .C : view.color = .C
+        }
+        switch card.number {
+        case .A : view.number = .A
+        case .B : view.number = .B
+        case .C : view.number = .C
+        }
+        switch card.shading {
+        case .A : view.shading = .A
+        case .B : view.shading = .B
+        case .C : view.shading = .C
+        }
+        switch card.symbol {
+        case .A : view.symbol = .A
+        case .B : view.symbol = .B
+        case .C : view.symbol = .C
+        }
     }
 }
 

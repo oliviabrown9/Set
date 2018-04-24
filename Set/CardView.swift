@@ -10,90 +10,55 @@ import UIKit
 
 class CardView: UIView {
 
-    let cornerRadiusToBoundsHeight: CGFloat = 0.06
-    let symbolCornerRadiusToBoundsHeight: CGFloat = 0.4
-    let cardFrameInsetToBound: CGFloat = 0.07
-    let controlPoint2_xToFrameWidth: CGFloat = 0.25
-    let controlPoint2HeightToSymbolFrameHeight: CGFloat = 1.11
-    let symbolGapHeightToSymbolFrameHeight: CGFloat = 0.11
-    let twoSymbolOffsetToSymbolFrameHeight: CGFloat = 0.56
-    let strokeWidthToSymbolFrameHeight: CGFloat = 0.12
-    
-    private var cornerRadius: CGFloat  {
-        return bounds.size.height * cornerRadiusToBoundsHeight
-    }
-    private var symbolGapToCardEdge: CGFloat {
-        return bounds.size.width * cardFrameInsetToBound
-    }
+    // Constants
+    let cornerRadiusRatio: CGFloat = 0.1
+    let cardEdgeInset: CGFloat = 0.1
+    let squiggleRatio: CGFloat = 0.3
+    let symbolGapRatio: CGFloat = 0.2
+    let twoSymbolGapRatio: CGFloat = 0.6
+    let strokeLineWidthRatio: CGFloat = 0.02
+    let oneSymbolHeightRatio: CGFloat = 2.6
     
     enum CardViewAttribute: Int {
         case A, B, C
     }
     
-    var color: CardViewAttribute = .A {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    var symbol: CardViewAttribute = .A {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    var number: CardViewAttribute = .A {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
-    var shading: CardViewAttribute = .A {
-        didSet {
-            setNeedsDisplay()
-        }
-    }
+    var color: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
+    var symbol: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
+    var number: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
+    var shading: CardViewAttribute = .A { didSet { setNeedsDisplay() }}
     
     override func draw(_ rect: CGRect) {
         isOpaque = false
-        UIColor.white.setFill()
-        let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
+        let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.height * cornerRadiusRatio)
         roundedRect.addClip()
+        UIColor.white.setFill()
         roundedRect.fill()
-        let insetFrame = bounds.insetBy(dx: symbolGapToCardEdge, dy: symbolGapToCardEdge)
-        let singleSymbolFrame = insetFrame.insetBy(dx: 0, dy: insetFrame.height/2.9)
-        drawCardContent(inRect: singleSymbolFrame)
+        drawCardContent(inFrame: bounds.insetBy(dx: bounds.size.width * cardEdgeInset, dy: bounds.height/oneSymbolHeightRatio))
     }
     
-    func drawCardContent(inRect rect: CGRect) {
-        var symbolFrame = rect
-        let symbolGap = symbolFrame.height * symbolGapHeightToSymbolFrameHeight
+    func drawCardContent(inFrame frameRect: CGRect) {
+        var symbolBounds = frameRect
         
         switch number {
-        case .A:
-            break
-        case .B:
-            symbolFrame = symbolFrame.offsetBy(dx: 0, dy: -symbolFrame.height * twoSymbolOffsetToSymbolFrameHeight)
-        case .C:
-            symbolFrame = symbolFrame.offsetBy(dx: 0, dy: -symbolFrame.height-symbolGap)
+        case .A: break
+        case .B: symbolBounds = symbolBounds.offsetBy(dx: 0, dy: -symbolBounds.height * twoSymbolGapRatio)
+        case .C: symbolBounds = symbolBounds.offsetBy(dx: 0, dy: -symbolBounds.height - symbolBounds.height * symbolGapRatio)
         }
         
         var cardColor: UIColor
         switch color {
-        case .A:
-            cardColor = UIColor.blue
-        case .B:
-            cardColor = UIColor.purple
-        case .C:
-            cardColor = UIColor.green
+        case .A: cardColor = UIColor.blue
+        case .B: cardColor = UIColor.purple
+        case .C: cardColor = UIColor.green
         }
         
         for _ in 0...number.rawValue {
             var symbolPath: UIBezierPath
             switch symbol {
-            case .A:
-                symbolPath = makeDiamondPath(inFrame: symbolFrame)
-            case .B:
-                symbolPath = makeSquigglePath(inFrame: symbolFrame)
-            case .C:
-                symbolPath = makeTrianglePath(inFrame: symbolFrame)
+            case .A: symbolPath = makeOvalPath(inBounds: symbolBounds)
+            case .B: symbolPath = makeSquigglePath(inBounds: symbolBounds)
+            case .C: symbolPath = makeDiamondPath(inBounds: symbolBounds)
             }
 
             switch shading {
@@ -101,50 +66,54 @@ class CardView: UIView {
                 cardColor.setFill()
                 symbolPath.fill()
             case .B:
-                symbolPath.lineWidth = frame.width * 0.05
+                symbolPath.lineWidth = frame.width * strokeLineWidthRatio
                 cardColor.setStroke()
                 symbolPath.stroke()
             case .C:
-                symbolPath.lineWidth = frame.width * 0.05
-                cardColor.setStroke()
-                symbolPath.stroke()
-                let context = UIGraphicsGetCurrentContext()
-                context?.saveGState()
-                symbolPath.addClip()
-                symbolPath.lineWidth = frame.width * 0.02
-                for i in stride(from: 0, to: bounds.maxY, by: 5) {
-                    symbolPath.move(to: CGPoint(x: 0, y: i))
-                    symbolPath.addLine(to: CGPoint(x: bounds.maxX, y: i))
-                }
-                symbolPath.stroke()
-                context?.restoreGState()
+                addStripes(toPath: symbolPath, inColor: cardColor)
             }
-            symbolFrame = symbolFrame.offsetBy(dx: 0, dy: symbolGap + symbolFrame.height)
+            symbolBounds = symbolBounds.offsetBy(dx: 0, dy: symbolBounds.height * symbolGapRatio + symbolBounds.height)
         }
     }
+    
+    private func addStripes(toPath path: UIBezierPath, inColor cardColor: UIColor) {
+        path.lineWidth = frame.width * strokeLineWidthRatio
+        cardColor.setStroke()
+        path.stroke()
+        let context = UIGraphicsGetCurrentContext()
+        context?.saveGState()
+        path.addClip()
+        path.lineWidth = frame.width * strokeLineWidthRatio
+        for yValue in stride(from: 0, to: bounds.maxY, by: 5) {
+            path.move(to: CGPoint(x: 0, y: yValue))
+            path.addLine(to: CGPoint(x: bounds.maxX, y: yValue))
+        }
+        path.stroke()
+        context?.restoreGState()
+    }
         
-    private func makeDiamondPath(inFrame frame: CGRect) -> UIBezierPath {
-        return UIBezierPath(roundedRect: frame, cornerRadius: frame.height * symbolCornerRadiusToBoundsHeight)
+    private func makeOvalPath(inBounds bounds: CGRect) -> UIBezierPath {
+        return UIBezierPath(ovalIn: bounds)
     }
     
-    private func makeSquigglePath(inFrame frame: CGRect) -> UIBezierPath {
+    private func makeSquigglePath(inBounds bounds: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: frame.minX, y: frame.maxY))
-        path.addCurve(to: CGPoint(x: frame.maxX, y: frame.minY),
-                      controlPoint1: CGPoint(x: frame.minX , y: frame.minY - frame.height * controlPoint2HeightToSymbolFrameHeight),
-                      controlPoint2: CGPoint(x: frame.maxX - controlPoint2_xToFrameWidth * frame.width, y: frame.maxY))
-        path.addCurve(to: CGPoint(x: frame.minX, y: frame.maxY),
-                      controlPoint1: CGPoint(x: frame.maxX , y: frame.maxY + frame.height * controlPoint2HeightToSymbolFrameHeight),
-                      controlPoint2: CGPoint(x: frame.minX + controlPoint2_xToFrameWidth*frame.width, y: frame.minY))
+        path.move(to: CGPoint(x: bounds.minX, y: bounds.maxY))
+        path.addCurve(to: CGPoint(x: bounds.maxX, y: bounds.minY),
+                      controlPoint1: CGPoint(x: bounds.minX , y: bounds.minY - bounds.height),
+                      controlPoint2: CGPoint(x: bounds.maxX - squiggleRatio * bounds.width, y: bounds.maxY))
+        path.addCurve(to: CGPoint(x: bounds.minX, y: bounds.maxY),
+                      controlPoint1: CGPoint(x: bounds.maxX , y: bounds.maxY + bounds.height),
+                      controlPoint2: CGPoint(x: bounds.minX + squiggleRatio * bounds.width, y: bounds.minY))
         return path
     }
     
-    private func makeTrianglePath(inFrame frame: CGRect) -> UIBezierPath {
+    private func makeDiamondPath(inBounds bounds: CGRect) -> UIBezierPath {
         let path = UIBezierPath()
-        path.move(to: CGPoint(x: frame.minX, y: frame.maxY - frame.height/2))
-        path.addLine(to: CGPoint(x: frame.maxX - frame.width/2, y: frame.minY))
-        path.addLine(to: CGPoint(x: frame.maxX, y: frame.minY + frame.height/2))
-        path.addLine(to: CGPoint(x: frame.minX + frame.width/2, y: frame.maxY))
+        path.move(to: CGPoint(x: bounds.minX, y: bounds.maxY - bounds.height/2))
+        path.addLine(to: CGPoint(x: bounds.maxX - bounds.width/2, y: bounds.minY))
+        path.addLine(to: CGPoint(x: bounds.maxX, y: bounds.minY + bounds.height/2))
+        path.addLine(to: CGPoint(x: bounds.minX + bounds.width/2, y: bounds.maxY))
         path.close()
         
         return path
