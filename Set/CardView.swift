@@ -136,27 +136,23 @@ class CardView: UIView {
                 color.setFill()
                 symbolPath.fill()
             case .B:
-                symbolPath.lineWidth = frame.height * strokeWidthToSymbolFrameHeight
+                symbolPath.lineWidth = frame.width * 0.05
                 color.setStroke()
                 symbolPath.stroke()
             case .C:
+                symbolPath.lineWidth = frame.width * 0.05
+                color.setStroke()
+                symbolPath.stroke()
                 let context = UIGraphicsGetCurrentContext()
                 context?.saveGState()
                 symbolPath.addClip()
-                var xPoint = frame.minX + stripeGapToSymbolFrameWidth * frame.width
-                while xPoint < frame.maxX {
-                    let line = UIBezierPath()
-                    line.move(to: CGPoint(x: xPoint, y: frame.minY))
-                    line.addLine(to: CGPoint(x: xPoint, y: frame.maxY))
-                    line.lineWidth = frame.height * strokeWidthToSymbolFrameHeight
-                    color.setStroke()
-                    line.stroke()
-                    xPoint = xPoint + stripeGapToSymbolFrameWidth*frame.width
+                symbolPath.lineWidth = frame.width * 0.02
+                for i in stride(from: 0, to: bounds.maxY, by: 5) {
+                    symbolPath.move(to: CGPoint(x: 0, y: i))
+                    symbolPath.addLine(to: CGPoint(x: bounds.maxX, y: i))
                 }
-                context?.restoreGState()
-                color.setStroke()
-                symbolPath.lineWidth = frame.height * strokeWidthToSymbolFrameHeight
                 symbolPath.stroke()
+                context?.restoreGState()
             }
             symbolFrame = symbolFrame.offsetBy(dx: 0, dy: symbolGap + symbolFrame.height)
         }
