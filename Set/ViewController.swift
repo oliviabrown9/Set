@@ -13,11 +13,35 @@ class ViewController: UIViewController {
     let cardAspectRatio: CGFloat = 5/8
     
     private(set) var game = SetGame()
-    
-    @IBOutlet weak var cardsView: CardsInGameView! {
+    @IBOutlet weak var cardsView: UIView! {
         didSet {
-            let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(game.shuffleCardsInGame))
+            let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
             cardsView.addGestureRecognizer(rotateGesture)
+            
+            let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown(sender:)))
+            swipeDownGesture.direction = .down
+            swipeDownGesture.numberOfTouchesRequired = 1
+            cardsView.addGestureRecognizer(swipeDownGesture)
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        updateViewFromModel()
+    }
+    
+    @objc func handleRotate(sender: UIRotationGestureRecognizer) {
+        print("rotate")
+        if sender.state == .ended {
+            game.shuffleCardsInGame()
+            updateViewFromModel()
+        }
+    }
+    
+    @objc func handleSwipeDown(sender: UISwipeGestureRecognizer) {
+        print("swipe down")
+        if sender.state == .ended {
+            game.addThreeCards()
+            updateViewFromModel()
         }
     }
     
@@ -28,8 +52,8 @@ class ViewController: UIViewController {
             }
             if let cardIndex = cardsView.subviews.index(of: selectedCardView) {
                 game.selectCard(card: game.currentCardsInGame[cardIndex])
+                updateViewFromModel()
             }
-            updateViewFromModel()
         }
     }
     
@@ -44,12 +68,6 @@ class ViewController: UIViewController {
     
     @IBAction private func dealThreeCards(_ sender: UIButton) {
         game.addThreeCards()
-        updateViewFromModel()
-    }
-    
-    // Loads an initial game on start
-    override func viewDidLoad() {
-        super.viewDidLoad()
         updateViewFromModel()
     }
     
@@ -99,9 +117,18 @@ class ViewController: UIViewController {
                     case .C : cardView.symbol = .C
                     }
                     
+                    // Outlines the selected cards and changes color if a set is correct/incorrect
                     if game.selectedCards.contains(card) {
                         cardView.layer.borderWidth = 5.0
-                        cardView.layer.borderColor = UIColor.black.cgColor
+                        if game.setFound(withCards: game.selectedCards) {
+                            cardView.layer.borderColor = UIColor.green.cgColor
+                        }
+                        else if game.selectedCards.count == 3 {
+                            cardView.layer.borderColor = UIColor.red.cgColor
+                        }
+                        else {
+                            cardView.layer.borderColor = UIColor.black.cgColor
+                        }
                     }
                     else {
                         cardView.layer.borderWidth = 0.0

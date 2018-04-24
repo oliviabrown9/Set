@@ -22,7 +22,7 @@ class SetGame {
     }
     
     // Replace 3 cards if found match, add three cards if not
-    func addThreeCards() {
+    @objc func addThreeCards() {
         if setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
         }
