@@ -35,6 +35,7 @@ class CardsInGameView: UIView {
             cardView.frame.origin = cardGrid[index]!.origin
         }
     }
+    
     private func configureCardView(_ view: UIView, _ frame: CGRect) {
         let delta = frame.width * cardEdgeWidthToCellFrameSize
         let insetFrame = frame.insetBy(dx: delta, dy: delta)

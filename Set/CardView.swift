@@ -51,6 +51,8 @@ class CardView: UIView {
                     if let eachCardView = eachCard as? CardView {
                         eachCardView.setNeedsLayout()
                         eachCardView.setNeedsDisplay()
+                        superview?.setNeedsLayout()
+                        superview?.setNeedsDisplay()
                     }
                 }
             }

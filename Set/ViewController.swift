@@ -41,12 +41,6 @@ class ViewController: UIViewController {
     private func updateViewFromModel() {
         
         cardsView.game = game
-        
-        
-//        for card in game.currentCardsInGame {
-//            let cardView = CardView()
-//            cardView.associatedCard = card
-//
     
         // Update the ability to deal three more cards & update score label
         if game.deck.cards.isEmpty {
