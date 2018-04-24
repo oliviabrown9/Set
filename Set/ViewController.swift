@@ -13,8 +13,7 @@ class ViewController: UIViewController {
     let cardAspectRatio: CGFloat = 5/8
     
     private(set) var game = SetGame()
-    
-    @IBOutlet weak var cardsView: CardsInGameView! {
+    @IBOutlet weak var cardsView: UIView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(game.shuffleCardsInGame))
             cardsView.addGestureRecognizer(rotateGesture)
@@ -99,9 +98,19 @@ class ViewController: UIViewController {
                     case .C : cardView.symbol = .C
                     }
                     
+                    // Outlines the selected cards and changes color if a set is correct/incorrect
                     if game.selectedCards.contains(card) {
                         cardView.layer.borderWidth = 5.0
-                        cardView.layer.borderColor = UIColor.black.cgColor
+                        if game.setFound(withCards: game.selectedCards) {
+                            cardView.layer.borderColor = UIColor.green.cgColor
+                        }
+                        else if game.selectedCards.count == 3 {
+                            cardView.layer.borderColor = UIColor.red.cgColor
+                            
+                        }
+                        else {
+                            cardView.layer.borderColor = UIColor.black.cgColor
+                        }
                     }
                     else {
                         cardView.layer.borderWidth = 0.0
