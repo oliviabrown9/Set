@@ -53,12 +53,9 @@ class CardView: UIView {
     
     override func draw(_ rect: CGRect) {
         isOpaque = false
-        let cardBackground = UIBezierPath(rect: bounds)
         UIColor.white.setFill()
-        cardBackground.fill()
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         roundedRect.addClip()
-        UIColor.white.setStroke()
         roundedRect.fill()
         let insetFrame = bounds.insetBy(dx: symbolGapToCardEdge, dy: symbolGapToCardEdge)
         let singleSymbolFrame = insetFrame.insetBy(dx: 0, dy: insetFrame.height/2.9)

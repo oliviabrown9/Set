@@ -30,7 +30,6 @@ class ViewController: UIViewController {
     }
     
     @objc func handleRotate(sender: UIRotationGestureRecognizer) {
-        print("rotate")
         if sender.state == .ended {
             game.shuffleCardsInGame()
             updateViewFromModel()
@@ -38,7 +37,6 @@ class ViewController: UIViewController {
     }
     
     @objc func handleSwipeDown(sender: UISwipeGestureRecognizer) {
-        print("swipe down")
         if sender.state == .ended {
             game.addThreeCards()
             updateViewFromModel()
