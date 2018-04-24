@@ -43,6 +43,10 @@ class ViewController: UIViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        updateViewFromModel()
+    }
+    
     @objc func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             guard let selectedCardView = sender.view else {
