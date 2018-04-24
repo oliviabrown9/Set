@@ -11,7 +11,12 @@ import UIKit
 class CardsInGameView: UIView {
     
     let cardAspectRatio: CGFloat = 5/8
-    var game: SetGame?
+    var game: SetGame? {
+        didSet {
+            setNeedsLayout()
+            setNeedsDisplay()
+        }
+    }
     
     lazy private var cardGrid = Grid(layout: Grid.Layout.aspectRatio(cardAspectRatio))
     let cardEdgeWidthToCellFrameSize: CGFloat = 0.02
