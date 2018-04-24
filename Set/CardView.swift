@@ -60,7 +60,7 @@ class CardView: UIView {
     override func draw(_ rect: CGRect) {
         isOpaque = false
         let cardBackground = UIBezierPath(rect: bounds)
-        UIColor.black.setFill()
+        UIColor.white.setFill()
         cardBackground.fill()
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius)
         roundedRect.addClip()
@@ -77,15 +77,15 @@ class CardView: UIView {
             if game!.selectedCards.contains(card) {
                 if game!.setFound(withCards: game!.selectedCards) {
                     self.layer.borderColor = UIColor.green.cgColor
-                    self.layer.borderWidth = 3.0
+                    self.layer.borderWidth = 5.0
                 }
                 else if game!.selectedCards.count == 3 {
                     self.layer.borderColor = UIColor.red.cgColor
-                    self.layer.borderWidth = 3.0
+                    self.layer.borderWidth = 5.0
                 }
                 else {
                     self.layer.borderColor = UIColor.black.cgColor
-                    self.layer.borderWidth = 3.0
+                    self.layer.borderWidth = 5.0
                 }
             }
             else {
