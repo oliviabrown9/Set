@@ -10,11 +10,11 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let cardAspectRatio: CGFloat = 5/8
-    let cardGapRatio: CGFloat = 0.02
+    private let cardAspectRatio: CGFloat = 5/8
+    private let cardGapRatio: CGFloat = 0.02
     
     private(set) var game = SetGame()
-    @IBOutlet weak var cardsView: UIView! {
+    @IBOutlet private weak var cardsView: UIView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
             cardsView.addGestureRecognizer(rotateGesture)
@@ -30,21 +30,21 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    @objc func handleRotate(sender: UIRotationGestureRecognizer) {
+    @objc private func handleRotate(sender: UIRotationGestureRecognizer) {
         if sender.state == .ended {
             game.shuffleCardsInGame()
             updateViewFromModel()
         }
     }
     
-    @objc func handleSwipeDown(sender: UISwipeGestureRecognizer) {
+    @objc private func handleSwipeDown(sender: UISwipeGestureRecognizer) {
         if sender.state == .ended {
             game.addThreeCards()
             updateViewFromModel()
         }
     }
     
-    @objc func handleTap(sender: UITapGestureRecognizer) {
+    @objc private func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             guard let selectedCardView = sender.view else {
                 return

@@ -11,13 +11,14 @@ import UIKit
 class CardView: UIView {
 
     // Constants
-    let symbolGapRatio: CGFloat = 0.2
-    let twoSymbolGapRatio: CGFloat = 0.6
-    let strokeLineWidthRatio: CGFloat = 0.02
-    let oneSymbolHeightRatio: CGFloat = 2.6
-    let cornerRadiusRatio: CGFloat = 0.1
-    let cardEdgeInset: CGFloat = 0.1
-    let squiggleRatio: CGFloat = 0.3
+    private let symbolGapRatio: CGFloat = 0.2
+    private let twoSymbolGapRatio: CGFloat = 0.6
+    private let strokeLineWidthRatio: CGFloat = 0.02
+    private let oneSymbolHeightRatio: CGFloat = 2.6
+    private let cornerRadiusRatio: CGFloat = 0.1
+    private let cardEdgeInset: CGFloat = 0.1
+    private let squiggleRatio: CGFloat = 0.3
+    private let stripeStride: CGFloat = 8
     
     enum CardViewAttribute: Int {
         case A, B, C
@@ -37,7 +38,7 @@ class CardView: UIView {
         drawCardContent(inFrame: bounds.insetBy(dx: bounds.size.width * cardEdgeInset, dy: bounds.height/oneSymbolHeightRatio))
     }
     
-    func drawCardContent(inFrame frameRect: CGRect) {
+    private func drawCardContent(inFrame frameRect: CGRect) {
         var symbolBounds = frameRect
         
         switch number {
@@ -84,7 +85,7 @@ class CardView: UIView {
         context?.saveGState()
         path.addClip()
         path.lineWidth = frame.width * strokeLineWidthRatio
-        for yValue in stride(from: 0, to: bounds.maxY, by: 8) {
+        for yValue in stride(from: 0, to: bounds.maxY, by: stripeStride) {
             path.move(to: CGPoint(x: 0, y: yValue))
             path.addLine(to: CGPoint(x: bounds.maxX, y: yValue))
         }
