@@ -84,7 +84,7 @@ class CardView: UIView {
         context?.saveGState()
         path.addClip()
         path.lineWidth = frame.width * strokeLineWidthRatio
-        for yValue in stride(from: 0, to: bounds.maxY, by: 5) {
+        for yValue in stride(from: 0, to: bounds.maxY, by: 8) {
             path.move(to: CGPoint(x: 0, y: yValue))
             path.addLine(to: CGPoint(x: bounds.maxX, y: yValue))
         }
