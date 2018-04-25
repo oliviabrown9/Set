@@ -48,9 +48,9 @@ class CardView: UIView {
         
         var cardColor: UIColor
         switch color {
-        case .A: cardColor = UIColor.blue
+        case .A: cardColor = UIColor.magenta
         case .B: cardColor = UIColor.purple
-        case .C: cardColor = UIColor.green
+        case .C: cardColor = UIColor.orange
         }
         
         for _ in 0...number.rawValue {
