@@ -11,13 +11,13 @@ import UIKit
 class CardView: UIView {
 
     // Constants
-    let cornerRadiusRatio: CGFloat = 0.1
-    let cardEdgeInset: CGFloat = 0.1
-    let squiggleRatio: CGFloat = 0.3
     let symbolGapRatio: CGFloat = 0.2
     let twoSymbolGapRatio: CGFloat = 0.6
     let strokeLineWidthRatio: CGFloat = 0.02
     let oneSymbolHeightRatio: CGFloat = 2.6
+    let cornerRadiusRatio: CGFloat = 0.1
+    let cardEdgeInset: CGFloat = 0.1
+    let squiggleRatio: CGFloat = 0.3
     
     enum CardViewAttribute: Int {
         case A, B, C

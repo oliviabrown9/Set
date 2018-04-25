@@ -92,10 +92,11 @@ class ViewController: UIViewController {
                 cardView.frame = cell
                 cardView.isOpaque = false
                 
-                if let card = game.currentCardsInGame.indices.contains(cellIndex) ? game.currentCardsInGame[cellIndex] : nil {
+                if game.currentCardsInGame.indices.contains(cellIndex) {
+                    let card = game.currentCardsInGame[cellIndex]
                     setCardViewAttributes(fromCard: card, forView: cardView)
                     addOutline(to: cardView, withCard: card)
-                    
+                        
                     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
                     cardView.addGestureRecognizer(tap)
                     addGapBetweenCards(cardView, cardGrid[cellIndex]!)
