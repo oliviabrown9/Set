@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,59 +18,49 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYL-23-MFw">
+                                <rect key="frame" x="20" y="44" width="64" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
+                                <rect key="frame" x="287" y="762" width="68" height="30"/>
+                                <state key="normal" title="+ 3 Cards">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="dealThreeCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w2c-ne-8xp"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znn-OC-ge7">
+                                <rect key="frame" x="20" y="762" width="75" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="New Game">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
+                                </connections>
+                            </button>
                             <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa">
-                                <rect key="frame" x="15" y="54" width="345" height="666.33333333333337"/>
+                                <rect key="frame" x="15" y="69.333333333333314" width="345" height="687.66666666666674"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
                             </view>
-                            <stackView opaque="NO" contentMode="scaleToFill" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="zO5-Yo-388">
-                                <rect key="frame" x="15" y="730.33333333333337" width="345" height="66.666666666666629"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znn-OC-ge7">
-                                        <rect key="frame" x="0.0" y="36.666666666666629" width="140.66666666666666" height="30"/>
-                                        <state key="normal" title="New Game">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pYL-23-MFw">
-                                        <rect key="frame" x="140.66666666666666" y="0.0" width="64" height="66.666666666666671"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
-                                        <rect key="frame" x="204.66666666666663" y="36.666666666666629" width="140.33333333333337" height="30"/>
-                                        <state key="normal" title="+ 3 Cards">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="dealThreeCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w2c-ne-8xp"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <constraints>
-                                    <constraint firstItem="pYL-23-MFw" firstAttribute="top" secondItem="zO5-Yo-388" secondAttribute="top" id="YTC-L5-wWk"/>
-                                    <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="zO5-Yo-388" secondAttribute="leading" id="Z2d-Y2-jqM"/>
-                                    <constraint firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" id="eIT-pK-5IX"/>
-                                    <constraint firstItem="An9-4A-dLk" firstAttribute="centerY" secondItem="znn-OC-ge7" secondAttribute="centerY" id="jz4-9V-Ab6"/>
-                                    <constraint firstItem="pYL-23-MFw" firstAttribute="centerX" secondItem="zO5-Yo-388" secondAttribute="centerX" id="oBJ-l2-z7z"/>
-                                    <constraint firstAttribute="bottom" secondItem="znn-OC-ge7" secondAttribute="bottom" id="wI2-pd-bBg"/>
-                                </constraints>
-                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cxe-H4-lxa" secondAttribute="trailing" constant="15" id="2fp-f8-IMv"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="zO5-Yo-388" secondAttribute="trailing" constant="15" id="9Ue-Ia-B8p"/>
+                            <constraint firstAttribute="bottom" secondItem="An9-4A-dLk" secondAttribute="bottom" constant="20" id="7eM-jI-xVg"/>
                             <constraint firstItem="Cxe-H4-lxa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="9l0-pu-DUb"/>
-                            <constraint firstItem="zO5-Yo-388" firstAttribute="height" secondItem="Cxe-H4-lxa" secondAttribute="height" multiplier="1:10" id="HTQ-qx-iu6"/>
-                            <constraint firstAttribute="bottom" secondItem="zO5-Yo-388" secondAttribute="bottom" constant="15" id="Pab-NE-2XL"/>
-                            <constraint firstItem="zO5-Yo-388" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="qV0-2N-hcA"/>
-                            <constraint firstItem="zO5-Yo-388" firstAttribute="top" secondItem="Cxe-H4-lxa" secondAttribute="bottom" constant="10" id="vR8-aE-oLY"/>
-                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="ysA-vN-uu4"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="9wH-iw-M4Y"/>
+                            <constraint firstItem="An9-4A-dLk" firstAttribute="top" secondItem="Cxe-H4-lxa" secondAttribute="bottom" constant="5" id="MRO-rI-iqI"/>
+                            <constraint firstItem="pYL-23-MFw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Nf0-Ku-vff"/>
+                            <constraint firstAttribute="bottom" secondItem="znn-OC-ge7" secondAttribute="bottom" constant="20" id="Ytn-LW-SZA"/>
+                            <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="aCZ-cz-ot1"/>
+                            <constraint firstItem="pYL-23-MFw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="skf-nZ-fvU"/>
+                            <constraint firstItem="Cxe-H4-lxa" firstAttribute="top" secondItem="pYL-23-MFw" secondAttribute="bottom" constant="5" id="wK0-hI-dLy"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
