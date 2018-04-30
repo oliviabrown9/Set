@@ -27,7 +27,7 @@ class CardView: UIView {
     var color: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var symbol: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var number: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
-    var shading: CardViewAttribute = .A { didSet { setNeedsDisplay() }}
+    var shading: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     
     override func draw(_ rect: CGRect) {
         isOpaque = false
@@ -39,6 +39,39 @@ class CardView: UIView {
     }
     
     private func drawCardContent(inFrame frameRect: CGRect) {
+        var symbolBounds = getSymbolBounds(forFrame: frameRect)
+        let cardColor = getCardColor()
+        
+        for _ in 0...number.rawValue {
+            let symbolPath = getSymbolPath(inBounds: symbolBounds)
+            addShading(toPath: symbolPath, withColor: cardColor)
+            symbolBounds = symbolBounds.offsetBy(dx: 0, dy: symbolBounds.height * symbolGapRatio + symbolBounds.height)
+        }
+    }
+    
+    private func addShading(toPath symbolPath: UIBezierPath, withColor cardColor: UIColor) {
+        switch shading {
+        case .A:
+            cardColor.setFill()
+            symbolPath.fill()
+        case .B:
+            symbolPath.lineWidth = frame.width * strokeLineWidthRatio
+            cardColor.setStroke()
+            symbolPath.stroke()
+        case .C:
+            addStripes(toPath: symbolPath, inColor: cardColor)
+        }
+    }
+    
+    private func getSymbolPath(inBounds symbolBounds: CGRect) -> UIBezierPath {
+        switch symbol {
+        case .A: return makeOvalPath(inBounds: symbolBounds)
+        case .B: return makeSquigglePath(inBounds: symbolBounds)
+        case .C: return makeDiamondPath(inBounds: symbolBounds)
+        }
+    }
+    
+    private func getSymbolBounds(forFrame frameRect: CGRect) -> CGRect {
         var symbolBounds = frameRect
         
         switch number {
@@ -47,34 +80,16 @@ class CardView: UIView {
         case .C: symbolBounds = symbolBounds.offsetBy(dx: 0, dy: -symbolBounds.height - symbolBounds.height * symbolGapRatio)
         }
         
-        var cardColor: UIColor
+        return symbolBounds
+    }
+    
+    private func getCardColor() -> UIColor {
         switch color {
-        case .A: cardColor = UIColor.magenta
-        case .B: cardColor = UIColor.purple
-        case .C: cardColor = UIColor.orange
+        case .A: return UIColor.magenta
+        case .B: return UIColor.purple
+        case .C: return UIColor.orange
         }
         
-        for _ in 0...number.rawValue {
-            var symbolPath: UIBezierPath
-            switch symbol {
-            case .A: symbolPath = makeOvalPath(inBounds: symbolBounds)
-            case .B: symbolPath = makeSquigglePath(inBounds: symbolBounds)
-            case .C: symbolPath = makeDiamondPath(inBounds: symbolBounds)
-            }
-
-            switch shading {
-            case .A:
-                cardColor.setFill()
-                symbolPath.fill()
-            case .B:
-                symbolPath.lineWidth = frame.width * strokeLineWidthRatio
-                cardColor.setStroke()
-                symbolPath.stroke()
-            case .C:
-                addStripes(toPath: symbolPath, inColor: cardColor)
-            }
-            symbolBounds = symbolBounds.offsetBy(dx: 0, dy: symbolBounds.height * symbolGapRatio + symbolBounds.height)
-        }
     }
     
     private func addStripes(toPath path: UIBezierPath, inColor cardColor: UIColor) {
