@@ -70,9 +70,9 @@ class ViewController: UIViewController {
     private func updateViewFromModel() {
         
         var currentCardViews = [CardView]()
-        let cardView = CardView()
         
         for card in game.currentCardsInGame {
+            let cardView = CardView()
             setCardViewAttributes(fromCard: card, forView: cardView)
             addOutline(to: cardView, withCard: card)
             
@@ -80,7 +80,6 @@ class ViewController: UIViewController {
             cardView.addGestureRecognizer(tap)
             
             cardsView.testFrame = dealThreeCardsButton.frame
-            cardView.frame.origin = dealThreeCardsButton.frame.origin
             currentCardViews.append(cardView)
         }
         cardsView.cardViewsOnScreen = currentCardViews
