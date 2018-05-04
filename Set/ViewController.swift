@@ -10,11 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    private let cardAspectRatio: CGFloat = 5/8
-    private let cardGapRatio: CGFloat = 0.02
-    
     private(set) var game = SetGame()
-    @IBOutlet private weak var cardsView: UIView! {
+    @IBOutlet private weak var cardsView: GridView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
             cardsView.addGestureRecognizer(rotateGesture)
@@ -79,32 +76,29 @@ class ViewController: UIViewController {
     }
     
     private func updateViewFromModel() {
-        for view in cardsView.subviews {
-            view.removeFromSuperview()
-        }
         
-        var cardGrid = Grid(layout: .aspectRatio(cardAspectRatio), frame: cardsView.bounds)
-        cardGrid.cellCount = game.currentCardsInGame.count
-        
-        for cellIndex in 0..<cardGrid.cellCount {
-            if let cell = cardGrid[cellIndex] {
-                let cardView = CardView()
-                cardView.frame = cell
-                cardView.isOpaque = false
+        cardsView.cards
                 
                 if game.currentCardsInGame.indices.contains(cellIndex) {
                     let card = game.currentCardsInGame[cellIndex]
                     setCardViewAttributes(fromCard: card, forView: cardView)
                     addOutline(to: cardView, withCard: card)
-                        
+
                     let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
                     cardView.addGestureRecognizer(tap)
                     addGapBetweenCards(cardView, cardGrid[cellIndex]!)
-                    cardsView.addSubview(cardView)
+
+                    if cardView.frame.origin == dealThreeCardsButton.frame.origin {
+                        cardView.isFaceUp = false
+
+                    }
+                    else {
+                        cardView.isFaceUp = true
+                    }
                 }
             }
         }
-    
+        
         // Update the ability to deal three more cards & update score label
         if game.deck.cards.isEmpty {
             dealThreeCardsButton.isEnabled = false
@@ -154,4 +148,3 @@ class ViewController: UIViewController {
         }
     }
 }
-

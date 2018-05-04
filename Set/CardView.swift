@@ -20,6 +20,8 @@ class CardView: UIView {
     private let squiggleRatio: CGFloat = 0.3
     private let stripeStride: CGFloat = 8
     
+    var isFaceUp: Bool = true { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    
     enum CardViewAttribute: Int {
         case A, B, C
     }
@@ -33,9 +35,16 @@ class CardView: UIView {
         isOpaque = false
         let roundedRect = UIBezierPath(roundedRect: bounds, cornerRadius: bounds.size.height * cornerRadiusRatio)
         roundedRect.addClip()
-        UIColor.white.setFill()
-        roundedRect.fill()
-        drawCardContent(inFrame: bounds.insetBy(dx: bounds.size.width * cardEdgeInset, dy: bounds.height/oneSymbolHeightRatio))
+        if isFaceUp {
+            UIColor.white.setFill()
+            roundedRect.fill()
+            drawCardContent(inFrame: bounds.insetBy(dx: bounds.size.width * cardEdgeInset, dy: bounds.height/oneSymbolHeightRatio))
+        }
+        else {
+            UIColor.purple.setFill()
+            roundedRect.fill()
+        }
+        
     }
     
     private func drawCardContent(inFrame frameRect: CGRect) {
@@ -133,5 +142,52 @@ class CardView: UIView {
         path.close()
         
         return path
+    }
+    
+    func cardsMatchAnimation(completion: (() -> Swift.Void)? = nil)  {
+        let matchCardAnimationDuration: TimeInterval = 0.6
+        let matchCardAnimationScaleUp: CGFloat = 3.0
+        let matchCardAnimationScaleDown: CGFloat = 0.1
+        let animator = UIViewPropertyAnimator(
+            duration: matchCardAnimationDuration,
+            curve: .linear ,
+            animations: {
+                self.center = self.superview!.center
+                self.transform = CGAffineTransform.identity.scaledBy(x: matchCardAnimationScaleUp,
+                                                                     y: matchCardAnimationScaleUp)
+        })
+        animator.addCompletion({ position in
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: matchCardAnimationDuration,
+                delay: 0, options: [],
+                animations: {
+                    self.transform = CGAffineTransform.identity.scaledBy(x: matchCardAnimationScaleDown,
+                                                                         y: matchCardAnimationScaleDown)
+                    self.alpha = 0
+            },
+                completion: { position in
+                    self.isHidden = true
+                    self.alpha = 1
+                    self.transform = .identity
+            }
+            )
+        })
+        animator.addCompletion({ position in
+            completion?()
+        })
+        animator.startAnimation()
+    }
+    
+    func flipCard(completion: (() -> Swift.Void)? = nil)  {
+                let flipCardAnimationDuration: TimeInterval = 0.6
+        UIView.transition(
+            with: self,
+            duration: flipCardAnimationDuration,
+            options: [.transitionFlipFromLeft],
+            animations: { self.isFaceUp = !self.isFaceUp },
+            completion: { position in
+                completion?()
+        }
+        )
     }
 }
