@@ -14,9 +14,18 @@ class CardsView: UIView {
     private let cardGapRatio: CGFloat = 0.02
     var cardViewsOnScreen = [CardView]()
     
+    var testFrame = CGRect()
+    
+    private var horizontalPadding: CGFloat {
+        return 50 / CGFloat(cardViewsOnScreen.count)
+    }
+    private var verticalPadding: CGFloat {
+        return 20 / CGFloat(cardViewsOnScreen.count)
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
-
+        
         var cardGrid = Grid(layout: .aspectRatio(cardAspectRatio), frame: bounds)
         cardGrid.cellCount = cardViewsOnScreen.count
         
@@ -25,23 +34,25 @@ class CardsView: UIView {
                 let cardView = cardViewsOnScreen[cellIndex]
                 if !subviews.contains(cardView) {
                     addSubview(cardView)
+                    cardView.frame.origin = testFrame.origin
                 }
-                addGapBetweenCards(cardView, cardGrid[cellIndex]!)
-                UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: 0.8,
-                    delay: 1.5,
-                    options: [],
-                    animations: {
-                        cardView.frame = cell
-                }, completion: { finished in
-                    UIView.transition(
-                        with: cardView,
-                        duration: 0.5,
-                        options: [.transitionFlipFromLeft],
+                if cardView.frame.origin == testFrame.origin {
+                    UIViewPropertyAnimator.runningPropertyAnimator(
+                        withDuration: 0.8,
+                        delay: 1.5,
+                        options: [.curveEaseInOut],
                         animations: {
-                            cardView.isFaceUp = true
+                            cardView.frame = cell
+                    }, completion: { finished in
+                        UIView.transition(
+                            with: cardView,
+                            duration: 0.5,
+                            options: [.transitionFlipFromLeft],
+                            animations: {
+                                cardView.isFaceUp = true
+                        })
                     })
-                })
+                }
             }
         }
     }

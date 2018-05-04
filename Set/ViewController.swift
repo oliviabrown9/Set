@@ -78,36 +78,21 @@ class ViewController: UIViewController {
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
             cardView.addGestureRecognizer(tap)
+            
+            cardsView.testFrame = dealThreeCardsButton.frame
+            cardView.frame.origin = dealThreeCardsButton.frame.origin
             currentCardViews.append(cardView)
         }
         cardsView.cardViewsOnScreen = currentCardViews
-        print(currentCardViews)
-    }
-                    
-
-        
-        
-//
-//                    if cardView.frame.origin == dealThreeCardsButton.frame.origin {
-//                        cardView.isFaceUp = false
-//
-//                    }
-//                    else {
-//                        cardView.isFaceUp = true
-//                    }
-//                }
-//            }
-//        }
         
         // Update the ability to deal three more cards & update score label
 //        if game.deck.cards.isEmpty {
 //            dealThreeCardsButton.isEnabled = false
 //        }
 //        scoreLabel.text = "Score: \(game.score)"
-
-    func updateCardView(for card: Card) {
-    }
         
+//        gameView.addSubview(cardView)
+    }
     
     
     private func addOutline(to cardView: CardView, withCard card: Card) {
