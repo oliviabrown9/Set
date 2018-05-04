@@ -44,7 +44,7 @@
                                     <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
-                            <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa">
+                            <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa" customClass="CardsView" customModule="Set" customModuleProvider="target">
                                 <rect key="frame" x="15" y="89" width="345" height="656"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>

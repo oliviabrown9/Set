@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController {
     
     private(set) var game = SetGame()
-    @IBOutlet private weak var cardsView: GridView! {
+    @IBOutlet private weak var cardsView: CardsView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
             cardsView.addGestureRecognizer(rotateGesture)
@@ -67,44 +67,48 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    private func addGapBetweenCards(_ view: UIView, _ frame: CGRect) {
-        let gap = frame.width * cardGapRatio
-        let insetFrame = frame.insetBy(dx: gap, dy: gap)
-        view.frame.size = CGSize.init(width: insetFrame.width, height: insetFrame.height)
-        view.frame.origin = insetFrame.origin
-        view.backgroundColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 0)
-    }
-    
     private func updateViewFromModel() {
         
-        cardsView.cards
-                
-                if game.currentCardsInGame.indices.contains(cellIndex) {
-                    let card = game.currentCardsInGame[cellIndex]
-                    setCardViewAttributes(fromCard: card, forView: cardView)
-                    addOutline(to: cardView, withCard: card)
-
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-                    cardView.addGestureRecognizer(tap)
-                    addGapBetweenCards(cardView, cardGrid[cellIndex]!)
-
-                    if cardView.frame.origin == dealThreeCardsButton.frame.origin {
-                        cardView.isFaceUp = false
-
-                    }
-                    else {
-                        cardView.isFaceUp = true
-                    }
-                }
-            }
+        var currentCardViews = [CardView]()
+        let cardView = CardView()
+        
+        for card in game.currentCardsInGame {
+            setCardViewAttributes(fromCard: card, forView: cardView)
+            addOutline(to: cardView, withCard: card)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+            cardView.addGestureRecognizer(tap)
+            currentCardViews.append(cardView)
         }
+        cardsView.cardViewsOnScreen = currentCardViews
+        print(currentCardViews)
+    }
+                    
+
+        
+        
+//
+//                    if cardView.frame.origin == dealThreeCardsButton.frame.origin {
+//                        cardView.isFaceUp = false
+//
+//                    }
+//                    else {
+//                        cardView.isFaceUp = true
+//                    }
+//                }
+//            }
+//        }
         
         // Update the ability to deal three more cards & update score label
-        if game.deck.cards.isEmpty {
-            dealThreeCardsButton.isEnabled = false
-        }
-        scoreLabel.text = "Score: \(game.score)"
+//        if game.deck.cards.isEmpty {
+//            dealThreeCardsButton.isEnabled = false
+//        }
+//        scoreLabel.text = "Score: \(game.score)"
+
+    func updateCardView(for card: Card) {
     }
+        
+    
     
     private func addOutline(to cardView: CardView, withCard card: Card) {
         // Outlines the selected cards and changes color if a set is correct/incorrect
