@@ -19,18 +19,52 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var cardsView: UIView!
     
-    var cardConstants: CardSizeConstants {
+//    var cardConstants: CardSizeConstants {
+//        if cardsView.bounds.height > cardsView.bounds.width {
+//            return CardSizeConstants(forGameSize: CGSize(
+//                width: cardsView.bounds.width,
+//                height: cardsView.bounds.height * (1 - bottomToHeightRatio)
+//            ), cardCount: game.currentCardsInGame.count)
+//        } else {
+//            return CardSizeConstants(forGameSize: CGSize(
+//                width: cardsView.bounds.width * (1 - sideToHeightRatio),
+//                height: cardsView.bounds.height
+//            ), cardCount: game.currentCardsInGame.count)
+//        }
+//    }
+    
+    var cardsViewWithBoundsSize: CGSize {
         if cardsView.bounds.height > cardsView.bounds.width {
-            return CardSizeConstants(forGameSize: CGSize(
-                width: cardsView.bounds.width,
-                height: cardsView.bounds.height * (1 - bottomToHeightRatio)
-            ), cardCount: game.currentCardsInGame.count)
-        } else {
-            return CardSizeConstants(forGameSize: CGSize(
-                width: cardsView.bounds.width * (1 - sideToHeightRatio),
-                height: cardsView.bounds.height
-            ), cardCount: game.currentCardsInGame.count)
+            return CGSize(width: cardsView.bounds.width, height: cardsView.bounds.height * (1 - bottomToHeightRatio))
         }
+        else {
+            return CGSize(width: cardsView.bounds.width * (1 - sideToHeightRatio), height: cardsView.bounds.height)
+        }
+    }
+    
+    var cardSize: CGSize {
+        return getCardSize(for: cardsViewWithBoundsSize, withNumCards: game.currentCardsInGame.count)
+    }
+    
+    lazy var numColumns = cardsViewWithBoundsSize.height > cardsViewWithBoundsSize.width ? 4 : 6
+    lazy var columnWidth = cardsViewWithBoundsSize.width / CGFloat(numColumns)
+    lazy var cardWidthGap = columnWidth * cardWidthGapRatio
+    
+    var numRows: Int {
+        return Int(ceil(Double(game.currentCardsInGame.count) / Double(numColumns)))
+    }
+    var rowHeight: CGFloat {
+        return cardsViewWithBoundsSize.height / CGFloat(numRows)
+    }
+    var cardHeightGap: CGFloat {
+        return rowHeight * cardHeightGapRatio
+    }
+    
+    func getCardSize(for size: CGSize, withNumCards cardCount: Int) -> CGSize {
+        let cardWidth = columnWidth - 2 * cardWidthGap
+        let cardHeight = rowHeight - 2 * cardHeightGap
+        
+        return CGSize(width: cardWidth, height: cardHeight)
     }
     
     override func viewDidLayoutSubviews() {
@@ -156,8 +190,8 @@ class ViewController: UIViewController {
             }
             let animationDelay = TimeInterval(cardCount) / 2
             placeView(forCard: card,
-                      atRow: index / cardConstants.columnCount,
-                      inColumn: index % cardConstants.columnCount,
+                      atRow: index / numColumns,
+                      inColumn: index % numColumns,
                       withDelay: animationDelay)
         }
     }
@@ -207,9 +241,8 @@ class ViewController: UIViewController {
     
     private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
         let cardView = findCardView(for: card)
-        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
-        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
-        let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
+        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardSize.width + (2 * CGFloat(column) + 1) * cardWidthGap
+        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardSize.height + (2 * CGFloat(row) + 1) * cardHeightGap
         
         if cardsView.bounds.height < cardsView.bounds.width {
             xOrigin += cardsView.bounds.width * sideToHeightRatio
@@ -226,7 +259,7 @@ class ViewController: UIViewController {
                         cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
                     }
                     cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                    cardView.frame.size = cardSize
+                    cardView.frame.size = self.cardSize
             }, completion: { finished in
                 flipCardViewUp()
             })
@@ -256,7 +289,7 @@ class ViewController: UIViewController {
                 options: [],
                 animations: {
                     cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                    cardView.frame.size = cardSize
+                    cardView.frame.size = self.cardSize
             })
         }
         cardsView.addSubview(cardView)
@@ -356,5 +389,7 @@ class ViewController: UIViewController {
     lazy private var deckWidthRatio: CGFloat = cardArea.height < cardArea.width ? 0.3 : 0.9
     lazy private var deckHeightRatio: CGFloat = cardArea.height < cardArea.width ? 0.9 : 0.3
     let deckBorderRatio: CGFloat = 0.025
+    private let cardHeightGapRatio: CGFloat = 0.025
+    private let cardWidthGapRatio: CGFloat = 0.05
     
 }
