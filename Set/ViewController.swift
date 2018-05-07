@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     var cardViewDict = [Card: CardView]()
     private weak var timer: Timer?
     
+    
     @IBOutlet private weak var cardsView: UIView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
@@ -28,6 +29,7 @@ class ViewController: UIViewController {
             cardsView.addGestureRecognizer(swipeDownGesture)
         }
     }
+    lazy var animator = UIDynamicAnimator(referenceView: cardsView)
     
     let bottomViewToBoundsHeightRatio: CGFloat = 0.11
     let sideViewToBoundsWidthRatio: CGFloat = 0.14
@@ -90,11 +92,69 @@ class ViewController: UIViewController {
         }
     }
     
+    let drawingAnimationDuration: TimeInterval = 0.4
+    let flippingAnimationDuration: TimeInterval = 0.5
+    let freeFloatAnimationDuration: TimeInterval = 0.8
+    let sendToDiscardPileAnimationDuration: TimeInterval = 0.2
+    
     override func viewDidLayoutSubviews() {
         updateViewFromModel()
         
         createDeckView()
         createDiscardView()
+        
+        var positionCardsAnimationDelay: TimeInterval = 0
+        
+        for card in cardViewDict.keys {
+            if !game.currentCardsInGame.contains(card) {
+                positionCardsAnimationDelay = freeFloatAnimationDuration
+                animateRemoval(of: card)
+                if let index = cardViewDict.index(forKey: card) {
+                    cardViewDict.remove(at: index)
+                }
+            }
+        }
+    }
+    
+    private func animateRemoval(of card: Card){
+        let cardView = findCardView(for: card)
+        
+        let pushBehavior = UIPushBehavior(items: [cardView], mode: .instantaneous)
+        pushBehavior.magnitude = 1.0
+        pushBehavior.angle = (CGFloat.pi * 2) * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+        
+        cardView.layer.zPosition += 100
+        animator.addBehavior(pushBehavior)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: freeFloatAnimationDuration, repeats: false) { timer in
+            pushBehavior.removeItem(cardView)
+            pushBehavior.dynamicAnimator?.removeBehavior(pushBehavior)
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: self.sendToDiscardPileAnimationDuration,
+                delay: 0.0,
+                options: [],
+                animations: {
+                    cardView.frame.size = self.deckConstants.discardPileRect.size
+                    cardView.frame.origin = self.deckConstants.discardPileRect.origin
+            }, completion: { finished in
+                if cardView.isFaceUp {
+                    UIView.transition(
+                        with: cardView,
+                        duration: self.flippingAnimationDuration,
+                        options: [.transitionFlipFromLeft],
+                        animations: {
+                            cardView.isFaceUp = false
+                    }, completion: { [weak self] finished in
+                        if let realSelf = self, self?.discardView == nil {
+                            let newDiscardPile = CardView(frame: realSelf.deckConstants.discardPileRect)
+                            realSelf.cardsView.addSubview(newDiscardPile)
+                            realSelf.discardView = newDiscardPile
+                        }
+                        cardView.removeFromSuperview()
+                    })
+                }
+            })
+        }
     }
     
     @objc private func handleRotate(sender: UIRotationGestureRecognizer) {
