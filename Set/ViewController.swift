@@ -18,17 +18,8 @@ class ViewController: UIViewController {
     private weak var timer: Timer?
     private let deckSubviewIndex = 1
     
-    @IBOutlet private weak var cardsView: UIView! {
-        didSet {
-            let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
-            cardsView.addGestureRecognizer(rotateGesture)
-            
-            let swipeDownGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeDown(sender:)))
-            swipeDownGesture.direction = .down
-            swipeDownGesture.numberOfTouchesRequired = 1
-            cardsView.addGestureRecognizer(swipeDownGesture)
-        }
-    }
+    @IBOutlet private weak var cardsView: UIView!
+    
     lazy var animator = UIDynamicAnimator(referenceView: cardsView)
     
     let bottomViewToBoundsHeightRatio: CGFloat = 0.11
@@ -156,20 +147,6 @@ class ViewController: UIViewController {
                     })
                 }
             })
-        }
-    }
-    
-    @objc private func handleRotate(sender: UIRotationGestureRecognizer) {
-        if sender.state == .ended {
-            game.shuffleCardsInGame()
-            updateViewFromModel()
-        }
-    }
-    
-    @objc private func handleSwipeDown(sender: UISwipeGestureRecognizer) {
-        if sender.state == .ended {
-            game.addThreeCards()
-            updateViewFromModel()
         }
     }
     
