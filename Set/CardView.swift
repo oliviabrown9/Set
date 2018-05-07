@@ -26,6 +26,11 @@ class CardView: UIView {
         case A, B, C
     }
     
+    override func setNeedsDisplay() {
+        super.setNeedsDisplay()
+        self.isOpaque = false
+    }
+    
     var color: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var symbol: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var number: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
