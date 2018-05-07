@@ -1,8 +1,8 @@
 //
-//  DeckConstants.swift
+//  CardConstants.swift
 //  Set
 //
-//  Created by Olivia Brown on 5/6/18.
+//  Created by Olivia Brown on 5/7/18.
 //  Copyright © 2018 Olivia Brown. All rights reserved.
 //
 
@@ -34,4 +34,3 @@ struct CardSizeConstants {
         cardHeight = baseHeight - 2 * verticalCardSeperation
     }
 }
-

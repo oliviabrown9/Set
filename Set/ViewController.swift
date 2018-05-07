@@ -19,17 +19,6 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var cardsView: UIView!
     
-    // Constants
-    private let cardAspectRatio: CGFloat = 5/8
-    private let bottomToHeightRatio: CGFloat = 0.1
-    private let sideToHeightRatio: CGFloat = 0.15
-    private let drawingAnimationDuration: TimeInterval = 0.4
-    private let flippingAnimationDuration: TimeInterval = 0.5
-    private let freeFloatAnimationDuration: TimeInterval = 0.8
-    private let sendToDiscardPileAnimationDuration: TimeInterval = 0.1
-    lazy private var deckWidthRatio: CGFloat = cardArea.height < cardArea.width ? 0.3 : 0.9
-    lazy private var deckHeightRatio: CGFloat = cardArea.height < cardArea.width ? 0.9 : 0.5
-    
     var cardConstants: CardSizeConstants {
         if cardsView.bounds.height > cardsView.bounds.width {
             return CardSizeConstants(forGameSize: CGSize(
@@ -44,134 +33,8 @@ class ViewController: UIViewController {
         }
     }
     
-    func findCardView(for card: Card) -> CardView {
-        if cardViewDict[card] == nil {
-            cardViewDict[card] = createCardView(for: card)
-        }
-        return cardViewDict[card]!
-    }
-    
-    private func createCardView(for card: Card) -> CardView {
-        let cardView = CardView()
-        setCardViewAttributes(fromCard: card, forView: cardView)
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCardTap))
-        cardView.addGestureRecognizer(tap)
-        cardView.frame = deckView?.frame ?? CGRect.zero
-        
-        return cardView
-    }
-    
-    lazy private var cardArea = getCardArea()
-    
-    // Handles card area for orientation of device
-    private func getCardArea() -> CGRect {
-        if cardsView.bounds.height > cardsView.bounds.width {
-            return CGRect(
-                x: cardsView.bounds.origin.x,
-                y: cardsView.bounds.origin.y + cardsView.bounds.height * (1 - bottomToHeightRatio),
-                width: cardsView.bounds.width,
-                height: cardsView.bounds.height * bottomToHeightRatio)
-        }
-        else {
-            return CGRect(
-                x: cardsView.bounds.origin.x,
-                y: cardsView.bounds.origin.y,
-                width: cardsView.bounds.width * sideToHeightRatio,
-                height: cardsView.bounds.height)
-        }
-    }
-    
-    private var deckSize: CGSize {
-        return CGSize(width: cardArea.width * deckWidthRatio,
-                      height: cardArea.height * deckHeightRatio)
-    }
-    
-    private var deckRect: CGRect {
-        return CGRect(origin: CGPoint(x: cardArea.origin.x + cardArea.width * deckHorizontalBorderToSizeRatio,
-                                      y: cardArea.origin.y + cardArea.height * deckVerticalBorderToSizeRatio),
-                      size: deckSize)
-    }
-    
-    private var discardRect: CGRect {
-        let origin: CGPoint = cardArea.height < cardArea.width
-            ? CGPoint(x: cardArea.origin.x + cardArea.width - deckSize.width,
-                      y: cardArea.origin.y + deckSize.height * deckVerticalBorderToSizeRatio)
-            : CGPoint(x: cardArea.origin.x + deckSize.width * deckHorizontalBorderToSizeRatio,
-                      y: cardArea.origin.y + cardArea.height - deckSize.height)
-        return CGRect(origin: origin, size: deckSize)
-    }
-    
-    let deckHorizontalBorderToSizeRatio: CGFloat = 0.025
-    let deckVerticalBorderToSizeRatio: CGFloat = 0.025
-    
-    private func createDeckView() {
-        if let currentDeckView = deckView {
-            currentDeckView.removeFromSuperview()
-            deckView = nil
-        }
-        if !game.deck.cards.isEmpty {
-            deckView = CardView(frame: deckRect)
-            cardsView.addSubview(deckView!)
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleDeckTap))
-            deckView!.addGestureRecognizer(tap)
-        }
-    }
-    
-    private func addDiscardView() {
-        if let currentDiscardView = discardView {
-            currentDiscardView.removeFromSuperview()
-            discardView = CardView(frame: discardRect)
-            cardsView.addSubview(discardView!)
-        }
-    }
-    
     override func viewDidLayoutSubviews() {
         updateViewFromModel()
-    }
-    
-    lazy var dynamicAnimator = UIDynamicAnimator(referenceView: cardsView)
-    
-    private func animateRemoval(of card: Card){
-        let cardView = findCardView(for: card)
-        
-        let pushBehavior = UIPushBehavior(items: [cardView], mode: .instantaneous)
-        pushBehavior.magnitude = 1.0
-        pushBehavior.angle = (CGFloat.pi * 2) * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
-        
-        cardView.layer.zPosition += 100
-        dynamicAnimator.addBehavior(pushBehavior)
-        
-        timer = Timer.scheduledTimer(withTimeInterval: freeFloatAnimationDuration, repeats: false) { timer in
-            pushBehavior.removeItem(cardView)
-            pushBehavior.dynamicAnimator?.removeBehavior(pushBehavior)
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: self.sendToDiscardPileAnimationDuration,
-                delay: 0.0,
-                options: [],
-                animations: {
-                    cardView.frame.size = self.discardRect.size
-                    cardView.frame.origin = self.discardRect.origin
-            }, completion: { finished in
-                if cardView.isFaceUp {
-                    UIView.transition(
-                        with: cardView,
-                        duration: self.flippingAnimationDuration,
-                        options: [.transitionFlipFromLeft],
-                        animations: {
-                            cardView.isFaceUp = false
-                    }, completion: { [weak self] finished in
-                        if self?.discardView == nil {
-                            let newDiscardPile = CardView(frame: self!.discardRect)
-                            self?.cardsView.addSubview(newDiscardPile)
-                            self?.discardView = newDiscardPile
-                        }
-                        cardView.removeFromSuperview()
-                    })
-                }
-            })
-        }
     }
     
     @objc private func handleCardTap(sender: UITapGestureRecognizer) {
@@ -240,80 +103,6 @@ class ViewController: UIViewController {
         }
     }
     
-    private func animateCardViews() {
-        var cardCount = 0
-        
-        for (index, card) in game.currentCardsInGame.enumerated() {
-            let cardView = findCardView(for: card)
-            if cardView.frame.origin == deckView?.frame.origin {
-                cardCount += 1
-            }
-            let animationDelay = TimeInterval(cardCount) / 2
-            placeView(forCard: card,
-                      atRow: index / cardConstants.columnCount,
-                      inColumn: index % cardConstants.columnCount,
-                      withDelay: animationDelay)
-        }
-    }
-    
-    private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
-        let cardView = findCardView(for: card)
-        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
-        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
-        let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
-        
-        if cardsView.bounds.height < cardsView.bounds.width {
-            xOrigin += cardsView.bounds.width * sideToHeightRatio
-        }
-        
-        func animateFromDeck() {
-            UIViewPropertyAnimator.runningPropertyAnimator (
-                withDuration: drawingAnimationDuration,
-                delay: delay,
-                options: [],
-                animations: {
-                    cardView.transform = CGAffineTransform.identity
-                    if cardView.frame.width > cardView.frame.height {
-                        cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
-                    }
-                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                    cardView.frame.size = cardSize
-            }, completion: { finished in
-                flipCardView()
-            })
-        }
-        
-        func flipCardView() {
-            if !cardView.isFaceUp {
-                UIView.transition(
-                    with: cardView,
-                    duration: self.flippingAnimationDuration,
-                    options: [.transitionFlipFromLeft],
-                    animations: {
-                        cardView.isFaceUp = true
-                })
-            }
-        }
-        
-        cardView.alpha = 1
-        
-        if cardView.frame.origin == deckView?.frame.origin {
-            animateFromDeck()
-        }
-        else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: drawingAnimationDuration,
-                delay: 0,
-                options: [],
-                animations: {
-                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                    cardView.frame.size = cardSize
-            })
-        }
-        cardsView.addSubview(cardView)
-    }
-    
-    
     private func addOutline(to cardView: CardView, withCard card: Card) {
         // Outlines the selected cards and changes color if a set is correct/incorrect
         if game.selectedCards.contains(card) {
@@ -355,4 +144,217 @@ class ViewController: UIViewController {
         case .C : view.symbol = .C
         }
     }
+    
+    // MARK: Animation functions
+    private func animateCardViews() {
+        var cardCount = 0
+        
+        for (index, card) in game.currentCardsInGame.enumerated() {
+            let cardView = findCardView(for: card)
+            if cardView.frame.origin == deckView?.frame.origin {
+                cardCount += 1
+            }
+            let animationDelay = TimeInterval(cardCount) / 2
+            placeView(forCard: card,
+                      atRow: index / cardConstants.columnCount,
+                      inColumn: index % cardConstants.columnCount,
+                      withDelay: animationDelay)
+        }
+    }
+    
+    lazy var dynamicAnimator = UIDynamicAnimator(referenceView: cardsView)
+    
+    private func animateRemoval(of card: Card){
+        let cardView = findCardView(for: card)
+        
+        let pushBehavior = UIPushBehavior(items: [cardView], mode: .instantaneous)
+        pushBehavior.magnitude = 1.0
+        pushBehavior.angle = (CGFloat.pi * 2) * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
+        
+        cardView.layer.zPosition += 100
+        dynamicAnimator.addBehavior(pushBehavior)
+        
+        timer = Timer.scheduledTimer(withTimeInterval: matchDuration, repeats: false) { timer in
+            pushBehavior.removeItem(cardView)
+            pushBehavior.dynamicAnimator?.removeBehavior(pushBehavior)
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: self.discardDuration,
+                delay: 0.0,
+                options: [],
+                animations: {
+                    cardView.frame.size = self.discardRect.size
+                    cardView.frame.origin = self.discardRect.origin
+            }, completion: { finished in
+                if cardView.isFaceUp {
+                    UIView.transition(
+                        with: cardView,
+                        duration: self.flipDuration,
+                        options: [.transitionFlipFromLeft],
+                        animations: {
+                            cardView.isFaceUp = false
+                    }, completion: { [weak self] finished in
+                        if self?.discardView == nil {
+                            let newDiscardPile = CardView(frame: self!.discardRect)
+                            self?.cardsView.addSubview(newDiscardPile)
+                            self?.discardView = newDiscardPile
+                        }
+                        cardView.removeFromSuperview()
+                    })
+                }
+            })
+        }
+    }
+    
+    private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
+        let cardView = findCardView(for: card)
+        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
+        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
+        let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
+        
+        if cardsView.bounds.height < cardsView.bounds.width {
+            xOrigin += cardsView.bounds.width * sideToHeightRatio
+        }
+        
+        func animateFromDeck() {
+            UIViewPropertyAnimator.runningPropertyAnimator (
+                withDuration: drawingCardDuration,
+                delay: delay,
+                options: [],
+                animations: {
+                    cardView.transform = CGAffineTransform.identity
+                    if cardView.frame.width > cardView.frame.height {
+                        cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
+                    }
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            }, completion: { finished in
+                flipCardViewUp()
+            })
+        }
+        
+        func flipCardViewUp() {
+            if !cardView.isFaceUp {
+                UIView.transition(
+                    with: cardView,
+                    duration: self.flipDuration,
+                    options: [.transitionFlipFromLeft],
+                    animations: {
+                        cardView.isFaceUp = true
+                })
+            }
+        }
+        
+        cardView.alpha = 1
+        
+        if cardView.frame.origin == deckView?.frame.origin {
+            animateFromDeck()
+        }
+        else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: drawingCardDuration,
+                delay: 0,
+                options: [],
+                animations: {
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            })
+        }
+        cardsView.addSubview(cardView)
+    }
+    
+    // MARK: Handling views functions
+    func findCardView(for card: Card) -> CardView {
+        if cardViewDict[card] == nil {
+            cardViewDict[card] = createCardView(for: card)
+        }
+        return cardViewDict[card]!
+    }
+    
+    private func createCardView(for card: Card) -> CardView {
+        let cardView = CardView()
+        setCardViewAttributes(fromCard: card, forView: cardView)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCardTap))
+        cardView.addGestureRecognizer(tap)
+        cardView.frame = deckView?.frame ?? CGRect.zero
+        
+        return cardView
+    }
+    
+    private func createDeckView() {
+        if let currentDeckView = deckView {
+            currentDeckView.removeFromSuperview()
+            deckView = nil
+        }
+        if !game.deck.cards.isEmpty {
+            deckView = CardView(frame: deckRect)
+            cardsView.addSubview(deckView!)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleDeckTap))
+            deckView!.addGestureRecognizer(tap)
+        }
+    }
+    
+    private func addDiscardView() {
+        if let currentDiscardView = discardView {
+            currentDiscardView.removeFromSuperview()
+            discardView = CardView(frame: discardRect)
+            cardsView.addSubview(discardView!)
+        }
+    }
+    
+    // MARK: Sizing functions and variables
+    
+    // Handles card area for orientation of device
+    private func getCardArea() -> CGRect {
+        if cardsView.bounds.height > cardsView.bounds.width {
+            return CGRect(
+                x: cardsView.bounds.origin.x,
+                y: cardsView.bounds.origin.y + cardsView.bounds.height * (1 - bottomToHeightRatio),
+                width: cardsView.bounds.width,
+                height: cardsView.bounds.height * bottomToHeightRatio)
+        }
+        else {
+            return CGRect(
+                x: cardsView.bounds.origin.x,
+                y: cardsView.bounds.origin.y,
+                width: cardsView.bounds.width * sideToHeightRatio,
+                height: cardsView.bounds.height)
+        }
+    }
+    
+    lazy private var cardArea = getCardArea()
+    
+    private var deckSize: CGSize {
+        return CGSize(width: cardArea.width * deckWidthRatio,
+                      height: cardArea.height * deckHeightRatio)
+    }
+    
+    private var deckRect: CGRect {
+        return CGRect(origin: CGPoint(x: cardArea.origin.x + cardArea.width * deckBorderRatio,
+                                      y: cardArea.origin.y + cardArea.height * deckBorderRatio),
+                      size: deckSize)
+    }
+    
+    private var discardRect: CGRect {
+        let origin: CGPoint = cardArea.height < cardArea.width
+            ? CGPoint(x: cardArea.origin.x + cardArea.width - deckSize.width,
+                      y: cardArea.origin.y + deckSize.height * deckBorderRatio)
+            : CGPoint(x: cardArea.origin.x + deckSize.width * deckBorderRatio,
+                      y: cardArea.origin.y + cardArea.height - deckSize.height * (1 + deckBorderRatio))
+        return CGRect(origin: origin, size: deckSize)
+    }
+    
+    // Constants
+    private let cardAspectRatio: CGFloat = 5/8
+    private let bottomToHeightRatio: CGFloat = 0.2
+    private let sideToHeightRatio: CGFloat = 0.15
+    private let drawingCardDuration: TimeInterval = 0.3
+    private let flipDuration: TimeInterval = 1/2
+    private let matchDuration: TimeInterval = 1/2
+    private let discardDuration: TimeInterval = 1/20
+    lazy private var deckWidthRatio: CGFloat = cardArea.height < cardArea.width ? 0.3 : 0.9
+    lazy private var deckHeightRatio: CGFloat = cardArea.height < cardArea.width ? 0.9 : 0.5
+    let deckBorderRatio: CGFloat = 0.025
+    
 }
