@@ -11,7 +11,12 @@ import UIKit
 class ViewController: UIViewController {
     
     private(set) var game = SetGame()
-    @IBOutlet private weak var cardsView: CardsView! {
+    
+    var deckView: CardView?
+    var discardPileView: CardView?
+    var cardViews = [Card: CardView]()
+    
+    @IBOutlet private weak var cardsView: UIView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
             cardsView.addGestureRecognizer(rotateGesture)
@@ -67,30 +72,53 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    private let cardAspectRatio: CGFloat = 5/8
+    
     private func updateViewFromModel() {
+        var cardGrid = Grid(layout: .aspectRatio(cardAspectRatio), frame: cardsView.bounds)
+        cardGrid.cellCount = game.currentCardsInGame.count
         
         var currentCardViews = [CardView]()
         
-        for card in game.currentCardsInGame {
+        for cardIndex in game.currentCardsInGame.indices {
             let cardView = CardView()
-            setCardViewAttributes(fromCard: card, forView: cardView)
-            addOutline(to: cardView, withCard: card)
+            setCardViewAttributes(fromCard: game.currentCardsInGame[cardIndex], forView: cardView)
+            addOutline(to: cardView, withCard: game.currentCardsInGame[cardIndex])
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
             cardView.addGestureRecognizer(tap)
-            
-            cardsView.testFrame = dealThreeCardsButton.frame
             currentCardViews.append(cardView)
+            
+            if let cell = cardGrid[cardIndex] {
+                if !cardsView.subviews.contains(cardView) {
+                    cardsView.addSubview(cardView)
+                    cardView.frame.origin = dealThreeCardsButton.frame.origin
+                }
+                if cardView.frame.origin == dealThreeCardsButton.frame.origin {
+                    UIViewPropertyAnimator.runningPropertyAnimator(
+                        withDuration: 0.8,
+                        delay: 1.5,
+                        options: [.curveEaseInOut],
+                        animations: {
+                            cardView.frame = cell
+                    }, completion: { finished in
+                        UIView.transition(
+                            with: cardView,
+                            duration: 0.5,
+                            options: [.transitionFlipFromLeft],
+                            animations: {
+                                cardView.isFaceUp = true
+                        })
+                    })
+                }
+            }
         }
-        cardsView.cardViewsOnScreen = currentCardViews
         
         // Update the ability to deal three more cards & update score label
 //        if game.deck.cards.isEmpty {
 //            dealThreeCardsButton.isEnabled = false
 //        }
 //        scoreLabel.text = "Score: \(game.score)"
-        
-//        gameView.addSubview(cardView)
     }
     
     

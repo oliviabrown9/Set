@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Card: Equatable {
+struct Card: Hashable {
     
     let color: Attribute
     let symbol: Attribute
@@ -17,6 +17,10 @@ struct Card: Equatable {
     
     static func ==(lhs: Card, rhs: Card) -> Bool {
         return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
+    }
+    
+    var hashValue: Int {
+        return (color.rawValue * 2) + (symbol.rawValue * 3) + (number.rawValue * 4) + (shading.rawValue * 5)
     }
     
     enum Attribute: Int {
