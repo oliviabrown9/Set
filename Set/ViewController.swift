@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     private(set) var game = SetGame()
     
     var deckView: CardView?
-    var discardPileView: CardView?
+    var discardView: CardView?
     var cardViewDict = [Card: CardView]()
     private weak var timer: Timer?
     
@@ -26,6 +26,27 @@ class ViewController: UIViewController {
             swipeDownGesture.direction = .down
             swipeDownGesture.numberOfTouchesRequired = 1
             cardsView.addGestureRecognizer(swipeDownGesture)
+        }
+    }
+    
+    let bottomViewToBoundsHeightRatio: CGFloat = 0.11
+    let sideViewToBoundsWidthRatio: CGFloat = 0.14
+    
+    var deckConstants: DeckSizeConstants {
+        if cardsView.bounds.height > cardsView.bounds.width {
+            return DeckSizeConstants(forViewBounds:
+                CGRect(
+                    x: cardsView.bounds.origin.x,
+                    y: cardsView.bounds.origin.y + cardsView.bounds.height * (1 - bottomViewToBoundsHeightRatio),
+                    width: cardsView.bounds.width,
+                    height: cardsView.bounds.height * bottomViewToBoundsHeightRatio))
+        } else {
+            return DeckSizeConstants(forViewBounds:
+                CGRect(
+                    x: cardsView.bounds.origin.x,
+                    y: cardsView.bounds.origin.y,
+                    width: cardsView.bounds.width * sideViewToBoundsWidthRatio,
+                    height: cardsView.bounds.height))
         }
     }
     
@@ -50,8 +71,30 @@ class ViewController: UIViewController {
         return cardView
     }
     
+    private func createDeckView() {
+        if let currentDeckView = deckView {
+            currentDeckView.removeFromSuperview()
+            deckView = nil
+        }
+        if !game.deck.cards.isEmpty {
+            deckView = CardView(frame: deckConstants.deckRect)
+            cardsView.addSubview(deckView!)
+        }
+    }
+    
+    private func createDiscardView() {
+        if let currentDiscardView = discardView {
+            currentDiscardView.removeFromSuperview()
+            discardView = CardView(frame: deckConstants.discardPileRect)
+            cardsView.addSubview(discardView!)
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         updateViewFromModel()
+        
+        createDeckView()
+        createDiscardView()
     }
     
     @objc private func handleRotate(sender: UIRotationGestureRecognizer) {
@@ -97,12 +140,8 @@ class ViewController: UIViewController {
     private let cardAspectRatio: CGFloat = 5/8
     
     private func updateViewFromModel() {
+        scoreLabel.text = "Score: \(game.score)"
         
-        // Update the ability to deal three more cards & update score label
-//        if game.deck.cards.isEmpty {
-//            dealThreeCardsButton.isEnabled = false
-//        }
-//        scoreLabel.text = "Score: \(game.score)"
     }
     
     
