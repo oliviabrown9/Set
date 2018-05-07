@@ -76,7 +76,6 @@ class ViewController: UIViewController {
     private func createCardView(for card: Card) -> CardView {
         let cardView = CardView()
         setCardViewAttributes(fromCard: card, forView: cardView)
-        addOutline(to: cardView, withCard: card)
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         cardView.addGestureRecognizer(tap)
@@ -175,7 +174,7 @@ class ViewController: UIViewController {
                 return
             }
             if let cardIndex = cardsView.subviews.index(of: selectedCardView) {
-                game.selectCard(card: game.currentCardsInGame[cardIndex])
+                game.selectCard(card: game.currentCardsInGame[cardIndex - 1])
                 updateViewFromModel()
             }
         }
@@ -206,6 +205,8 @@ class ViewController: UIViewController {
         var positionCardsAnimationDelay: TimeInterval = 0
         
         for card in cardViewDict.keys {
+            let currentCardView = findCardView(for: card)
+            addOutline(to: currentCardView, withCard: card)
             if !game.currentCardsInGame.contains(card) {
                 positionCardsAnimationDelay = freeFloatAnimationDuration
                 animateRemoval(of: card)

@@ -20,7 +20,7 @@ class CardView: UIView {
     private let squiggleRatio: CGFloat = 0.3
     private let stripeStride: CGFloat = 8
     
-    var isFaceUp: Bool = true { didSet { setNeedsDisplay(); setNeedsLayout() } }
+    var isFaceUp = false { didSet { setNeedsDisplay(); setNeedsLayout() } }
     
     enum CardViewAttribute: Int {
         case A, B, C
@@ -44,7 +44,6 @@ class CardView: UIView {
             UIColor.purple.setFill()
             roundedRect.fill()
         }
-        
     }
     
     private func drawCardContent(inFrame frameRect: CGRect) {
