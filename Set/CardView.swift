@@ -18,7 +18,7 @@ class CardView: UIView {
     private let cornerRadiusRatio: CGFloat = 0.1
     private let cardEdgeInset: CGFloat = 0.1
     private let squiggleRatio: CGFloat = 0.3
-    private let stripeStride: CGFloat = 8
+    private let stripeStride: CGFloat = 6
     
     var isFaceUp = false { didSet { setNeedsDisplay(); setNeedsLayout() } }
     
