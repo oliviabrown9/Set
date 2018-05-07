@@ -205,7 +205,11 @@ class ViewController: UIViewController {
     
     @IBAction private func newGame(_ sender: UIButton) {
         game.newGame()
-        updateViewFromModel(newGame: true)
+        for card in cardViewDict.keys {
+            animateRemoval(of: card)
+        }
+        cardViewDict.removeAll()
+        updateViewFromModel()
     }
     
     private func dealThreeCards() {
@@ -213,152 +217,142 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    private func updateViewFromModel(newGame: Bool = false) {
+    private func updateViewFromModel() {
         scoreLabel.text = "Score: \(game.score)"
         
         createDeckView()
         addDiscardView()
         
-        updateCardsOnScreen(newGame: newGame)
+        updateCardsOnScreen()
         animateCardViews()
     }
     
-    private func updateCardsOnScreen(newGame: Bool) {
-        if newGame {
-            for card in cardViewDict.keys {
-                if newGame {
-                    animateRemoval(of: card)
-                }
-            }
-            cardViewDict.removeAll()
-        }
-        else {
-            for card in cardViewDict.keys {
-                let currentCardView = findCardView(for: card)
-                addOutline(to: currentCardView, withCard: card)
-                if !game.currentCardsInGame.contains(card) {
-                    animateRemoval(of: card)
-                    if let index = cardViewDict.index(forKey: card) {
-                        cardViewDict.remove(at: index)
-                    }
+    private func updateCardsOnScreen() {
+        for card in cardViewDict.keys {
+            let currentCardView = findCardView(for: card)
+            addOutline(to: currentCardView, withCard: card)
+            if !game.currentCardsInGame.contains(card) {
+                animateRemoval(of: card)
+                if let index = cardViewDict.index(forKey: card) {
+                    cardViewDict.remove(at: index)
                 }
             }
         }
     }
+    
+    private func animateCardViews() {
+        var cardCount = 0
         
-        private func animateCardViews() {
-            var cardCount = 0
-            
-            for (index, card) in game.currentCardsInGame.enumerated() {
-                let cardView = findCardView(for: card)
-                if cardView.frame.origin == deckView?.frame.origin {
-                    cardCount += 1
-                }
-                let animationDelay = TimeInterval(cardCount) / 2
-                placeView(forCard: card,
-                          atRow: index / cardConstants.columnCount,
-                          inColumn: index % cardConstants.columnCount,
-                          withDelay: animationDelay)
-            }
-        }
-        
-        private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
+        for (index, card) in game.currentCardsInGame.enumerated() {
             let cardView = findCardView(for: card)
-            var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
-            let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
-            let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
-            
-            if cardsView.bounds.height < cardsView.bounds.width {
-                xOrigin += cardsView.bounds.width * sideToHeightRatio
-            }
-            
-            func animateFromDeck() {
-                UIViewPropertyAnimator.runningPropertyAnimator (
-                    withDuration: drawingAnimationDuration,
-                    delay: delay,
-                    options: [],
-                    animations: {
-                        cardView.transform = CGAffineTransform.identity
-                        if cardView.frame.width > cardView.frame.height {
-                            cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
-                        }
-                        cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                        cardView.frame.size = cardSize
-                }, completion: { finished in
-                    flipCardView()
-                })
-            }
-            
-            func flipCardView() {
-                if !cardView.isFaceUp {
-                    UIView.transition(
-                        with: cardView,
-                        duration: self.flippingAnimationDuration,
-                        options: [.transitionFlipFromLeft],
-                        animations: {
-                            cardView.isFaceUp = true
-                    })
-                }
-            }
-            
-            cardView.alpha = 1
-            
             if cardView.frame.origin == deckView?.frame.origin {
-                animateFromDeck()
+                cardCount += 1
             }
-            else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
-                UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: drawingAnimationDuration,
-                    delay: 0,
-                    options: [],
-                    animations: {
-                        cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                        cardView.frame.size = cardSize
-                })
-            }
-            cardsView.addSubview(cardView)
+            let animationDelay = TimeInterval(cardCount) / 2
+            placeView(forCard: card,
+                      atRow: index / cardConstants.columnCount,
+                      inColumn: index % cardConstants.columnCount,
+                      withDelay: animationDelay)
+        }
+    }
+    
+    private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
+        let cardView = findCardView(for: card)
+        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
+        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
+        let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
+        
+        if cardsView.bounds.height < cardsView.bounds.width {
+            xOrigin += cardsView.bounds.width * sideToHeightRatio
         }
         
+        func animateFromDeck() {
+            UIViewPropertyAnimator.runningPropertyAnimator (
+                withDuration: drawingAnimationDuration,
+                delay: delay,
+                options: [],
+                animations: {
+                    cardView.transform = CGAffineTransform.identity
+                    if cardView.frame.width > cardView.frame.height {
+                        cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
+                    }
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            }, completion: { finished in
+                flipCardView()
+            })
+        }
         
-        private func addOutline(to cardView: CardView, withCard card: Card) {
-            // Outlines the selected cards and changes color if a set is correct/incorrect
-            if game.selectedCards.contains(card) {
-                cardView.layer.borderWidth = 5.0
-                if game.setFound(withCards: game.selectedCards) {
-                    cardView.layer.borderColor = UIColor.green.cgColor
-                }
-                else if game.selectedCards.count == 3 {
-                    cardView.layer.borderColor = UIColor.red.cgColor
-                }
-                else {
-                    cardView.layer.borderColor = UIColor.black.cgColor
-                }
+        func flipCardView() {
+            if !cardView.isFaceUp {
+                UIView.transition(
+                    with: cardView,
+                    duration: self.flippingAnimationDuration,
+                    options: [.transitionFlipFromLeft],
+                    animations: {
+                        cardView.isFaceUp = true
+                })
+            }
+        }
+        
+        cardView.alpha = 1
+        
+        if cardView.frame.origin == deckView?.frame.origin {
+            animateFromDeck()
+        }
+        else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: drawingAnimationDuration,
+                delay: 0,
+                options: [],
+                animations: {
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            })
+        }
+        cardsView.addSubview(cardView)
+    }
+    
+    
+    private func addOutline(to cardView: CardView, withCard card: Card) {
+        // Outlines the selected cards and changes color if a set is correct/incorrect
+        if game.selectedCards.contains(card) {
+            cardView.layer.borderWidth = 5.0
+            if game.setFound(withCards: game.selectedCards) {
+                cardView.layer.borderColor = UIColor.green.cgColor
+            }
+            else if game.selectedCards.count == 3 {
+                cardView.layer.borderColor = UIColor.red.cgColor
             }
             else {
-                cardView.layer.borderWidth = 0.0
+                cardView.layer.borderColor = UIColor.black.cgColor
             }
         }
-        
-        private func setCardViewAttributes(fromCard card: Card, forView view: CardView) {
-            switch card.color {
-            case .A : view.color = .A
-            case .B : view.color = .B
-            case .C : view.color = .C
-            }
-            switch card.number {
-            case .A : view.number = .A
-            case .B : view.number = .B
-            case .C : view.number = .C
-            }
-            switch card.shading {
-            case .A : view.shading = .A
-            case .B : view.shading = .B
-            case .C : view.shading = .C
-            }
-            switch card.symbol {
-            case .A : view.symbol = .A
-            case .B : view.symbol = .B
-            case .C : view.symbol = .C
-            }
+        else {
+            cardView.layer.borderWidth = 0.0
         }
+    }
+    
+    private func setCardViewAttributes(fromCard card: Card, forView view: CardView) {
+        switch card.color {
+        case .A : view.color = .A
+        case .B : view.color = .B
+        case .C : view.color = .C
+        }
+        switch card.number {
+        case .A : view.number = .A
+        case .B : view.number = .B
+        case .C : view.number = .C
+        }
+        switch card.shading {
+        case .A : view.shading = .A
+        case .B : view.shading = .B
+        case .C : view.shading = .C
+        }
+        switch card.symbol {
+        case .A : view.symbol = .A
+        case .B : view.symbol = .B
+        case .C : view.symbol = .C
+        }
+    }
 }
