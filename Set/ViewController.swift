@@ -339,8 +339,8 @@ class ViewController: UIViewController {
     private var discardRect: CGRect {
         let origin: CGPoint = cardArea.height < cardArea.width
             ? CGPoint(x: cardArea.origin.x + cardArea.width - deckSize.width,
-                      y: cardArea.origin.y + deckSize.height * deckBorderRatio)
-            : CGPoint(x: cardArea.origin.x + deckSize.width * deckBorderRatio,
+                      y: deckRect.minY)
+            : CGPoint(x: deckRect.minX,
                       y: cardArea.origin.y + cardArea.height - deckSize.height * (1 + deckBorderRatio))
         return CGRect(origin: origin, size: deckSize)
     }
@@ -354,7 +354,7 @@ class ViewController: UIViewController {
     private let matchDuration: TimeInterval = 1/2
     private let discardDuration: TimeInterval = 1/20
     lazy private var deckWidthRatio: CGFloat = cardArea.height < cardArea.width ? 0.3 : 0.9
-    lazy private var deckHeightRatio: CGFloat = cardArea.height < cardArea.width ? 0.9 : 0.5
+    lazy private var deckHeightRatio: CGFloat = cardArea.height < cardArea.width ? 0.9 : 0.3
     let deckBorderRatio: CGFloat = 0.025
     
 }
