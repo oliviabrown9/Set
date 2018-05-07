@@ -24,16 +24,6 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="An9-4A-dLk">
-                                <rect key="frame" x="249" y="750" width="106" height="42"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
-                                <state key="normal" title="+ 3 Cards">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="dealThreeCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="w2c-ne-8xp"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="znn-OC-ge7">
                                 <rect key="frame" x="20" y="750" width="120" height="42"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
@@ -44,7 +34,7 @@
                                     <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="3Ob-hD-zao"/>
                                 </connections>
                             </button>
-                            <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa" customClass="CardsView" customModule="Set" customModuleProvider="target">
+                            <view opaque="NO" contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Cxe-H4-lxa">
                                 <rect key="frame" x="15" y="89" width="345" height="656"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <gestureRecognizers/>
@@ -53,11 +43,9 @@
                         <color key="backgroundColor" white="0.75" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Cxe-H4-lxa" secondAttribute="trailing" constant="15" id="2fp-f8-IMv"/>
-                            <constraint firstAttribute="bottom" secondItem="An9-4A-dLk" secondAttribute="bottom" constant="20" id="7eM-jI-xVg"/>
                             <constraint firstItem="Cxe-H4-lxa" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="9l0-pu-DUb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="An9-4A-dLk" secondAttribute="trailing" constant="20" id="9wH-iw-M4Y"/>
-                            <constraint firstItem="An9-4A-dLk" firstAttribute="top" secondItem="Cxe-H4-lxa" secondAttribute="bottom" constant="5" id="MRO-rI-iqI"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="Nf0-Ku-vff"/>
+                            <constraint firstItem="znn-OC-ge7" firstAttribute="top" secondItem="Cxe-H4-lxa" secondAttribute="bottom" constant="5" id="RsV-nl-XL0"/>
                             <constraint firstAttribute="bottom" secondItem="znn-OC-ge7" secondAttribute="bottom" constant="20" id="Ytn-LW-SZA"/>
                             <constraint firstItem="znn-OC-ge7" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="aCZ-cz-ot1"/>
                             <constraint firstItem="pYL-23-MFw" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="skf-nZ-fvU"/>
@@ -67,7 +55,6 @@
                     </view>
                     <connections>
                         <outlet property="cardsView" destination="Cxe-H4-lxa" id="ZW6-JM-z7v"/>
-                        <outlet property="dealThreeCardsButton" destination="An9-4A-dLk" id="Wo7-ss-Mdn"/>
                         <outlet property="scoreLabel" destination="pYL-23-MFw" id="XRd-Tw-apb"/>
                     </connections>
                 </viewController>

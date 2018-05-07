@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var discardView: CardView?
     var cardViewDict = [Card: CardView]()
     private weak var timer: Timer?
+    private let deckSubviewIndex = 1
     
     @IBOutlet private weak var cardsView: UIView! {
         didSet {
@@ -76,8 +77,8 @@ class ViewController: UIViewController {
     private func createCardView(for card: Card) -> CardView {
         let cardView = CardView()
         setCardViewAttributes(fromCard: card, forView: cardView)
-
-        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleCardTap))
         cardView.addGestureRecognizer(tap)
         
         cardView.frame = deckView?.frame ?? CGRect.zero
@@ -93,7 +94,11 @@ class ViewController: UIViewController {
         if !game.deck.cards.isEmpty {
             deckView = CardView(frame: deckConstants.deckRect)
             cardsView.addSubview(deckView!)
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleDeckTap))
+            deckView!.addGestureRecognizer(tap)
         }
+        
     }
     
     private func createDiscardView() {
@@ -168,28 +173,34 @@ class ViewController: UIViewController {
         }
     }
     
-    @objc private func handleTap(sender: UITapGestureRecognizer) {
+    @objc private func handleCardTap(sender: UITapGestureRecognizer) {
         if sender.state == .ended {
             guard let selectedCardView = sender.view else {
                 return
             }
             if let cardIndex = cardsView.subviews.index(of: selectedCardView) {
                 game.selectCard(card: game.currentCardsInGame[cardIndex - 1])
-                updateViewFromModel()
+            }
+            updateViewFromModel()
+        }
+    }
+    
+    @objc private func handleDeckTap(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            if !game.deck.cards.isEmpty {
+                dealThreeCards()
             }
         }
     }
     
-    @IBOutlet private weak var dealThreeCardsButton: UIButton!
     @IBOutlet private weak var scoreLabel: UILabel!
     
     @IBAction private func newGame(_ sender: UIButton) {
         game.newGame()
         updateViewFromModel()
-        dealThreeCardsButton.isEnabled = true
     }
     
-    @IBAction private func dealThreeCards(_ sender: UIButton) {
+    private func dealThreeCards() {
         game.addThreeCards()
         updateViewFromModel()
     }
