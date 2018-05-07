@@ -14,7 +14,8 @@ class ViewController: UIViewController {
     
     var deckView: CardView?
     var discardPileView: CardView?
-    var cardViews = [Card: CardView]()
+    var cardViewDict = [Card: CardView]()
+    private weak var timer: Timer?
     
     @IBOutlet private weak var cardsView: UIView! {
         didSet {
@@ -26,6 +27,27 @@ class ViewController: UIViewController {
             swipeDownGesture.numberOfTouchesRequired = 1
             cardsView.addGestureRecognizer(swipeDownGesture)
         }
+    }
+    
+    func findCardView(for card: Card) -> CardView {
+        if cardViewDict[card] == nil {
+            cardViewDict[card] = createCardView(for: card)
+        }
+        
+        return cardViewDict[card]!
+    }
+    
+    private func createCardView(for card: Card) -> CardView {
+        let cardView = CardView()
+        setCardViewAttributes(fromCard: card, forView: cardView)
+        addOutline(to: cardView, withCard: card)
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        cardView.addGestureRecognizer(tap)
+        
+        cardView.frame = deckView?.frame ?? CGRect.zero
+        
+        return cardView
     }
     
     override func viewDidLayoutSubviews() {
@@ -75,44 +97,6 @@ class ViewController: UIViewController {
     private let cardAspectRatio: CGFloat = 5/8
     
     private func updateViewFromModel() {
-        var cardGrid = Grid(layout: .aspectRatio(cardAspectRatio), frame: cardsView.bounds)
-        cardGrid.cellCount = game.currentCardsInGame.count
-        
-        var currentCardViews = [CardView]()
-        
-        for cardIndex in game.currentCardsInGame.indices {
-            let cardView = CardView()
-            setCardViewAttributes(fromCard: game.currentCardsInGame[cardIndex], forView: cardView)
-            addOutline(to: cardView, withCard: game.currentCardsInGame[cardIndex])
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            cardView.addGestureRecognizer(tap)
-            currentCardViews.append(cardView)
-            
-            if let cell = cardGrid[cardIndex] {
-                if !cardsView.subviews.contains(cardView) {
-                    cardsView.addSubview(cardView)
-                    cardView.frame.origin = dealThreeCardsButton.frame.origin
-                }
-                if cardView.frame.origin == dealThreeCardsButton.frame.origin {
-                    UIViewPropertyAnimator.runningPropertyAnimator(
-                        withDuration: 0.8,
-                        delay: 1.5,
-                        options: [.curveEaseInOut],
-                        animations: {
-                            cardView.frame = cell
-                    }, completion: { finished in
-                        UIView.transition(
-                            with: cardView,
-                            duration: 0.5,
-                            options: [.transitionFlipFromLeft],
-                            animations: {
-                                cardView.isFaceUp = true
-                        })
-                    })
-                }
-            }
-        }
         
         // Update the ability to deal three more cards & update score label
 //        if game.deck.cards.isEmpty {
