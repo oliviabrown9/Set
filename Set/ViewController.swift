@@ -17,7 +17,6 @@ class ViewController: UIViewController {
     var cardViewDict = [Card: CardView]()
     private weak var timer: Timer?
     
-    
     @IBOutlet private weak var cardsView: UIView! {
         didSet {
             let rotateGesture = UIRotationGestureRecognizer(target: self, action: #selector(handleRotate(sender:)))
@@ -49,6 +48,20 @@ class ViewController: UIViewController {
                     y: cardsView.bounds.origin.y,
                     width: cardsView.bounds.width * sideViewToBoundsWidthRatio,
                     height: cardsView.bounds.height))
+        }
+    }
+    
+    var cardConstants: CardSizeConstants {
+        if cardsView.bounds.height > cardsView.bounds.width {
+            return CardSizeConstants(forGameSize: CGSize(
+                width: cardsView.bounds.width,
+                height: cardsView.bounds.height * (1 - bottomViewToBoundsHeightRatio)
+            ), cardCount: game.currentCardsInGame.count)
+        } else {
+            return CardSizeConstants(forGameSize: CGSize(
+                width: cardsView.bounds.width * (1 - sideViewToBoundsWidthRatio),
+                height: cardsView.bounds.height
+            ), cardCount: game.currentCardsInGame.count)
         }
     }
     
@@ -99,21 +112,6 @@ class ViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         updateViewFromModel()
-        
-        createDeckView()
-        createDiscardView()
-        
-        var positionCardsAnimationDelay: TimeInterval = 0
-        
-        for card in cardViewDict.keys {
-            if !game.currentCardsInGame.contains(card) {
-                positionCardsAnimationDelay = freeFloatAnimationDuration
-                animateRemoval(of: card)
-                if let index = cardViewDict.index(forKey: card) {
-                    cardViewDict.remove(at: index)
-                }
-            }
-        }
     }
     
     private func animateRemoval(of card: Card){
@@ -202,6 +200,80 @@ class ViewController: UIViewController {
     private func updateViewFromModel() {
         scoreLabel.text = "Score: \(game.score)"
         
+        createDeckView()
+        createDiscardView()
+        
+        var positionCardsAnimationDelay: TimeInterval = 0
+        
+        for card in cardViewDict.keys {
+            if !game.currentCardsInGame.contains(card) {
+                positionCardsAnimationDelay = freeFloatAnimationDuration
+                animateRemoval(of: card)
+                if let index = cardViewDict.index(forKey: card) {
+                    cardViewDict.remove(at: index)
+                }
+            }
+        }
+        
+        var newCardCount = -1
+        
+        for (index,card) in game.currentCardsInGame.enumerated() {
+            
+            let cardView = findCardView(for: card)
+            if cardView.frame.origin == deckView?.frame.origin { newCardCount += 1 }
+            let animationDelay = positionCardsAnimationDelay + TimeInterval(newCardCount) * drawingAnimationDuration
+            positionCard(card, rowIndex: index / cardConstants.columnCount, columnIndex: index % cardConstants.columnCount, animationDelay: animationDelay)
+        }
+    }
+    
+    private func positionCard(_ card: Card, rowIndex row: Int, columnIndex column: Int, animationDelay: TimeInterval = 0.0) {
+        let cardView = findCardView(for: card)
+        
+        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardConstants.cardWidth + (2 * CGFloat(column) + 1) * cardConstants.horizontalCardSeperation
+        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardConstants.cardHeight + (2 * CGFloat(row) + 1) * cardConstants.verticalCardSeperation
+        let cardSize = CGSize(width: cardConstants.cardWidth, height: cardConstants.cardHeight)
+        
+        if cardsView.bounds.height < cardsView.bounds.width {
+            xOrigin += cardsView.bounds.width * sideViewToBoundsWidthRatio
+        }
+        
+        cardView.alpha = 1
+        
+        if cardView.frame.origin == deckView?.frame.origin {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: drawingAnimationDuration,
+                delay: animationDelay,
+                options: [],
+                animations: {
+                    cardView.transform = CGAffineTransform.identity
+                    if cardView.frame.width > cardView.frame.height {
+                        cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
+                    }
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            }, completion: { finished in
+                if !cardView.isFaceUp {
+                    UIView.transition(
+                        with: cardView,
+                        duration: self.flippingAnimationDuration,
+                        options: [.transitionFlipFromLeft],
+                        animations: {
+                            cardView.isFaceUp = true
+                    })
+                }
+            })
+        } else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: drawingAnimationDuration,
+                delay: 0,
+                options: [],
+                animations: {
+                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.size = cardSize
+            })
+        }
+        
+        cardsView.addSubview(cardView)
     }
     
     
