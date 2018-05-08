@@ -31,6 +31,11 @@ class CardView: UIView {
         self.isOpaque = false
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        setNeedsDisplay()
+    }
+    
     var color: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var symbol: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
     var number: CardViewAttribute = .A { didSet { setNeedsDisplay() } }
