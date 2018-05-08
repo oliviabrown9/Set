@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CardView: UIView {
+class SetCardView: UIView {
 
     // Constants
     private let symbolGapRatio: CGFloat = 0.2

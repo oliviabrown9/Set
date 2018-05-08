@@ -8,14 +8,14 @@
 
 import Foundation
 
-struct Card: Hashable {
+struct SetCard: Hashable {
     
     let color: Attribute
     let symbol: Attribute
     let number: Attribute
     let shading: Attribute
     
-    static func ==(lhs: Card, rhs: Card) -> Bool {
+    static func ==(lhs: SetCard, rhs: SetCard) -> Bool {
         return lhs.number == rhs.number && lhs.symbol == rhs.symbol && lhs.shading == rhs.shading && lhs.color == rhs.color
     }
     

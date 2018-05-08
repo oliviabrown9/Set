@@ -10,12 +10,12 @@ import Foundation
 
 class SetGame {
     
-    private(set) var deck = Deck()
-    private(set) var currentCardsInGame = [Card]()
-    private(set) var selectedCards = [Card]()
+    private(set) var deck = SetDeck()
+    private(set) var currentCardsInGame = [SetCard]()
+    private(set) var selectedCards = [SetCard]()
     private(set) var score = 0
     private var firstMoveTime: Date?
-    private var foundSet: [Card]?
+    private var foundSet: [SetCard]?
     
     init() {
         newGame()
@@ -34,7 +34,7 @@ class SetGame {
     }
     
     // Locates the passed cards and inserts a new random card at that index
-    private func replace(cards: [Card]) {
+    private func replace(cards: [SetCard]) {
         cards.forEach {
             if let cardIndex = currentCardsInGame.index(of: $0) {
                 currentCardsInGame.remove(at: cardIndex)
@@ -46,7 +46,7 @@ class SetGame {
     }
     
     // Handles when a selection by checking if a set is found or if the card was already selected
-    func selectCard(card: Card) {
+    func selectCard(card: SetCard) {
         if selectedCards.count == 3 && setFound(withCards: selectedCards) {
             replace(cards: selectedCards)
             selectedCards.removeAll()
@@ -83,7 +83,7 @@ class SetGame {
     }
     
     // Checks if a set was found based on Attribute enums of the card
-    func setFound(withCards cards: [Card]) -> Bool {
+    func setFound(withCards cards: [SetCard]) -> Bool {
         if selectedCards.count == 3 {
             if selectedCards[0].color == selectedCards[1].color && selectedCards[0].color == selectedCards[2].color ||
                 selectedCards[0].color != selectedCards[1].color && selectedCards[0].color != selectedCards[2].color && selectedCards[1].color != selectedCards[2].color {
@@ -107,7 +107,7 @@ class SetGame {
     }
     
     @objc func shuffleCardsInGame() {
-        var shuffledCards = [Card]()
+        var shuffledCards = [SetCard]()
         while !currentCardsInGame.isEmpty {
             let randomCard = currentCardsInGame.remove(at: Int(arc4random_uniform(UInt32(currentCardsInGame.count))))
             shuffledCards.append(randomCard)

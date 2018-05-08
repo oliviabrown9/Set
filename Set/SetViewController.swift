@@ -8,13 +8,13 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SetViewController: UIViewController {
     
     private(set) var game = SetGame()
     
-    private var deckView: CardView?
-    private var discardView: CardView?
-    private var cardViewDict = [Card: CardView]()
+    private var deckView: SetCardView?
+    private var discardView: SetCardView?
+    private var cardViewDict = [SetCard: SetCardView]()
     private var timer: Timer?
     
     @IBOutlet private weak var cardsView: UIView!
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
             guard let selectedCardView = sender.view else {
                 return
             }
-            var card: Card?
+            var card: SetCard?
             for (key, value) in cardViewDict {
                 if value == selectedCardView {
                     card = key
@@ -90,7 +90,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func addOutline(to cardView: CardView, withCard card: Card) {
+    private func addOutline(to cardView: SetCardView, withCard card: SetCard) {
         // Outlines the selected cards and changes color if a set is correct/incorrect
         if game.selectedCards.contains(card) {
             cardView.layer.borderWidth = 5.0
@@ -109,7 +109,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setCardViewAttributes(fromCard card: Card, forView view: CardView) {
+    private func setCardViewAttributes(fromCard card: SetCard, forView view: SetCardView) {
         switch card.color {
         case .A : view.color = .A
         case .B : view.color = .B
@@ -135,129 +135,107 @@ class ViewController: UIViewController {
     // MARK: Animation functions
     private func animateCardViews() {
         var cardCount = 0
-        
         for (index, card) in game.currentCardsInGame.enumerated() {
             let cardView = findCardView(for: card)
             if cardView.frame.origin == deckView?.frame.origin {
                 cardCount += 1
             }
             let animationDelay = TimeInterval(cardCount) / 2
-            placeView(forCard: card,
-                      atRow: index / numColumns,
-                      inColumn: index % numColumns,
-                      withDelay: animationDelay)
+            let column = index % numColumns
+            let row = index / numColumns
+            var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardSize.width + (2 * CGFloat(column) + 1) * cardWidthGap
+            let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardSize.height + (2 * CGFloat(row) + 1) * cardHeightGap
+            if cardsView.bounds.height < cardsView.bounds.width {
+                xOrigin += cardsView.bounds.width * sideToHeightRatio
+            }
+            placeView(cardView, withDelay: animationDelay, atLocation: (xOrigin, yOrigin))
         }
     }
     
     private lazy var dynamicAnimator = UIDynamicAnimator(referenceView: cardsView)
     
-    private func animateRemoval(of card: Card){
+    private func animateRemoval(of card: SetCard) {
         let cardView = findCardView(for: card)
         
         let pushBehavior = UIPushBehavior(items: [cardView], mode: .instantaneous)
         pushBehavior.magnitude = 1.0
         pushBehavior.angle = (CGFloat.pi * 2) * CGFloat(Float(arc4random()) / Float(UINT32_MAX))
-        
-        cardView.layer.zPosition += 100
         dynamicAnimator.addBehavior(pushBehavior)
         
         timer = Timer.scheduledTimer(withTimeInterval: matchDuration, repeats: false) { timer in
             pushBehavior.removeItem(cardView)
             pushBehavior.dynamicAnimator?.removeBehavior(pushBehavior)
             UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: self.discardDuration,
-                delay: 0.0,
-                options: [],
-                animations: {
+                withDuration: self.discardDuration, delay: 0.0, options: [], animations: {
                     cardView.frame.size = self.discardRect.size
                     cardView.frame.origin = self.discardRect.origin
             }, completion: { finished in
-                if cardView.isFaceUp {
-                    UIView.transition(
-                        with: cardView,
-                        duration: self.flipDuration,
-                        options: [.transitionFlipFromLeft],
-                        animations: {
-                            cardView.isFaceUp = false
-                    }, completion: { [weak self] finished in
-                        if self?.discardView == nil {
-                            let newDiscardPile = CardView(frame: self!.discardRect)
-                            self?.cardsView.addSubview(newDiscardPile)
-                            self?.discardView = newDiscardPile
-                        }
-                        cardView.removeFromSuperview()
-                    })
-                }
+                self.discard(cardView)
             })
         }
     }
     
-    private func placeView(forCard card: Card, atRow row: Int, inColumn column: Int, withDelay delay: TimeInterval = 0.0) {
-        let cardView = findCardView(for: card)
-        var xOrigin = cardsView.bounds.origin.x + CGFloat(column) * cardSize.width + (2 * CGFloat(column) + 1) * cardWidthGap
-        let yOrigin = cardsView.bounds.origin.y + CGFloat(row) * cardSize.height + (2 * CGFloat(row) + 1) * cardHeightGap
-        
-        if cardsView.bounds.height < cardsView.bounds.width {
-            xOrigin += cardsView.bounds.width * sideToHeightRatio
-        }
-        
-        func animateFromDeck() {
-            UIViewPropertyAnimator.runningPropertyAnimator (
-                withDuration: drawingCardDuration,
-                delay: delay,
-                options: [],
+    private func discard(_ cardView: SetCardView) {
+        if cardView.isFaceUp {
+            UIView.transition(
+                with: cardView,
+                duration: self.flipDuration,
+                options: [.transitionFlipFromLeft],
                 animations: {
-                    cardView.transform = CGAffineTransform.identity
-                    if cardView.frame.width > cardView.frame.height {
-                        cardView.transform = cardView.transform.rotated(by: CGFloat.pi / 2)
-                    }
-                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
-                    cardView.frame.size = self.cardSize
-            }, completion: { finished in
-                flipCardViewUp()
+                    cardView.isFaceUp = false
+            }, completion: { [weak self] finished in
+                if self?.discardView == nil {
+                    let newDiscardPile = SetCardView(frame: self!.discardRect)
+                    self?.cardsView.addSubview(newDiscardPile)
+                    self?.discardView = newDiscardPile
+                }
+                cardView.removeFromSuperview()
             })
         }
-        
-        func flipCardViewUp() {
-            if !cardView.isFaceUp {
-                UIView.transition(
-                    with: cardView,
-                    duration: self.flipDuration,
-                    options: [.transitionFlipFromLeft],
-                    animations: {
-                        cardView.isFaceUp = true
-                })
-            }
-        }
-        
-        cardView.alpha = 1
-        
+    }
+    
+    private func placeView(_ cardView: SetCardView, withDelay delay: TimeInterval, atLocation location: (CGFloat, CGFloat)) {
         if cardView.frame.origin == deckView?.frame.origin {
-            animateFromDeck()
-        }
-        else if cardView.frame.origin != CGPoint(x: xOrigin, y: yOrigin) {
-            UIViewPropertyAnimator.runningPropertyAnimator(
-                withDuration: drawingCardDuration,
-                delay: 0,
-                options: [],
+            UIViewPropertyAnimator.runningPropertyAnimator (
+                withDuration: drawingCardDuration, delay: delay, options: [],
                 animations: {
-                    cardView.frame.origin = CGPoint(x: xOrigin, y: yOrigin)
+                    cardView.frame.origin = CGPoint(x: location.0, y: location.1)
+                    cardView.frame.size = self.cardSize
+            }, completion: { finished in
+                self.flipUp(cardView)
+            })
+        }
+        else if cardView.frame.origin != CGPoint(x: location.0, y: location.1) {
+            UIViewPropertyAnimator.runningPropertyAnimator(
+                withDuration: drawingCardDuration, delay: 0, options: [],
+                animations: {
+                    cardView.frame.origin = CGPoint(x: location.0, y: location.1)
                     cardView.frame.size = self.cardSize
             })
         }
         cardsView.addSubview(cardView)
     }
     
+    private func flipUp(_ cardView: SetCardView) {
+        if !cardView.isFaceUp {
+            UIView.transition(
+                with: cardView, duration: self.flipDuration, options: [.transitionFlipFromLeft],
+                animations: {
+                    cardView.isFaceUp = true
+            })
+        }
+    }
+    
     // MARK: Handling views functions
-    private func findCardView(for card: Card) -> CardView {
+    private func findCardView(for card: SetCard) -> SetCardView {
         if cardViewDict[card] == nil {
             cardViewDict[card] = createCardView(for: card)
         }
         return cardViewDict[card]!
     }
     
-    private func createCardView(for card: Card) -> CardView {
-        let cardView = CardView()
+    private func createCardView(for card: SetCard) -> SetCardView {
+        let cardView = SetCardView()
         setCardViewAttributes(fromCard: card, forView: cardView)
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleCardTap))
@@ -273,7 +251,7 @@ class ViewController: UIViewController {
             deckView = nil
         }
         if !game.deck.cards.isEmpty {
-            deckView = CardView(frame: deckRect)
+            deckView = SetCardView(frame: deckRect)
             cardsView.addSubview(deckView!)
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleDeckTap))
@@ -284,7 +262,7 @@ class ViewController: UIViewController {
     private func addDiscardView() {
         if let currentDiscardView = discardView {
             currentDiscardView.removeFromSuperview()
-            discardView = CardView(frame: discardRect)
+            discardView = SetCardView(frame: discardRect)
             cardsView.addSubview(discardView!)
         }
     }

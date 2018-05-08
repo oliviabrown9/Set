@@ -7,29 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		18D25AE72085566D0056A865 /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D25AE62085566D0056A865 /* Deck.swift */; };
-		752A40FB208D23C000AC7BB0 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A40FA208D23C000AC7BB0 /* CardView.swift */; };
+		18D25AE72085566D0056A865 /* SetDeck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18D25AE62085566D0056A865 /* SetDeck.swift */; };
+		752A40FB208D23C000AC7BB0 /* SetCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752A40FA208D23C000AC7BB0 /* SetCardView.swift */; };
 		759FD9B320844DE40045444F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9B220844DE40045444F /* AppDelegate.swift */; };
-		759FD9B520844DE40045444F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9B420844DE40045444F /* ViewController.swift */; };
+		759FD9B520844DE40045444F /* SetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9B420844DE40045444F /* SetViewController.swift */; };
 		759FD9B820844DE40045444F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 759FD9B620844DE40045444F /* Main.storyboard */; };
 		759FD9BA20844DE80045444F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 759FD9B920844DE80045444F /* Assets.xcassets */; };
 		759FD9BD20844DE80045444F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 759FD9BB20844DE80045444F /* LaunchScreen.storyboard */; };
 		759FD9C5208454BE0045444F /* SetGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9C4208454BE0045444F /* SetGame.swift */; };
-		759FD9C7208454CB0045444F /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9C6208454CB0045444F /* Card.swift */; };
+		759FD9C7208454CB0045444F /* SetCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759FD9C6208454CB0045444F /* SetCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		18D25AE62085566D0056A865 /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
-		752A40FA208D23C000AC7BB0 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		18D25AE62085566D0056A865 /* SetDeck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetDeck.swift; sourceTree = "<group>"; };
+		752A40FA208D23C000AC7BB0 /* SetCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCardView.swift; sourceTree = "<group>"; };
 		759FD9AF20844DE40045444F /* Set.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Set.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		759FD9B220844DE40045444F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		759FD9B420844DE40045444F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		759FD9B420844DE40045444F /* SetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewController.swift; sourceTree = "<group>"; };
 		759FD9B720844DE40045444F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		759FD9B920844DE80045444F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		759FD9BC20844DE80045444F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		759FD9BE20844DE80045444F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		759FD9C4208454BE0045444F /* SetGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetGame.swift; sourceTree = "<group>"; };
-		759FD9C6208454CB0045444F /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		759FD9C6208454CB0045444F /* SetCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,12 +63,12 @@
 			isa = PBXGroup;
 			children = (
 				759FD9C82085CF5C0045444F /* Supporting Files */,
-				759FD9B420844DE40045444F /* ViewController.swift */,
+				759FD9B420844DE40045444F /* SetViewController.swift */,
 				759FD9B620844DE40045444F /* Main.storyboard */,
-				752A40FA208D23C000AC7BB0 /* CardView.swift */,
+				752A40FA208D23C000AC7BB0 /* SetCardView.swift */,
 				759FD9C4208454BE0045444F /* SetGame.swift */,
-				759FD9C6208454CB0045444F /* Card.swift */,
-				18D25AE62085566D0056A865 /* Deck.swift */,
+				759FD9C6208454CB0045444F /* SetCard.swift */,
+				18D25AE62085566D0056A865 /* SetDeck.swift */,
 				759FD9BE20844DE80045444F /* Info.plist */,
 			);
 			path = Set;
@@ -155,12 +155,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				759FD9B520844DE40045444F /* ViewController.swift in Sources */,
+				759FD9B520844DE40045444F /* SetViewController.swift in Sources */,
 				759FD9B320844DE40045444F /* AppDelegate.swift in Sources */,
-				18D25AE72085566D0056A865 /* Deck.swift in Sources */,
+				18D25AE72085566D0056A865 /* SetDeck.swift in Sources */,
 				759FD9C5208454BE0045444F /* SetGame.swift in Sources */,
-				752A40FB208D23C000AC7BB0 /* CardView.swift in Sources */,
-				759FD9C7208454CB0045444F /* Card.swift in Sources */,
+				752A40FB208D23C000AC7BB0 /* SetCardView.swift in Sources */,
+				759FD9C7208454CB0045444F /* SetCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

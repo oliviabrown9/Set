@@ -8,18 +8,18 @@
 
 import Foundation
 
-struct Deck {
+struct SetDeck {
     
-    private(set) var cards = [Card]()
+    private(set) var cards = [SetCard]()
     
     // Generates a deck with all possible combinations of Attribute enums
     mutating func fillDeck() {
         cards.removeAll()
-        for color in Card.Attribute.cases {
-            for symbol in Card.Attribute.cases {
-                for number in Card.Attribute.cases {
-                    for shading in Card.Attribute.cases {
-                        cards.append(Card(color: color, symbol: symbol, number: number, shading: shading))
+        for color in SetCard.Attribute.cases {
+            for symbol in SetCard.Attribute.cases {
+                for number in SetCard.Attribute.cases {
+                    for shading in SetCard.Attribute.cases {
+                        cards.append(SetCard(color: color, symbol: symbol, number: number, shading: shading))
                     }
                 }
             }
@@ -27,7 +27,7 @@ struct Deck {
     }
     
     // Removes and returns a random card from the deck
-    mutating func drawCard() -> Card {
+    mutating func drawCard() -> SetCard {
         let cardDrawn = self.cards.remove(at: Int(arc4random_uniform(UInt32(self.cards.count))))
         return cardDrawn
     }
